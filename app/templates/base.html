@@ -3,29 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}电气复习系统{% endblock %}</title>
-    <!-- 【统一设计系统 CSS】所有页面共用 -->
+    <title>{% block title %}电气复习{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/style.css">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- ========== 顶部导航栏 ========== -->
-    <!-- 【Jinja2 模板继承】所有页面共用这个导航栏 -->
+    <!-- 顶部导航栏 -->
     <nav class="navbar">
-        <!-- 左侧：品牌标识和学科选择器 -->
         <div class="navbar-brand">
             ⚡
             <a href="/" style="color: inherit; text-decoration: none;">电气复习</a>
         </div>
-
-        <!-- 中间：学科选择器 -->
         <div class="subject-selector">
             <select id="subjectSelector" aria-label="选择学科">
                 <option value="">加载中...</option>
             </select>
         </div>
-
-        <!-- 右侧：导航链接 + 主题切换 -->
         <div class="navbar-links">
             <a href="/" class="nav-link">🏠 <span>首页</span></a>
             <a href="/exam" class="nav-link">📝 <span>刷题</span></a>
@@ -35,19 +28,16 @@
         </div>
     </nav>
 
-    <!-- ========== 主内容区域 ========== -->
-    <!-- 【block content】子模板可以替换这部分内容 -->
+    <!-- 主内容 -->
     <main class="container">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- ========== 页脚 ========== -->
+    <!-- 页脚 -->
     <footer style="text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); margin-top: 48px;">
-        <p>⚡ 电气专业课 AI 期末刷题系统 &copy; 2026 — 基于 DeepSeek-V4</p>
+        <p>⚡ 电气专业课 AI 期末复习系统 &copy; 2026</p>
     </footer>
 
-    <!-- ========== JavaScript ========== -->
-    <!-- 【加载顺序很重要】先加载学科数据（SUBJECTS对象），再加载应用逻辑 -->
     <script src="/static/js/subjects.js"></script>
     <script src="/static/js/app.js"></script>
     {% block extra_js %}{% endblock %}

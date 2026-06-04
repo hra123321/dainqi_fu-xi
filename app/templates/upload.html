@@ -1,14 +1,12 @@
 ﻿{% extends "base.html" %}
 
-{% block title %}上传课件 - 电气复习系统{% endblock %}
+{% block title %}上传课件 - 电气复习{% endblock %}
 
 {% block content %}
 <div class="fade-in">
-    <div class="flex-between mb-md" style="flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1 style="font-size: 24px;">📤 上传课件</h1>
-            <p style="color: var(--text-secondary); font-size: 14px;">上传 PDF 课件，AI 自动提取文字并建立向量知识库</p>
-        </div>
+    <div style="margin-bottom: 20px;">
+        <h1 style="font-size: 24px;">📤 上传课件</h1>
+        <p style="color: var(--text-secondary); font-size: 14px;">上传 PDF 课件，AI 会自动学习教材内容，出题更贴近课堂</p>
     </div>
 
     <div class="card">
@@ -16,10 +14,9 @@
             <h3>选择 PDF 文件</h3>
         </div>
         <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
-            支持电气专业课的教材、讲义、习题集等 PDF 格式文件。系统会自动切片并向量化入库。
+            支持教材、讲义、习题集的 PDF 格式。
         </p>
 
-        <!-- 拖拽上传区域 -->
         <div id="dropArea" style="
             border: 2px dashed var(--primary);
             border-radius: var(--radius-lg);
@@ -28,15 +25,14 @@
             cursor: pointer;
             transition: var(--transition);
             background: var(--primary-bg);
-        " onclick="document.getElementById('fileInput').click()" ondragover="this.style.background='var(--primary)'; this.style.color='white';" ondragleave="this.style.background='var(--primary-bg)'; this.style.color='inherit';">
+        " onclick="document.getElementById('fileInput').click()">
             <div style="font-size: 48px; margin-bottom: 12px;">📄</div>
-            <p style="font-size: 16px; font-weight: 600;" id="uploadPrompt">点击此处选择 PDF 文件</p>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">或拖拽 PDF 文件到此处</p>
+            <p style="font-size: 16px; font-weight: 600;" id="uploadPrompt">点击选择 PDF 文件</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">或拖拽 PDF 到此处</p>
         </div>
 
         <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileSelect(event)">
 
-        <!-- 文件信息 -->
         <div id="fileInfo" class="hidden card" style="margin-top: 16px;">
             <div class="flex-between">
                 <div>
@@ -47,22 +43,7 @@
             </div>
         </div>
 
-        <!-- 上传状态 -->
         <div id="uploadStatus" class="hidden mt-md"></div>
-    </div>
-
-    <!-- 知识库状态 -->
-    <div class="card fade-in">
-        <div class="card-header">
-            <h3>📊 知识库状态</h3>
-            <button class="btn btn-sm btn-outline" onclick="loadKbStatus()">🔄 刷新</button>
-        </div>
-        <div id="kbStatus">
-            <div class="flex-center" style="padding: 24px;">
-                <div class="spinner"></div>
-                <span style="margin-left: 12px; color: var(--text-muted);">加载中...</span>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}
@@ -91,97 +72,29 @@
 
         const statusDiv = document.getElementById("uploadStatus");
         statusDiv.classList.remove("hidden");
-        statusDiv.className = "card";
-        statusDiv.innerHTML = `
-            <div class="flex-center" style="padding: 16px;">
-                <div class="spinner"></div>
-                <span style="margin-left: 12px; color: var(--text-muted);">正在上传并处理，请稍候...</span>
-            </div>
-        `;
+        statusDiv.innerHTML = `<div class="flex-center" style="padding: 16px;"><div class="spinner"></div><span style="margin-left: 12px; color: var(--text-muted);">正在处理，请稍候...</span></div>`;
 
         try {
-            const resp = await fetch("/api/knowledge/upload", {
-                method: "POST",
-                body: formData,
-            });
+            const resp = await fetch("/api/knowledge/upload", { method: "POST", body: formData });
             const data = await resp.json();
-
             if (data.success) {
                 statusDiv.className = "card";
                 statusDiv.style.borderLeft = "4px solid var(--success)";
-                statusDiv.innerHTML = `
-                    <div class="flex">
-                        <span style="font-size: 24px; margin-right: 12px;">✅</span>
-                        <div>
-                            <strong style="color: var(--success);">上传成功！</strong>
-                            <p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${data.message || "课件已成功入库"}</p>
-                        </div>
-                    </div>
-                `;
+                statusDiv.innerHTML = `<div class="flex"><span style="font-size: 24px; margin-right: 12px;">✅</span><div><strong style="color: var(--success);">上传成功！</strong><p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${data.message || "课件已入库"}</p></div></div>`;
                 showToast("课件上传成功！", "success");
             } else {
                 statusDiv.className = "card";
                 statusDiv.style.borderLeft = "4px solid var(--danger)";
-                statusDiv.innerHTML = `
-                    <div class="flex">
-                        <span style="font-size: 24px; margin-right: 12px;">❌</span>
-                        <div>
-                            <strong style="color: var(--danger);">上传失败</strong>
-                            <p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${data.error || "未知错误"}</p>
-                        </div>
-                    </div>
-                `;
+                statusDiv.innerHTML = `<div class="flex"><span style="font-size: 24px; margin-right: 12px;">❌</span><div><strong style="color: var(--danger);">上传失败</strong><p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${data.error || "未知错误"}</p></div></div>`;
             }
         } catch (e) {
             statusDiv.className = "card";
             statusDiv.style.borderLeft = "4px solid var(--danger)";
-            statusDiv.innerHTML = `
-                <div class="flex">
-                    <span style="font-size: 24px; margin-right: 12px;">❌</span>
-                    <div>
-                        <strong style="color: var(--danger);">网络错误</strong>
-                        <p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${e.message}</p>
-                    </div>
-                </div>
-            `;
+            statusDiv.innerHTML = `<div class="flex"><span style="font-size: 24px; margin-right: 12px;">❌</span><div><strong style="color: var(--danger);">网络错误</strong><p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">${e.message}</p></div></div>`;
         } finally {
             btn.disabled = false;
             btn.textContent = "🚀 开始上传";
-            loadKbStatus();
         }
     }
-
-    async function loadKbStatus() {
-        const container = document.getElementById("kbStatus");
-        container.innerHTML = `
-            <div class="flex-center" style="padding: 16px;">
-                <div class="spinner"></div>
-                <span style="margin-left: 12px; color: var(--text-muted);">加载中...</span>
-            </div>
-        `;
-        try {
-            const resp = await fetch("/api/knowledge/collections");
-            const data = await resp.json();
-            if (data.collections && data.collections.length > 0) {
-                container.innerHTML = `
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                        ${data.collections.map(c => `
-                            <div style="padding: 16px; background: var(--bg-card-hover); border-radius: var(--radius-sm);">
-                                <p style="font-size: 13px; color: var(--text-muted);">${c.name}</p>
-                                <p style="font-size: 24px; font-weight: 700; color: var(--primary);">${c.doc_count}</p>
-                                <p style="font-size: 12px; color: var(--text-muted);">篇文档</p>
-                            </div>
-                        `).join("")}
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 24px;">暂无课件数据，上传 PDF 后自动建立知识库</p>`;
-            }
-        } catch (e) {
-            container.innerHTML = `<p style="color: var(--danger);">加载失败: ${e.message}</p>`;
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", loadKbStatus);
 </script>
 {% endblock %}

@@ -1,13 +1,12 @@
 ﻿{% extends "base.html" %}
 
-{% block title %}首页 - 电气复习系统{% endblock %}
+{% block title %}首页 - 电气复习{% endblock %}
 
 {% block content %}
-<!-- ========== 英雄区（Hero Section） ========== -->
-<!-- 【作用】页面最上方的大标题区，给用户第一印象 -->
+<!-- ========== 英雄区 ========== -->
 <div class="hero-section fade-in">
-    <h1>⚡ 电气专业课 <span class="gradient-text">AI 期末复习</span></h1>
-    <p>基于 DeepSeek-V4 双规格 AI 模型，智能出题、自动批改、错题分析，帮你高效备战期末考试。</p>
+    <h1>⚡ 期末复习 <span class="gradient-text">冲冲冲</span></h1>
+    <p>智能出题、自动批改、错题分析，帮你高效备战电气专业课期末考试。</p>
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
         <a href="/exam" class="btn btn-primary">📝 开始刷题</a>
         <a href="/wrong-book" class="btn btn-outline">📕 错题本</a>
@@ -15,144 +14,63 @@
     </div>
 </div>
 
-<!-- ========== 快捷功能卡片 ========== -->
+<!-- ========== 功能卡片 ========== -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px;">
-    
-    <!-- 功能卡片1: 刷题 -->
+
     <a href="/exam" class="card" style="text-decoration: none; color: inherit; display: block;">
-        <div class="card-header">
-            <h3>📝 在线刷题</h3>
-            <span class="badge badge-flash">Flash · 常规</span>
-        </div>
+        <div style="font-size: 36px; margin-bottom: 8px;">📝</div>
+        <h3 style="margin-bottom: 8px;">智能刷题</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            选择知识点和难度，AI 自动生成考题。简单概念用 Flash，复杂推导用 Pro。
+            选择知识点和难度，AI 自动生成考题，答完立刻批改讲解。
         </p>
-        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="badge badge-flash">基础概念</span>
-            <span class="badge badge-pro">电路推导</span>
-            <span class="badge badge-flash">客观题</span>
-        </div>
     </a>
 
-    <!-- 功能卡片2: 错题本 -->
     <a href="/wrong-book" class="card" style="text-decoration: none; color: inherit; display: block;">
-        <div class="card-header">
-            <h3>📕 智能错题本</h3>
-            <span class="badge badge-danger">自进化</span>
-        </div>
+        <div style="font-size: 36px; margin-bottom: 8px;">📕</div>
+        <h3 style="margin-bottom: 8px;">错题本</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            自动记录错题，分析薄弱知识点。累计阈值后自动触发 AI 优化出题策略。
+            自动记录错题，分析薄弱环节，越用越懂你。
         </p>
-        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="badge badge-success">学情分析</span>
-            <span class="badge badge-danger">薄弱点</span>
-        </div>
     </a>
 
-    <!-- 功能卡片3: 上传课件 -->
     <a href="/upload" class="card" style="text-decoration: none; color: inherit; display: block;">
-        <div class="card-header">
-            <h3>📤 课件知识库</h3>
-            <span class="badge badge-flash">Chroma</span>
-        </div>
+        <div style="font-size: 36px; margin-bottom: 8px;">📤</div>
+        <h3 style="margin-bottom: 8px;">课件导入</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            上传 PDF 课件，AI 自动提取文字建立向量知识库。刷题时自动召回相关教材原文。
+            上传 PDF 课件，AI 自动学习教材内容，出题更贴近课堂。
         </p>
-        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="badge badge-success">自动切片</span>
-            <span class="badge badge-flash">语义检索</span>
-        </div>
     </a>
 </div>
 
-<!-- ========== 系统状态看板 ========== -->
-<div class="card fade-in">
-    <div class="card-header">
-        <h3>🔧 系统运行状态</h3>
-        <span class="status-bar">
-            <span class="status-dot" id="healthDot"></span>
-            <span id="healthText">检查中...</span>
-        </span>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">后端框架</p>
-            <p style="font-weight: 600;">FastAPI</p>
-        </div>
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">AI 模型</p>
-            <p style="font-weight: 600;">DeepSeek-V4 Flash + Pro</p>
-        </div>
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">知识库</p>
-            <p style="font-weight: 600;">Chroma 本地向量库</p>
-        </div>
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">提示词</p>
-            <p style="font-weight: 600;">4 套场景已加载</p>
-        </div>
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">缓存</p>
-            <p style="font-weight: 600;">内存 LRU + SHA256</p>
-        </div>
-        <div>
-            <p style="color: var(--text-muted); font-size: 12px;">浏览器</p>
-            <p style="font-weight: 600;">Microsoft Edge</p>
-        </div>
-    </div>
-</div>
-
-<!-- ========== 学习建议 ========== -->
+<!-- ========== 当前学科建议 ========== -->
 <div class="card fade-in" id="currentSubjectCard">
     <div class="card-header">
-        <h3>📚 当前学习建议</h3>
-        <span class="badge badge-flash" id="subjectBadge">未选择学科</span>
+        <h3>📚 当前复习建议</h3>
+        <span class="badge" id="subjectBadge" style="background: var(--primary-bg); color: var(--primary);">未选择学科</span>
     </div>
     <p style="color: var(--text-secondary); font-size: 14px;" id="studyAdvice">
-        从导航栏选择一门学科开始复习，或上传课件建立知识库。
+        从导航栏选择一门学科开始复习，或上传课件让 AI 学习教材内容。
     </p>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-// 页面加载后检查系统健康状态
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const resp = await fetch("/api/health");
-        const data = await resp.json();
-        const dot = document.getElementById("healthDot");
-        const text = document.getElementById("healthText");
-        if (data.status === "ok") {
-            dot.style.background = "var(--success)";
-            text.textContent = "系统运行正常 v" + data.version;
-        } else {
-            dot.style.background = "var(--danger)";
-            text.textContent = "系统异常";
-        }
-    } catch (e) {
-        document.getElementById("healthDot").style.background = "var(--danger)";
-        document.getElementById("healthText").textContent = "无法连接";
-    }
-
-    // 学科选择变化时更新建议
+document.addEventListener("DOMContentLoaded", () => {
     const saved = localStorage.getItem("selectedSubject");
     if (saved) {
         const subject = findSubject(saved);
         if (subject) {
             document.getElementById("subjectBadge").textContent = subject.icon + " " + subject.name;
-            document.getElementById("studyAdvice").textContent = 
-                `当前选择：${subject.name}。推荐从 "${subject.topics[0]}" 开始复习，` +
-                `逐步掌握 ${subject.topics.slice(1, 4).join("、")} 等核心知识点。`;
+            document.getElementById("studyAdvice").textContent =
+                `当前选择：${subject.name}。推荐从「${subject.topics[0]}」开始复习，逐步掌握 ${subject.topics.slice(1, 4).join("、")} 等核心知识点。`;
         }
     }
-
     document.addEventListener("subjectChanged", (e) => {
         const s = e.detail;
         document.getElementById("subjectBadge").textContent = s.icon + " " + s.name;
-        document.getElementById("studyAdvice").textContent = 
-            `当前选择：${s.name}。推荐从 "${s.topics[0]}" 开始复习，` +
-            `逐步掌握 ${s.topics.slice(1, 4).join("、")} 等核心知识点。`;
+        document.getElementById("studyAdvice").textContent =
+            `当前选择：${s.name}。推荐从「${s.topics[0]}」开始复习，逐步掌握 ${s.topics.slice(1, 4).join("、")} 等核心知识点。`;
     });
 });
 </script>

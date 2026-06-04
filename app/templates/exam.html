@@ -1,42 +1,34 @@
 ﻿{% extends "base.html" %}
 
-{% block title %}刷题 - 电气复习系统{% endblock %}
+{% block title %}刷题 - 电气复习{% endblock %}
 
 {% block content %}
 <div class="fade-in">
-    <div class="flex-between mb-md" style="flex-wrap: wrap; gap: 12px;">
-        <div>
-            <h1 style="font-size: 24px;">📝 AI 智能出题</h1>
-            <p style="color: var(--text-secondary); font-size: 14px;">选择知识点和难度，AI 自动生成考题并批改</p>
-        </div>
-        <span class="status-bar">
-            <span class="status-dot" id="modelStatusDot"></span>
-            <span id="modelStatus">Flash 就绪</span>
-        </span>
+    <div style="margin-bottom: 20px;">
+        <h1 style="font-size: 24px;">📝 开始刷题</h1>
+        <p style="color: var(--text-secondary); font-size: 14px;">选择知识点和难度，AI 自动出题并批改讲解</p>
     </div>
 
-    <!-- 出题设置卡片 -->
+    <!-- 出题设置 -->
     <div class="card">
         <div class="card-header">
             <h3>⚙️ 出题设置</h3>
-            <span class="badge badge-flash" id="currentSubjectLabel">请先选择学科</span>
+            <span style="font-size: 13px; color: var(--text-muted);" id="currentSubjectLabel">请先选择学科</span>
         </div>
 
         <div class="form-group">
             <label>📌 知识点</label>
-            <input type="text" id="knowledgePoint" class="form-control" placeholder="输入知识点（如：戴维南定理、傅里叶变换）">
-            <div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;" id="topicSuggestions">
-                <!-- JS 动态填充知识点建议 -->
-            </div>
+            <input type="text" id="knowledgePoint" class="form-control" placeholder="输入知识点，如：戴维南定理、傅里叶变换">
+            <div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;" id="topicSuggestions"></div>
         </div>
 
         <div class="form-group">
-            <label>📊 难度选择</label>
+            <label>📊 题目难度</label>
             <select id="difficultySelect" class="form-control">
-                <option value="easy">简单（概念选择题）→ Flash 模型</option>
-                <option value="normal" selected>中等（一般计算）→ Flash 模型</option>
-                <option value="hard">困难（复杂推导）→ Pro 模型</option>
-                <option value="expert">专家（综合应用）→ Pro 模型</option>
+                <option value="easy">简单 — 概念题</option>
+                <option value="normal" selected>中等 — 一般计算</option>
+                <option value="hard">困难 — 复杂推导</option>
+                <option value="expert">专家 — 综合应用</option>
             </select>
         </div>
 
@@ -45,28 +37,24 @@
             <input type="number" id="questionCount" class="form-control" value="3" min="1" max="10" style="max-width: 120px;">
         </div>
 
-        <div style="display: flex; gap: 12px; align-items: center;">
-            <button class="btn btn-primary" onclick="generateQuestions()" id="generateBtn">🚀 开始出题</button>
-            <span id="modelHint" style="font-size: 13px; color: var(--text-muted);">当前难度将使用 Flash 模型</span>
-        </div>
+        <button class="btn btn-primary" onclick="generateQuestions()" id="generateBtn">🚀 开始出题</button>
     </div>
 
-    <!-- 加载指示器 -->
+    <!-- 加载中 -->
     <div id="loadingIndicator" class="hidden card" style="text-align: center; padding: 40px;">
         <div class="spinner" style="margin: 0 auto 16px;"></div>
-        <p style="color: var(--text-muted);">AI 正在出题，请稍候...</p>
+        <p style="color: var(--text-muted);">正在出题，请稍候...</p>
     </div>
 
-    <!-- 题目区域 -->
+    <!-- 题目区 -->
     <div id="questionsArea" class="hidden">
         <div class="card">
             <div class="card-header">
-                <h3>📋 题目列表</h3>
-                <span id="modelBadge"></span>
+                <h3>📋 题目</h3>
             </div>
             <div id="questionsList"></div>
         </div>
-        <div class="card" style="text-align: center;">
+        <div style="text-align: center; margin-bottom: 16px;">
             <button class="btn btn-success" onclick="submitAllAnswers()" id="submitBtn">📤 提交全部答案</button>
         </div>
     </div>
@@ -87,18 +75,16 @@
 <script>
     let currentQuestions = [];
 
-    // 学科变化时更新知识点建议
     function updateTopicSuggestions() {
         const saved = localStorage.getItem("selectedSubject");
         const container = document.getElementById("topicSuggestions");
         const label = document.getElementById("currentSubjectLabel");
-
         if (saved) {
             const subject = findSubject(saved);
             if (subject) {
                 label.textContent = subject.icon + " " + subject.name;
                 container.innerHTML = subject.topics.map(t =>
-                    `<span class="badge badge-flash" style="cursor: pointer;" onclick="document.getElementById('knowledgePoint').value='${t}'; this.style.background='var(--primary)'; this.style.color='white';">${t}</span>`
+                    `<span class="badge" style="cursor: pointer; background: var(--primary-bg); color: var(--primary);" onclick="document.getElementById('knowledgePoint').value='${t}';">${t}</span>`
                 ).join("");
                 return;
             }
@@ -107,34 +93,12 @@
         container.innerHTML = `<span style="color: var(--text-muted); font-size: 13px;">请在导航栏选择学科</span>`;
     }
 
-    // 难度切换时更新模型提示
-    document.getElementById("difficultySelect").addEventListener("change", function() {
-        const hint = document.getElementById("modelHint");
-        const dot = document.getElementById("modelStatusDot");
-        const status = document.getElementById("modelStatus");
-        if (this.value === "hard" || this.value === "expert") {
-            hint.textContent = "当前难度将使用 Pro 模型（高推理能力）";
-            hint.style.color = "var(--danger)";
-            dot.style.background = "var(--danger)";
-            status.textContent = "Pro 就绪";
-        } else {
-            hint.textContent = "当前难度将使用 Flash 模型（快速响应）";
-            hint.style.color = "var(--text-muted)";
-            dot.style.background = "var(--success)";
-            status.textContent = "Flash 就绪";
-        }
-    });
-
-    // 监听学科变化
     document.addEventListener("subjectChanged", updateTopicSuggestions);
-
-    // 页面加载时初始化
     document.addEventListener("DOMContentLoaded", updateTopicSuggestions);
 
     async function generateQuestions() {
         const point = document.getElementById("knowledgePoint").value.trim();
         if (!point) { showToast("请输入知识点", "warning"); return; }
-
         const difficulty = document.getElementById("difficultySelect").value;
         const count = parseInt(document.getElementById("questionCount").value);
 
@@ -149,19 +113,17 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     knowledge_point: point,
-                    difficulty,
-                    count,
+                    difficulty, count,
                     subject: localStorage.getItem("selectedSubject") || ""
                 }),
             });
             const data = await resp.json();
-
             if (data.questions && data.questions.length > 0) {
                 currentQuestions = data.questions;
                 renderQuestions(data);
-                showToast(`成功生成 ${data.questions.length} 道题`, "success");
+                showToast(`生成了 ${data.questions.length} 道题`, "success");
             } else {
-                showToast("AI 出题失败，请重试", "error");
+                showToast("出题失败，请重试", "error");
             }
         } catch (e) {
             showToast("请求失败: " + e.message, "error");
@@ -173,30 +135,16 @@
 
     function renderQuestions(data) {
         const container = document.getElementById("questionsList");
-        const badge = document.getElementById("modelBadge");
-        const model = data.model_used || "deepseek-v4-flash";
-
-        badge.innerHTML = model.includes("pro")
-            ? '<span class="badge badge-pro">🧠 Pro 模型</span>'
-            : '<span class="badge badge-flash">⚡ Flash 模型</span>';
-
         container.innerHTML = data.questions.map((q, i) => `
-            <div class="question-item" style="
-                border-left: 4px solid var(--primary);
-                padding: 16px;
-                margin: 12px 0;
-                background: var(--primary-bg);
-                border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-            ">
+            <div style="border-left: 4px solid var(--primary); padding: 16px; margin: 12px 0; background: var(--primary-bg); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
                 <div class="flex-between mb-sm">
                     <strong>第 ${i + 1} 题</strong>
-                    <span class="badge ${q.type === 'objective' ? 'badge-flash' : 'badge-pro'}">${q.type === 'objective' ? '客观题' : '主观题'}</span>
+                    <span style="font-size: 12px; color: var(--text-muted);">${q.type === 'objective' ? '客观题' : '主观题'}</span>
                 </div>
                 <p style="white-space: pre-wrap; margin-bottom: 12px;">${q.question_text}</p>
                 <textarea id="answer_${q.id}" class="form-control" placeholder="输入你的答案..." style="min-height: 60px;"></textarea>
             </div>
         `).join("");
-
         document.getElementById("questionsArea").classList.remove("hidden");
         document.getElementById("questionsArea").scrollIntoView({ behavior: "smooth" });
     }
@@ -205,57 +153,36 @@
         const results = [];
         for (const q of currentQuestions) {
             const answer = document.getElementById("answer_" + q.id).value.trim();
-            if (!answer) {
-                showToast("请回答所有题目后再提交", "warning");
-                return;
-            }
+            if (!answer) { showToast("请回答所有题目后再提交", "warning"); return; }
             results.push({
-                question_id: q.id,
-                question_type: q.type,
-                question: q.question_text,
-                student_answer: answer,
+                question_id: q.id, question_type: q.type,
+                question: q.question_text, student_answer: answer,
             });
         }
-
         document.getElementById("submitBtn").disabled = true;
-
-        const resultsContainer = document.getElementById("resultsList");
-        resultsContainer.innerHTML = "";
+        document.getElementById("resultsList").innerHTML = "";
 
         for (const r of results) {
             try {
                 const resp = await fetch("/api/exam/submit", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    method: "POST", headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(r),
                 });
                 const data = await resp.json();
-
-                const div = document.createElement("div");
                 const isWrong = data.conclusion === "错误" || data.conclusion === "wrong";
-                div.className = `card ${isWrong ? '' : ''}`;
-                div.style.cssText = `
-                    margin-bottom: 12px;
-                    padding: 16px;
-                    border-left: 4px solid ${isWrong ? 'var(--danger)' : 'var(--success)'};
-                    background: ${isWrong ? 'var(--danger-bg)' : 'var(--success-bg)'};
-                `;
+                const div = document.createElement("div");
+                div.style.cssText = `margin-bottom: 12px; padding: 16px; border-radius: var(--radius-sm); border-left: 4px solid ${isWrong ? 'var(--danger)' : 'var(--success)'}; background: ${isWrong ? 'var(--danger-bg)' : 'var(--success-bg)'};`;
                 div.innerHTML = `
                     <div class="flex-between mb-sm">
                         <strong>${isWrong ? "❌ 错误" : "✅ 正确"}</strong>
-                        <span class="badge ${data.model_used && data.model_used.includes('pro') ? 'badge-pro' : 'badge-flash'}">${data.model_used || "flash"}</span>
                     </div>
                     <div style="font-size: 14px; white-space: pre-wrap;">${data.analysis || "无分析"}</div>
                 `;
-                resultsContainer.appendChild(div);
+                document.getElementById("resultsList").appendChild(div);
             } catch (e) {
-                resultsContainer.innerHTML += `
-                    <div class="card" style="border-left: 4px solid var(--danger);">
-                        <p>提交失败: ${e.message}</p>
-                    </div>`;
+                document.getElementById("resultsList").innerHTML += `<div style="padding: 12px; border-left: 4px solid var(--danger);">提交失败: ${e.message}</div>`;
             }
         }
-
         document.getElementById("resultsArea").classList.remove("hidden");
         document.getElementById("resultsArea").scrollIntoView({ behavior: "smooth" });
         document.getElementById("submitBtn").disabled = false;
