@@ -468,3 +468,38 @@ body.dark .form-control { background: #1e293b; border-color: var(--border); colo
     max-width: 600px;
     margin: 0 auto var(--space-lg);
 }
+
+/* ========== ????? ========== */
+.topic-card {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.topic-card:hover {
+    border-left-color: var(--primary);
+    background: var(--primary-bg);
+    transform: translateX(4px);
+}
+
+.topic-card .btn {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.topic-card:hover .btn {
+    opacity: 1;
+}
+
+/* ????? */
+#topicSearch {
+    padding-left: 36px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+
+/* ?????? */
+#explainContent h2 { color: var(--primary); font-size: 20px; margin-top: 24px; }
+#explainContent h3 { color: var(--text-primary); font-size: 17px; margin-top: 20px; }
+#explainContent h4 { color: var(--text-secondary); font-size: 15px; margin-top: 16px; }
+#explainContent strong { color: var(--primary); }

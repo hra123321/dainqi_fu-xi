@@ -1,71 +1,96 @@
 ﻿{% extends "base.html" %}
 
-{% block title %}刷题 - 电气复习{% endblock %}
+{% block title %}学习 - 电气复习{% endblock %}
 
 {% block content %}
 <div class="fade-in">
     <div style="margin-bottom: 20px;">
-        <h1 style="font-size: 24px;">📝 开始刷题</h1>
-        <p style="color: var(--text-secondary); font-size: 14px;">选择知识点和难度，AI 自动出题并批改讲解</p>
+        <h1 style="font-size: 24px;">📚 知识点学习</h1>
+        <p style="color: var(--text-secondary); font-size: 14px;">浏览知识点 → 看视频讲解 → AI 深度讲解 → 刷题巩固</p>
     </div>
 
-    <!-- 出题设置 -->
-    <div class="card">
-        <div class="card-header">
-            <h3>⚙️ 出题设置</h3>
-            <span style="font-size: 13px; color: var(--text-muted);" id="currentSubjectLabel">请先选择学科</span>
+    <!-- 搜索栏 + 学科课程入口 -->
+    <div class="card" style="margin-bottom: 16px;">
+        <div class="flex-between" style="flex-wrap: wrap; gap: 12px;">
+            <div style="flex: 1; min-width: 200px; position: relative;">
+                <input type="text" id="topicSearch" class="form-control" placeholder="🔍 搜索知识点..." oninput="filterTopics()" style="padding-left: 36px;">
+            </div>
+            <a id="courseLinkBtn" href="#" target="_blank" class="btn btn-outline" style="display: none;">
+                📺 看全套课程视频
+            </a>
         </div>
-
-        <div class="form-group">
-            <label>📌 知识点</label>
-            <input type="text" id="knowledgePoint" class="form-control" placeholder="输入知识点，如：戴维南定理、傅里叶变换">
-            <div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;" id="topicSuggestions"></div>
+        <div style="margin-top: 8px; font-size: 13px; color: var(--text-muted);">
+            当前学科：<strong id="currentSubjectName">-</strong>
+            <span id="topicCount" style="margin-left: 8px;"></span>
         </div>
-
-        <div class="form-group">
-            <label>📊 题目难度</label>
-            <select id="difficultySelect" class="form-control">
-                <option value="easy">简单 — 概念题</option>
-                <option value="normal" selected>中等 — 一般计算</option>
-                <option value="hard">困难 — 复杂推导</option>
-                <option value="expert">专家 — 综合应用</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>📄 出题数量</label>
-            <input type="number" id="questionCount" class="form-control" value="3" min="1" max="10" style="max-width: 120px;">
-        </div>
-
-        <button class="btn btn-primary" onclick="generateQuestions()" id="generateBtn">🚀 开始出题</button>
     </div>
 
-    <!-- 加载中 -->
-    <div id="loadingIndicator" class="hidden card" style="text-align: center; padding: 40px;">
-        <div class="spinner" style="margin: 0 auto 16px;"></div>
-        <p style="color: var(--text-muted);">正在出题，请稍候...</p>
+    <!-- 知识点列表 -->
+    <div id="topicList" class="fade-in">
+        <!-- JS 动态渲染 -->
     </div>
 
-    <!-- 题目区 -->
-    <div id="questionsArea" class="hidden">
+    <!-- 讲解弹出区 -->
+    <div id="explainArea" class="hidden">
         <div class="card">
             <div class="card-header">
-                <h3>📋 题目</h3>
+                <h3 id="explainTitle">📖 知识点讲解</h3>
+                <button class="btn btn-sm btn-outline" onclick="closeExplain()">✕ 关闭</button>
             </div>
-            <div id="questionsList"></div>
-        </div>
-        <div style="text-align: center; margin-bottom: 16px;">
-            <button class="btn btn-success" onclick="submitAllAnswers()" id="submitBtn">📤 提交全部答案</button>
+            <div id="explainContent" style="font-size: 15px; line-height: 1.8; white-space: pre-wrap;">
+                <div class="flex-center" style="padding: 40px;">
+                    <div class="spinner"></div>
+                    <span style="margin-left: 12px; color: var(--text-muted);">AI 正在生成讲解...</span>
+                </div>
+            </div>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn btn-primary" id="explainPracticeBtn" onclick="startPracticeFromExplain()">📝 针对这个知识点出题</button>
+                <a id="explainVideoLink" href="#" target="_blank" class="btn btn-outline">📺 B站搜讲解视频</a>
+            </div>
         </div>
     </div>
 
-    <!-- 批改结果 -->
-    <div id="resultsArea" class="hidden">
+    <!-- 出题区 -->
+    <div id="practiceArea" class="hidden">
         <div class="card">
             <div class="card-header">
-                <h3>📊 批改结果</h3>
+                <h3 id="practiceTitle">📝 刷题</h3>
+                <button class="btn btn-sm btn-outline" onclick="closePractice()">✕ 关闭</button>
             </div>
-            <div id="resultsList"></div>
+            <div id="practiceContent">
+                <div class="form-group">
+                    <label>📊 难度</label>
+                    <select id="practiceDifficulty" class="form-control">
+                        <option value="easy">简单 — 概念题</option>
+                        <option value="normal" selected>中等 — 一般计算</option>
+                        <option value="hard">困难 — 复杂推导</option>
+                        <option value="expert">专家 — 综合应用</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📄 数量</label>
+                    <input type="number" id="practiceCount" class="form-control" value="3" min="1" max="10" style="max-width: 120px;">
+                </div>
+                <button class="btn btn-primary" onclick="generatePracticeQuestions()" id="practiceGenBtn">🚀 开始出题</button>
+            </div>
+        </div>
+
+        <!-- 题目 -->
+        <div id="practiceQuestions" class="hidden">
+            <div class="card">
+                <div id="practiceQuestionsList"></div>
+            </div>
+            <div style="text-align: center; margin-bottom: 16px;">
+                <button class="btn btn-success" onclick="submitPracticeAnswers()" id="practiceSubmitBtn">📤 提交全部答案</button>
+            </div>
+        </div>
+
+        <!-- 批改结果 -->
+        <div id="practiceResults" class="hidden">
+            <div class="card">
+                <div class="card-header"><h3>📊 批改结果</h3></div>
+                <div id="practiceResultsList"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -73,46 +98,170 @@
 
 {% block extra_js %}
 <script>
+    let currentTopic = "";
+    let currentSubject = "";
     let currentQuestions = [];
+    // 防抖定时器
+    let searchTimer = null;
 
-    function updateTopicSuggestions() {
-        const saved = localStorage.getItem("selectedSubject");
-        const container = document.getElementById("topicSuggestions");
-        const label = document.getElementById("currentSubjectLabel");
-        if (saved) {
-            const subject = findSubject(saved);
-            if (subject) {
-                label.textContent = subject.icon + " " + subject.name;
-                container.innerHTML = subject.topics.map(t =>
-                    `<span class="badge" style="cursor: pointer; background: var(--primary-bg); color: var(--primary);" onclick="document.getElementById('knowledgePoint').value='${t}';">${t}</span>`
-                ).join("");
-                return;
-            }
+    // 渲染知识点列表
+    function renderTopics(topics, subject) {
+        const container = document.getElementById("topicList");
+        if (!topics || topics.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 48px; color: var(--text-muted);">
+                    <div style="font-size: 48px; margin-bottom: 12px;">🔍</div>
+                    <p>没有找到匹配的知识点</p>
+                </div>`;
+            return;
         }
-        label.textContent = "请先选择学科";
-        container.innerHTML = `<span style="color: var(--text-muted); font-size: 13px;">请在导航栏选择学科</span>`;
+        container.innerHTML = topics.map((t, i) => `
+            <div class="card topic-card" style="cursor: pointer; padding: 16px; animation: fadeIn 0.3s ease ${i * 0.03}s both;"
+                 onclick="showExplain('${t.replace(/'/g, "\\'")}')">
+                <div class="flex-between" style="flex-wrap: wrap; gap: 8px;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 15px; font-weight: 500; margin-bottom: 4px;">${i + 1}. ${t}</div>
+                    </div>
+                    <div class="flex gap-sm" style="flex-shrink: 0;">
+                        <button class="btn btn-sm btn-outline" onclick="event.stopPropagation(); window.open(getBilibiliSearchUrl('${t.replace(/'/g, "\\'")}', '${subject.name.replace(/'/g, "\\'")}'), '_blank')" title="B站搜讲解视频">
+                            📺 视频
+                        </button>
+                        <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); showExplain('${t.replace(/'/g, "\\'")}')">
+                            📖 讲解
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="event.stopPropagation(); startPractice('${t.replace(/'/g, "\\'")}')">
+                            📝 刷题
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join("");
     }
 
-    document.addEventListener("subjectChanged", updateTopicSuggestions);
-    document.addEventListener("DOMContentLoaded", updateTopicSuggestions);
+    // 搜索过滤
+    function filterTopics() {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            const query = document.getElementById("topicSearch").value.trim();
+            const subject = getDefaultSubject();
+            const results = searchTopics(subject.id, query);
+            renderTopics(results, subject);
+            document.getElementById("topicCount").textContent = `共 ${subject.topics.length} 个知识点，显示 ${results.length} 个`;
+        }, 200);
+    }
 
-    async function generateQuestions() {
-        const point = document.getElementById("knowledgePoint").value.trim();
-        if (!point) { showToast("请输入知识点", "warning"); return; }
-        const difficulty = document.getElementById("difficultySelect").value;
-        const count = parseInt(document.getElementById("questionCount").value);
+    // 初始化
+    function initTopicBrowser() {
+        const subject = getDefaultSubject();
+        currentSubject = subject.name;
+        document.getElementById("currentSubjectName").textContent = subject.icon + " " + subject.name;
+        document.getElementById("topicCount").textContent = `共 ${subject.topics.length} 个知识点`;
 
-        document.getElementById("generateBtn").disabled = true;
-        document.getElementById("loadingIndicator").classList.remove("hidden");
-        document.getElementById("questionsArea").classList.add("hidden");
-        document.getElementById("resultsArea").classList.add("hidden");
+        // 课程视频入口
+        const courseBtn = document.getElementById("courseLinkBtn");
+        if (subject.courseLink) {
+            courseBtn.href = subject.courseLink;
+            courseBtn.style.display = "inline-flex";
+            courseBtn.innerHTML = "📺 " + subject.courseName;
+        } else {
+            courseBtn.style.display = "none";
+        }
+
+        renderTopics(subject.topics, subject);
+    }
+
+    // 学科切换时刷新
+    document.addEventListener("subjectChanged", (e) => {
+        document.getElementById("topicSearch").value = "";
+        document.getElementById("explainArea").classList.add("hidden");
+        document.getElementById("practiceArea").classList.add("hidden");
+        initTopicBrowser();
+    });
+
+    // ========== 知识点讲解 ==========
+    let explainingTopic = "";
+
+    async function showExplain(topic) {
+        explainingTopic = topic;
+        currentTopic = topic;
+        document.getElementById("explainArea").classList.remove("hidden");
+        document.getElementById("explainTitle").textContent = "📖 " + topic;
+        document.getElementById("explainContent").innerHTML = `
+            <div class="flex-center" style="padding: 40px;">
+                <div class="spinner"></div>
+                <span style="margin-left: 12px; color: var(--text-muted);">AI 正在生成讲解...</span>
+            </div>`;
+
+        // 更新视频链接
+        const subject = getDefaultSubject();
+        document.getElementById("explainVideoLink").href = getBilibiliSearchUrl(topic, subject.name);
+
+        // 滚动到讲解区
+        document.getElementById("explainArea").scrollIntoView({ behavior: "smooth" });
+
+        try {
+            const resp = await fetch("/api/exam/explain", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ topic: topic, subject: subject.name })
+            });
+            const data = await resp.json();
+            // 把讲解内容中的 Markdown 标题转成 HTML 格式显示
+            let html = data.explanation || "暂无讲解内容";
+            // 简单的 Markdown 转 HTML
+            html = html.replace(/^### (.+)$/gm, "<h4 style='margin-top: 16px; margin-bottom: 8px;'>$1</h4>");
+            html = html.replace(/^## (.+)$/gm, "<h3 style='margin-top: 20px; margin-bottom: 8px;'>$1</h3>");
+            html = html.replace(/^# (.+)$/gm, "<h2 style='margin-top: 24px; margin-bottom: 12px;'>$1</h2>");
+            html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+            html = html.replace(/\n/g, "<br>");
+            document.getElementById("explainContent").innerHTML = html;
+            showToast("讲解已生成", "success");
+        } catch (e) {
+            document.getElementById("explainContent").innerHTML = `<p style="color: var(--danger);">生成失败: ${e.message}</p>`;
+        }
+    }
+
+    function closeExplain() {
+        document.getElementById("explainArea").classList.add("hidden");
+    }
+
+    function startPracticeFromExplain() {
+        closeExplain();
+        startPractice(explainingTopic);
+    }
+
+    // ========== 刷题 ==========
+    function startPractice(topic) {
+        currentTopic = topic;
+        document.getElementById("practiceArea").classList.remove("hidden");
+        document.getElementById("practiceTitle").textContent = "📝 " + topic;
+        document.getElementById("practiceContent").classList.remove("hidden");
+        document.getElementById("practiceQuestions").classList.add("hidden");
+        document.getElementById("practiceResults").classList.add("hidden");
+        document.getElementById("practiceArea").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function closePractice() {
+        document.getElementById("practiceArea").classList.add("hidden");
+    }
+
+    async function generatePracticeQuestions() {
+        const difficulty = document.getElementById("practiceDifficulty").value;
+        const count = parseInt(document.getElementById("practiceCount").value);
+
+        document.getElementById("practiceGenBtn").disabled = true;
+        document.getElementById("practiceContent").innerHTML = `
+            <div class="flex-center" style="padding: 24px;">
+                <div class="spinner"></div>
+                <span style="margin-left: 12px; color: var(--text-muted);">正在出题...</span>
+            </div>`;
 
         try {
             const resp = await fetch("/api/exam/generate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    knowledge_point: point,
+                    knowledge_point: currentTopic,
                     difficulty, count,
                     subject: localStorage.getItem("selectedSubject") || ""
                 }),
@@ -120,21 +269,19 @@
             const data = await resp.json();
             if (data.questions && data.questions.length > 0) {
                 currentQuestions = data.questions;
-                renderQuestions(data);
-                showToast(`生成了 ${data.questions.length} 道题`, "success");
+                renderPracticeQuestions(data);
+                showToast("生成了 " + data.questions.length + " 道题", "success");
             } else {
                 showToast("出题失败，请重试", "error");
             }
         } catch (e) {
             showToast("请求失败: " + e.message, "error");
-        } finally {
-            document.getElementById("generateBtn").disabled = false;
-            document.getElementById("loadingIndicator").classList.add("hidden");
         }
+        document.getElementById("practiceGenBtn").disabled = false;
     }
 
-    function renderQuestions(data) {
-        const container = document.getElementById("questionsList");
+    function renderPracticeQuestions(data) {
+        const container = document.getElementById("practiceQuestionsList");
         container.innerHTML = data.questions.map((q, i) => `
             <div style="border-left: 4px solid var(--primary); padding: 16px; margin: 12px 0; background: var(--primary-bg); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
                 <div class="flex-between mb-sm">
@@ -142,25 +289,26 @@
                     <span style="font-size: 12px; color: var(--text-muted);">${q.type === 'objective' ? '客观题' : '主观题'}</span>
                 </div>
                 <p style="white-space: pre-wrap; margin-bottom: 12px;">${q.question_text}</p>
-                <textarea id="answer_${q.id}" class="form-control" placeholder="输入你的答案..." style="min-height: 60px;"></textarea>
+                <textarea id="panswer_${q.id}" class="form-control" placeholder="输入你的答案..." style="min-height: 60px;"></textarea>
             </div>
         `).join("");
-        document.getElementById("questionsArea").classList.remove("hidden");
-        document.getElementById("questionsArea").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("practiceContent").classList.add("hidden");
+        document.getElementById("practiceQuestions").classList.remove("hidden");
+        document.getElementById("practiceQuestions").scrollIntoView({ behavior: "smooth" });
     }
 
-    async function submitAllAnswers() {
+    async function submitPracticeAnswers() {
         const results = [];
         for (const q of currentQuestions) {
-            const answer = document.getElementById("answer_" + q.id).value.trim();
-            if (!answer) { showToast("请回答所有题目后再提交", "warning"); return; }
+            const answer = document.getElementById("panswer_" + q.id).value.trim();
+            if (!answer) { showToast("请回答所有题目", "warning"); return; }
             results.push({
                 question_id: q.id, question_type: q.type,
                 question: q.question_text, student_answer: answer,
             });
         }
-        document.getElementById("submitBtn").disabled = true;
-        document.getElementById("resultsList").innerHTML = "";
+        document.getElementById("practiceSubmitBtn").disabled = true;
+        document.getElementById("practiceResultsList").innerHTML = "";
 
         for (const r of results) {
             try {
@@ -178,14 +326,17 @@
                     </div>
                     <div style="font-size: 14px; white-space: pre-wrap;">${data.analysis || "无分析"}</div>
                 `;
-                document.getElementById("resultsList").appendChild(div);
+                document.getElementById("practiceResultsList").appendChild(div);
             } catch (e) {
-                document.getElementById("resultsList").innerHTML += `<div style="padding: 12px; border-left: 4px solid var(--danger);">提交失败: ${e.message}</div>`;
+                document.getElementById("practiceResultsList").innerHTML += `<div style="padding: 12px; border-left: 4px solid var(--danger);">提交失败: ${e.message}</div>`;
             }
         }
-        document.getElementById("resultsArea").classList.remove("hidden");
-        document.getElementById("resultsArea").scrollIntoView({ behavior: "smooth" });
-        document.getElementById("submitBtn").disabled = false;
+        document.getElementById("practiceResults").classList.remove("hidden");
+        document.getElementById("practiceResults").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("practiceSubmitBtn").disabled = false;
     }
+
+    // 页面加载
+    document.addEventListener("DOMContentLoaded", initTopicBrowser);
 </script>
 {% endblock %}

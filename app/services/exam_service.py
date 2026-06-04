@@ -169,6 +169,37 @@ class ExamService:
         result["model_used"] = model_used
         return result
 
+
+    async def explain_topic(self, topic: str, subject: str = "") -> Dict:
+        """
+        ???????
+        ????????? AI ????????????
+        """
+        logger.info(f"[??] ???={topic} ??={subject}")
+
+        # ?????????????
+        search_result = retriever.search(topic, top_k=3)
+        context = retriever.format_context(search_result)
+
+        prompt_kwargs = {
+            "topic": topic,
+            "subject": subject or "?????",
+            "knowledge_context": context,
+        }
+
+        ai_response = await ai_service.call(
+            prompt_name="explain",
+            difficulty="normal",
+            **prompt_kwargs,
+        )
+
+        return {
+            "topic": topic,
+            "subject": subject,
+            "explanation": ai_response,
+            "knowledge_context": context[:300] + "..." if len(context) > 300 else context,
+        }
+
     def _parse_questions(self, ai_text: str, difficulty: str) -> List[Dict]:
         """
         【解析 AI 生成的题目】

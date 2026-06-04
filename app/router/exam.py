@@ -32,6 +32,26 @@ async def generate_questions(req: QuestionGenerateRequest):
     return result
 
 
+
+
+@router.post("/explain")
+async def explain_topic(req: dict):
+    """
+    ?????????
+    
+    ????:
+        POST /api/exam/explain
+        {"topic": "?????", "subject": "????"}
+    
+    ??:
+        {"topic": "...", "subject": "...", "explanation": "...", "knowledge_context": "..."}
+    """
+    result = await exam_service.explain_topic(
+        topic=req.get("topic", ""),
+        subject=req.get("subject", ""),
+    )
+    return result
+
 @router.post("/submit")
 async def submit_answer(req: AnswerSubmitRequest):
     """
