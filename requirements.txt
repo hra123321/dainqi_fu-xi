@@ -1,0 +1,52 @@
+﻿# ============================================
+# 电气专业课AI期末刷题系统 - 依赖清单
+# 安装方法：pip install -r requirements.txt
+# ============================================
+
+# ---- Web 框架 ----
+# FastAPI：Python 写网站后端的主流框架
+# 特点：速度快、自动生成 API 文档、支持异步
+fastapi==0.115.6
+
+# Uvicorn：运行 FastAPI 的服务器程序
+# 就像汽车的引擎，负责启动和运行你的网站
+uvicorn==0.34.0
+
+# ---- 模板引擎 ----
+# Jinja2：在 HTML 里嵌入 Python 变量的模板引擎
+# 用于生成动态网页（比如把题目数据填入页面模板）
+jinja2==3.1.4
+
+# ---- AI API 调用 ----
+# httpx：发 HTTP 请求的工具（比 requests 库更现代）
+# 用来调用 DeepSeek 的 API
+httpx==0.28.1
+
+# ---- 向量数据库 ----
+# Chroma：本地向量数据库，存课文/错题的"语义"信息
+# 全文��型，无需安装数据库服务
+chromadb==0.5.18
+
+# sentence-transformers：把文字转换成"向量"（数学向量）
+# 让电脑能理解文字的相似度
+sentence-transformers==3.3.1
+
+# ---- PDF 处理 ----
+# PyMuPDF (fitz)：读取 PDF 文件的工具
+# 用于提取课件 PDF 中的文字内容
+PyMuPDF==1.25.2
+
+# ---- 文本处理 ----
+# pdfplumber：另一种 PDF 读取方式，表格提取更强
+pdfplumber==0.11.4
+
+# ---- 数据验证 ----
+# Pydantic：数据格式检查工具
+# 确保 API 收到的数据格式是正确的（FastAPI 内置依赖）
+pydantic==2.10.3
+pydantic-settings==2.7.0
+
+# ---- 开发调试 ----
+# python-dotenv：从 .env 文件读取环境变量
+# 用来安全地管理 API Key
+python-dotenv==1.0.1

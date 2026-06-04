@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        /* ========== 页面样式 ========== */
+        /* 这里定义页面长什么样，这是最简单的 "干净白底" 风格 */
+        
+        /* 全局设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, "Microsoft YaHei", sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航栏 */
+        .header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* 主体内容区域 */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        
+        .card h2 {
+            color: #1a73e8;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* 功能按钮 */
+        .btn {
+            display: inline-block;
+            background: #1a73e8;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #1557b0;
+        }
+        
+        .btn-secondary {
+            background: #34a853;
+        }
+        
+        .btn-secondary:hover {
+            background: #2d8f47;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-size: 13px;
+        }
+        
+        /* 状态标签 */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面顶部 -->
+    <div class="header">
+        <h1>⚡ 电气专业课 AI 期末刷题系统</h1>
+        <p>{{ message }}</p>
+        <span class="status-badge">{{ version }}</span>
+    </div>
+    
+    <!-- 页面主体 -->
+    <div class="container">
+        <!-- 欢迎卡片 -->
+        <div class="card">
+            <h2>📚 欢迎回来！</h2>
+            <p>本系统基于 DeepSeek-V4 AI 模型，为你提供智能出题、自动批改、错题分析等功能。</p>
+            <p>目前处于第一阶段：项目基础设施搭建完成，核心业务功能将在后续阶段逐步上线。</p>
+        </div>
+        
+        <!-- 功能卡片 -->
+        <div class="card">
+            <h2>🚀 即将上线的功能</h2>
+            <p>✅ 课件 PDF 上传 → 自动入库</p>
+            <p>✅ 知识点智能检索召回</p>
+            <p>✅ 分层 AI 出题（Flash/Pro 双规格）</p>
+            <p>✅ 在线作答与自动批改</p>
+            <p>✅ 错题收集与 Skill 自迭代优化</p>
+        </div>
+        
+        <!-- 系统状态卡片 -->
+        <div class="card">
+            <h2>💻 系统状态</h2>
+            <p>🔹 后端框架: FastAPI</p>
+            <p>🔹 AI 模型: DeepSeek-V4 Flash + Pro</p>
+            <p>🔹 知识库: Chroma 本地向量数据库</p>
+            <p>🔹 浏览器: Microsoft Edge</p>
+            <p>🔹 提示词: {{ version }} 已加载 4 套场景提示词</p>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>电气专业课 AI 期末刷题系统 &copy; 2026</p>
+    </div>
+</body>
+</html>
