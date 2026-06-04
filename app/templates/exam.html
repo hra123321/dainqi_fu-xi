@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刷题 - 电气复习系统</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; }
+        .header { background: #1a73e8; color: white; padding: 15px 0; text-align: center; }
+        .header h1 { font-size: 22px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; }
+        textarea { min-height: 80px; resize: vertical; font-family: inherit; }
+        .btn { background: #1a73e8; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+        .btn:hover { background: #1557b0; }
+        .btn:disabled { background: #999; cursor: not-allowed; }
+        .question { border-left: 4px solid #1a73e8; padding: 15px; margin: 15px 0; background: #f8f9ff; border-radius: 0 8px 8px 0; }
+        .question textarea { margin-top: 10px; min-height: 60px; }
+        .result { background: #e8f5e9; border-radius: 8px; padding: 15px; margin-top: 15px; white-space: pre-wrap; }
+        .result.wrong { background: #ffebee; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-left: 8px; }
+        .badge.flash { background: #e3f2fd; color: #1565c0; }
+        .badge.pro { background: #fce4ec; color: #c62828; }
+        .nav-link { display: inline-block; color: white; opacity: 0.9; text-decoration: none; margin: 0 15px; font-size: 14px; }
+        .nav-link:hover { opacity: 1; text-decoration: underline; }
+        .status-bar { background: #f5f5f5; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; color: #666; }
+        .hidden { display: none; }
+        .loading { text-align: center; padding: 30px; color: #999; }
+        .loading::after { content: "..."; animation: dots 1.5s steps(4, jump-none) infinite; }
+        @keyframes dots { 0%, 20% { content: ""; } 40% { content: "."; } 60% { content: ".."; } 80%, 100% { content: "..."; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 在线刷题</h1>
+        <div style="margin-top: 8px;">
+            <a href="/" class="nav-link">首页</a>
+            <a href="/exam" class="nav-link">刷题</a>
+            <a href="/upload" class="nav-link">上传课件</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>⚙️ 出题设置</h2>
+            <div class="form-group">
+                <label>知识点</label>
+                <input type="text" id="knowledgePoint" placeholder="输入知识点（如：欧姆定律、戴维南定理）">
+            </div>
+            <div class="form-group">
+                <label>难度</label>
+                <select id="difficultySelect">
+                    <option value="easy">简单（概念题）— Flash</option>
+                    <option value="normal" selected>中等（一般计算）— Flash</option>
+                    <option value="hard">困难（复杂推导）— Pro</option>
+                    <option value="expert">专家（综合应用）— Pro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>出题数量</label>
+                <input type="number" id="questionCount" value="3" min="1" max="10">
+            </div>
+            <button class="btn" onclick="generateQuestions()" id="generateBtn">开始出题</button>
+            <div id="loadingIndicator" class="loading hidden">AI 正在出题</div>
+        </div>
+
+        <div id="questionsArea" class="hidden">
+            <div class="card">
+                <h2>📋 题目 <span id="modelBadge"></span></h2>
+                <div id="questionsList"></div>
+            </div>
+            <div class="card">
+                <button class="btn" onclick="submitAllAnswers()" id="submitBtn">提交全部答案</button>
+            </div>
+        </div>
+
+        <div id="resultsArea" class="hidden">
+            <div class="card">
+                <h2>📊 批改结果</h2>
+                <div id="resultsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestions = [];
+
+        async function generateQuestions() {
+            const point = document.getElementById("knowledgePoint").value.trim();
+            if (!point) { alert("请输入知识点"); return; }
+
+            const difficulty = document.getElementById("difficultySelect").value;
+            const count = parseInt(document.getElementById("questionCount").value);
+
+            document.getElementById("generateBtn").disabled = true;
+            document.getElementById("loadingIndicator").classList.remove("hidden");
+            document.getElementById("questionsArea").classList.add("hidden");
+            document.getElementById("resultsArea").classList.add("hidden");
+
+            try {
+                const resp = await fetch("/api/exam/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ knowledge_point: point, difficulty, count }),
+                });
+                const data = await resp.json();
+
+                if (data.questions && data.questions.length > 0) {
+                    currentQuestions = data.questions;
+                    renderQuestions(data);
+                } else {
+                    alert("AI 出题失败，请重试");
+                }
+            } catch (e) {
+                alert("请求失败: " + e.message);
+            } finally {
+                document.getElementById("generateBtn").disabled = false;
+                document.getElementById("loadingIndicator").classList.add("hidden");
+            }
+        }
+
+        function renderQuestions(data) {
+            const container = document.getElementById("questionsList");
+            const badge = document.getElementById("modelBadge");
+            badge.innerHTML = data.model_used === "deepseek-chat"
+                ? '<span class="badge flash">Flash</span>'
+                : '<span class="badge pro">Pro</span>';
+
+            container.innerHTML = data.questions.map((q, i) => `
+                <div class="question">
+                    <strong>第 ${i+1} 题</strong>
+                    <p style="margin-top: 8px; white-space: pre-wrap;">${q.question_text}</p>
+                    <textarea id="answer_${q.id}" placeholder="输入你的答案..."></textarea>
+                </div>
+            `).join("");
+
+            document.getElementById("questionsArea").classList.remove("hidden");
+        }
+
+        async function submitAllAnswers() {
+            const results = [];
+            for (const q of currentQuestions) {
+                const answer = document.getElementById("answer_" + q.id).value.trim();
+                if (!answer) {
+                    alert("请回答所有题目后再提交");
+                    return;
+                }
+                results.push({
+                    question_id: q.id,
+                    question_type: q.type,
+                    question: q.question_text,
+                    student_answer: answer,
+                });
+            }
+
+            document.getElementById("submitBtn").disabled = true;
+
+            const resultsContainer = document.getElementById("resultsList");
+            resultsContainer.innerHTML = "";
+
+            for (const r of results) {
+                try {
+                    const resp = await fetch("/api/exam/submit", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(r),
+                    });
+                    const data = await resp.json();
+
+                    const div = document.createElement("div");
+                    div.className = `result ${data.conclusion === "错误" ? "wrong" : ""}`;
+                    div.innerHTML = `
+                        <strong>${data.conclusion}</strong>
+                        <span class="badge ${data.model_used === 'deepseek-chat' ? 'flash' : 'pro'}">${data.model_used}</span>
+                        <div style="margin-top: 10px;">${data.analysis}</div>
+                    `;
+                    resultsContainer.appendChild(div);
+                } catch (e) {
+                    resultsContainer.innerHTML += `<div class="result wrong">提交失败: ${e.message}</div>`;
+                }
+            }
+
+            document.getElementById("resultsArea").classList.remove("hidden");
+            document.getElementById("submitBtn").disabled = false;
+        }
+    </script>
+</body>
+</html>
