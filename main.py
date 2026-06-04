@@ -30,6 +30,11 @@ app.include_router(exam_router.router)
 app.include_router(knowledge_router.router)
 app.include_router(admin_router.router)
 
+from app.router import mobile as mobile_router
+app.include_router(mobile_router.router)
+
+
+
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -52,6 +57,16 @@ async def exam_page(request: Request):
 @app.get("/upload", response_class=HTMLResponse)
 async def upload_page(request: Request):
     return templates.TemplateResponse("upload.html", {"request": request})
+
+@app.get("/mobile")
+async def mobile_page(request: Request):
+    return templates.TemplateResponse("mobile.html", {"request": request})
+
+@app.get("/mobile/manifest.json")
+async def mobile_manifest():
+    from fastapi.responses import FileResponse
+    return FileResponse("app/templates/manifest.json", media_type="application/json")
+
 
 
 @app.get("/api/health")

@@ -1,0 +1,31 @@
+﻿name: exam_app
+description: 电气专业课AI期末刷题系统 - 安卓客户端
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Material Design 3 图标
+  cupertino_icons: ^1.0.6
+  # 网络请求
+  http: ^1.2.0
+  # 拍照/选图
+  image_picker: ^1.0.7
+  # 本地存储
+  shared_preferences: ^2.2.2
+  # 权限请求
+  permission_handler: ^11.3.0
+  # 加载动画
+  flutter_spinkit: ^5.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true

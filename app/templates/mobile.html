@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>电气复习助手 - 手机版</title>
+    <!-- PWA 配置 -->
+    <link rel="manifest" href="/mobile/manifest.json">
+    <meta name="theme-color" content="#1a73e8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --surface: #ffffff;
+            --bg: #f0f2f5;
+            --text: #1f1f1f;
+            --text-secondary: #5f6368;
+            --error: #d93025;
+            --success: #188038;
+            --radius: 16px;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        body {
+            font-family: -apple-system, "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 20px; font-weight: 600; }
+        .header p { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+        .container { padding: 16px; max-width: 480px; margin: 0 auto; }
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* 连接模式选择 */
+        .mode-grid { display: flex; flex-direction: column; gap: 10px; }
+        .mode-option {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+        .mode-option:active { transform: scale(0.98); }
+        .mode-option.active {
+            border-color: var(--primary);
+            background: #e8f0fe;
+        }
+        .mode-option .icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .mode-option .info { flex: 1; }
+        .mode-option .info .name { font-weight: 600; font-size: 15px; }
+        .mode-option .info .desc { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+        .mode-option .check {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .mode-option.active .check {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        .mode-option.active .check::after {
+            content: "\\2713";
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        /* IP 输入 */
+        .ip-input {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .ip-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .ip-input input:focus { border-color: var(--primary); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-secondary { background: #e8f0fe; color: var(--primary); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        /* 拍照区域 */
+        .camera-area {
+            border: 2px dashed #ccc;
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fafafa;
+        }
+        .camera-area:active { background: #f0f4ff; }
+        .camera-area .icon { font-size: 48px; margin-bottom: 8px; }
+        .camera-area p { color: var(--text-secondary); font-size: 14px; }
+        .preview-area { margin-top: 12px; display: none; }
+        .preview-area img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        /* 结果区域 */
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+            white-space: pre-wrap;
+            font-size: 15px;
+            line-height: 1.7;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .result-box:empty { display: none; }
+        .status-dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .status-dot.online { background: #34a853; }
+        .status-dot.offline { background: #ccc; }
+        /* 底部工具栏 */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 16px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        .bottom-bar .btn { font-size: 14px; padding: 10px; }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1a2e;
+                --surface: #16213e;
+                --text: #e0e0e0;
+                --text-secondary: #a0a0a0;
+                --shadow: 0 2px 8px rgba(0,0,0,0.3);
+            }
+            .mode-option { background: #1a1a2e; border-color: #333; }
+            .mode-option.active { background: #0d2137; }
+            .camera-area { background: #1a1a2e; border-color: #444; }
+            .result-box { background: #1a1a2e; }
+            .bottom-bar { background: #16213e; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ 电气复习助手</h1>
+        <p>手机版 · 拍照上传 · AI 智能批改</p>
+    </div>
+
+    <div class="container">
+        <!-- 连接模式 -->
+        <div class="card">
+            <div class="card-title">🔗 连接模式</div>
+            <div class="mode-grid">
+                <div class="mode-option active" onclick="selectMode(this, 'network')">
+                    <div class="icon" style="background:#e8f0fe;">📶</div>
+                    <div class="info">
+                        <div class="name">WiFi 连接</div>
+                        <div class="desc">手机通过校园网连接电脑</div>
+                    </div>
+                    <div class="check"></div>
+                </div>
+                <div class="mode-option" onclick="selectMode(this, 'usb')">
+                    <div class="icon" style="background:#fef7e0;">🔌</div>
+                    <div class="info">
+                        <div class="name">USB 有线连接</div>
+                        <div class="desc">通过 USB 数据线连接电脑</div>
+                    </div>
+                    <div class="check"></div>
+                </div>
+                <div class="mode-option" onclick="selectMode(this, 'local')">
+                    <div class="icon" style="background:#e6f4ea;">📱</div>
+                    <div class="info">
+                        <div class="name">手机本地处理</div>
+                        <div class="desc">完全在手机本地运行</div>
+                    </div>
+                    <div class="check"></div>
+                </div>
+            </div>
+            <div class="ip-input" id="ipInputGroup">
+                <input type="text" id="serverIp" placeholder="电脑 IP（如 192.168.1.100）" value="192.168.17.129">
+                <button class="btn btn-secondary" style="width:auto;padding:12px 16px;" onclick="autoDetect()">🔍</button>
+            </div>
+            <div style="display:flex;align-items:center;margin-top:8px;font-size:13px;color:var(--text-secondary);">
+                <span class="status-dot offline" id="statusDot"></span>
+                <span id="statusText">未连接</span>
+            </div>
+        </div>
+
+        <!-- 拍照上传 -->
+        <div class="card">
+            <div class="card-title">📷 拍照上传题目</div>
+            <div class="camera-area" id="cameraArea" onclick="takePhoto()">
+                <div class="icon">📸</div>
+                <p>点击拍照或选择图片</p>
+                <p style="font-size:12px;margin-top:4px;">支持 JPG / PNG 格式</p>
+            </div>
+            <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(event)">
+            <div class="preview-area" id="previewArea">
+                <img id="previewImage" alt="预览">
+            </div>
+            <div class="result-box" id="ocrResult"></div>
+        </div>
+
+        <!-- 快捷操作 -->
+        <div class="card">
+            <div class="card-title">⚡ 快捷操作</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <button class="btn btn-secondary" onclick="identifyQuestion()">📝 识别题目</button>
+                <button class="btn btn-secondary" onclick="sendToServer()">📤 发送到电脑</button>
+            </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="card">
+            <div class="card-title">📖 使用说明</div>
+            <div style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+                <p>① 选择连接模式（推荐 WiFi）</p>
+                <p>② 点击 📸 拍照或选择相册图片</p>
+                <p>③ 点击"识别题目"提取文字</p>
+                <p>④ 点击"发送到电脑"进行 AI 批改</p>
+                <p style="margin-top:8px;font-size:12px;">
+                    💡 <strong>校园网提示：</strong>手机和电脑需连接同一个校园网 WiFi。<br>
+                    电脑 IP 会自动检测，也可在电脑终端运行 <code>ipconfig</code> 查看。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="bottom-bar">
+        <button class="btn btn-primary" onclick="takePhoto()" style="flex:2">📸 拍照</button>
+        <button class="btn btn-outline" onclick="identifyQuestion()" style="flex:1">识别</button>
+    </div>
+
+    <script>
+        let selectedMode = "network";
+        let photoData = null;
+        let serverIp = document.getElementById("serverIp").value;
+
+        function selectMode(el, mode) {
+            document.querySelectorAll(".mode-option").forEach(e => e.classList.remove("active"));
+            el.classList.add("active");
+            selectedMode = mode;
+
+            const ipInput = document.getElementById("ipInputGroup");
+            if (mode === "local") {
+                ipInput.style.display = "none";
+            } else {
+                ipInput.style.display = "flex";
+            }
+            checkConnection();
+        }
+
+        document.getElementById("serverIp").addEventListener("input", function() {
+            serverIp = this.value;
+            checkConnection();
+        });
+
+        async function checkConnection() {
+            const dot = document.getElementById("statusDot");
+            const text = document.getElementById("statusText");
+            
+            if (selectedMode === "local") {
+                dot.className = "status-dot online";
+                text.textContent = "本地处理模式";
+                return;
+            }
+
+            try {
+                const resp = await fetch(`http://${serverIp}:8000/api/health`);
+                if (resp.ok) {
+                    dot.className = "status-dot online";
+                    text.textContent = "已连接: " + serverIp;
+                } else {
+                    throw new Error("no");
+                }
+            } catch {
+                dot.className = "status-dot offline";
+                text.textContent = "未连接 - 请检查 IP 和服务器状态";
+            }
+        }
+
+        async function autoDetect() {
+            try {
+                const resp = await fetch("/api/mobile/network-info");
+                const data = await resp.json();
+                if (data.ip_addresses && data.ip_addresses.length > 0) {
+                    document.getElementById("serverIp").value = data.ip_addresses[0];
+                    serverIp = data.ip_addresses[0];
+                    checkConnection();
+                }
+            } catch {
+                alert("无法自动检测，请手动输入电脑 IP");
+            }
+        }
+
+        function takePhoto() {
+            document.getElementById("photoInput").click();
+        }
+
+        function handlePhoto(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoData = e.target.result;
+                document.getElementById("previewImage").src = photoData;
+                document.getElementById("previewArea").style.display = "block";
+                document.getElementById("ocrResult").textContent = "照片已选择 ✓ 点击「识别题目」提取文字";
+                document.getElementById("ocrResult").style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function identifyQuestion() {
+            const resultDiv = document.getElementById("ocrResult");
+            if (!photoData) {
+                resultDiv.textContent = "请先拍照或选择图片";
+                return;
+            }
+
+            // 本地模式：用前端提示（手机浏览器不支持本地OCR）
+            if (selectedMode === "local") {
+                resultDiv.textContent = "本地模式需要安装完整 App，当前使用网络模式处理";
+                return;
+            }
+
+            // 网络模式：发送到服务器OCR
+            const fileInput = document.getElementById("photoInput");
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            resultDiv.textContent = "正在识别...";
+
+            try {
+                const resp = await fetch(`http://${serverIp}:8000/api/mobile/photo/upload`, {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await resp.json();
+                if (data.success) {
+                    resultDiv.textContent = data.text || "（未识别到文字）";
+                    if (data.ocr_error) {
+                        resultDiv.textContent += "\n\n[提示] " + data.ocr_error;
+                    }
+                } else {
+                    resultDiv.textContent = "识别失败: " + (data.error || "未知错误");
+                }
+            } catch (e) {
+                resultDiv.textContent = "连接失败: " + e.message + "\n\n请检查：\n1. 电脑端服务器是否已启动\n2. IP 地址是否正确\n3. 手机和电脑是否在同一网络";
+            }
+        }
+
+        async function sendToServer() {
+            const resultDiv = document.getElementById("ocrResult");
+            const text = resultDiv.textContent;
+
+            if (!text || text === "正在识别..." || text.startsWith("请先拍照")) {
+                alert("请先拍照并识别题目");
+                return;
+            }
+
+            if (selectedMode === "local") {
+                alert("本地模式：请在手机 App 中处理");
+                return;
+            }
+
+            try {
+                const resp = await fetch(`http://${serverIp}:8000/api/exam/generate`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        knowledge_point: text.substring(0, 100),
+                        difficulty: "normal",
+                        count: 3,
+                    }),
+                });
+                const data = await resp.json();
+                if (data.questions) {
+                    alert("已获取 " + data.questions.length + " 道题目，请在电脑上查看");
+                    window.open(`http://${serverIp}:8000/exam`, "_blank");
+                }
+            } catch (e) {
+                alert("发送失败: " + e.message);
+            }
+        }
+
+        // 自动检测连接
+        setTimeout(autoDetect, 1000);
+    </script>
+</body>
+</html>
