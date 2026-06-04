@@ -33,6 +33,9 @@ app.include_router(admin_router.router)
 from app.router import mobile as mobile_router
 app.include_router(mobile_router.router)
 
+from app.router import wrong_book as wrong_book_router
+app.include_router(wrong_book_router.router)
+
 
 
 
@@ -57,6 +60,12 @@ async def exam_page(request: Request):
 @app.get("/upload", response_class=HTMLResponse)
 async def upload_page(request: Request):
     return templates.TemplateResponse("upload.html", {"request": request})
+
+
+@app.get("/wrong-book", response_class=HTMLResponse)
+async def wrong_book_page(request: Request):
+    return templates.TemplateResponse("wrong_book.html", {"request": request})
+
 
 @app.get("/mobile")
 async def mobile_page(request: Request):

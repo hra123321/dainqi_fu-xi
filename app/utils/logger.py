@@ -55,6 +55,7 @@ def record_wrong_question(
     analysis: str,
     difficulty: str,
     model_used: str,
+    knowledge_point: str = "",
 ):
     """
     【记录错题】
@@ -74,6 +75,7 @@ def record_wrong_question(
         "analysis": analysis,
         "difficulty": difficulty,
         "model_used": model_used,
+        "knowledge_point": knowledge_point,
     }
     
     # 追加写入（a = append 追加模式）
@@ -178,6 +180,36 @@ def should_trigger_optimization() -> bool:
         )
     
     return trigger
+
+
+
+def get_wrong_questions_by_knowledge_point() -> dict:
+    """按知识点统计错题数量"""
+    if not WRONG_QUESTIONS_FILE.exists():
+        return {}
+    stats = {}
+    with open(WRONG_QUESTIONS_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                q = json.loads(line)
+                kp = q.get("knowledge_point", "未知")
+                if kp not in stats:
+                    stats[kp] = {"count": 0, "questions": []}
+                stats[kp]["count"] += 1
+                stats[kp]["questions"].append(q)
+            except json.JSONDecodeError:
+                continue
+    return stats
+
+
+def get_weakest_topics(top_n: int = 5) -> list:
+    """获取错题最多的知识点排行"""
+    stats = get_wrong_questions_by_knowledge_point()
+    sorted_topics = sorted(stats.items(), key=lambda x: x[1]["count"], reverse=True)
+    return [{"topic": k, "count": v["count"]} for k, v in sorted_topics[:top_n]]
 
 
 def get_stats() -> Dict:
