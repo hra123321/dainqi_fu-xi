@@ -1,192 +1,202 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>错题本 - 电气复习系统</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; }
-        .header { background: #1a73e8; color: white; padding: 15px 0; text-align: center; }
-        .header h1 { font-size: 22px; }
-        .nav-link { color: white; opacity: 0.9; text-decoration: none; margin: 0 15px; font-size: 14px; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-        .card h2 { font-size: 18px; margin-bottom: 12px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
-        .stat-box { background: #f8f9ff; border-radius: 10px; padding: 16px; text-align: center; }
-        .stat-box .num { font-size: 28px; font-weight: 700; color: #1a73e8; }
-        .stat-box .label { font-size: 13px; color: #666; margin-top: 4px; }
-        .stat-box.warning .num { color: #d93025; }
-        .question-item { border-left: 4px solid #d93025; padding: 16px; margin: 12px 0; background: #fef7f7; border-radius: 0 8px 8px 0; }
-        .q-meta { font-size: 13px; color: #666; margin-bottom: 8px; }
-        .q-meta span { margin-right: 12px; }
-        .q-text { font-size: 15px; margin-bottom: 8px; white-space: pre-wrap; }
-        .q-answer { font-size: 14px; padding: 8px 12px; border-radius: 6px; margin: 4px 0; }
-        .q-answer.wrong { background: #ffebee; }
-        .q-answer.correct { background: #e8f5e9; }
-        .topic-tag { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; background: #e3f2fd; color: #1565c0; margin: 2px; }
-        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
-        .btn-primary { background: #1a73e8; color: white; }
-        .btn-danger { background: #d93025; color: white; }
-        .btn-outline { background: transparent; border: 1px solid #1a73e8; color: #1a73e8; }
-        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-        .pagination button { padding: 8px 16px; border: 1px solid #ddd; border-radius: 6px; background: white; cursor: pointer; }
-        .pagination button.active { background: #1a73e8; color: white; border-color: #1a73e8; }
-        .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-        .filter-bar select, .filter-bar input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
-        .evolve-result { background: #e8f5e9; border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 14px; }
-        .hidden { display: none; }
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>📖 智能错题本</h1>
-        <div style="margin-top:8px;">
-            <a href="/" class="nav-link">首页</a>
-            <a href="/exam" class="nav-link">刷题</a>
-            <a href="/wrong-book" class="nav-link">错题本</a>
+﻿{% extends "base.html" %}
+
+{% block title %}错题本 - 电气复习系统{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+    <div class="flex-between mb-md" style="flex-wrap: wrap; gap: 12px;">
+        <div>
+            <h1 style="font-size: 24px;">📕 智能错题本</h1>
+            <p style="color: var(--text-secondary); font-size: 14px;">自动记录错题，分析薄弱知识点，AI 自进化优化出题策略</p>
+        </div>
+        <div class="flex gap-sm">
+            <button class="btn btn-primary btn-sm" onclick="triggerEvolve()">🧬 触发自进化</button>
+            <button class="btn btn-danger btn-sm" onclick="clearBook()">🗑️ 清空错题本</button>
         </div>
     </div>
 
-    <div class="container">
-        <!-- 学情概览 -->
-        <div class="card" id="analysisCard">
-            <h2>📊 学情分析</h2>
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-box"><div class="num" id="totalWrong">-</div><div class="label">总错题数</div></div>
-                <div class="stat-box" id="weakestTopicBox"><div class="num" id="weakestCount">-</div><div class="label">最多错题知识点</div></div>
+    <!-- 学情分析卡片 -->
+    <div class="card" id="analysisCard">
+        <div class="card-header">
+            <h3>📊 学情分析</h3>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;" id="statsGrid">
+            <div class="stat-box" style="text-align: center; padding: 20px; background: var(--bg-card-hover); border-radius: var(--radius-md);">
+                <div style="font-size: 32px; font-weight: 800; color: var(--primary);" id="totalWrong">-</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">总错题数</div>
             </div>
-            <div id="weaknessList"></div>
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-primary" onclick="triggerEvolve()">🤖 触发自进化</button>
-                <button class="btn btn-danger" onclick="clearBook()">🗑️ 清空错题本</button>
+            <div class="stat-box" style="text-align: center; padding: 20px; background: var(--bg-card-hover); border-radius: var(--radius-md);">
+                <div style="font-size: 32px; font-weight: 800; color: var(--danger);" id="weakestCount">-</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;" id="weakestLabel">最多错题知识点</div>
             </div>
-            <div id="evolveResult" class="hidden"></div>
         </div>
 
-        <!-- 错题列表 -->
-        <div class="card">
-            <h2>📝 错题列表</h2>
-            <div class="filter-bar">
-                <select id="difficultyFilter" onchange="loadQuestions()">
+        <!-- 薄弱知识点标签 -->
+        <div id="weaknessList" style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;"></div>
+
+        <!-- 自进化结果 -->
+        <div id="evolveResult" class="hidden mt-md" style="padding: 16px; border-radius: var(--radius-sm); background: var(--success-bg); border-left: 4px solid var(--success);"></div>
+    </div>
+
+    <!-- 错题列表 -->
+    <div class="card">
+        <div class="card-header">
+            <h3>📋 错题列表</h3>
+            <div class="flex gap-sm">
+                <select id="difficultyFilter" class="form-control" style="width: auto;" onchange="loadQuestions()">
                     <option value="">全部难度</option>
                     <option value="easy">简单</option>
                     <option value="normal">中等</option>
                     <option value="hard">困难</option>
-                    <option value="expert">专家</option>
                 </select>
-                <select id="sortFilter" onchange="loadQuestions()">
+                <select id="sortFilter" class="form-control" style="width: auto;" onchange="loadQuestions()">
                     <option value="newest">最新优先</option>
                     <option value="oldest">最早优先</option>
+                    <option value="most_wrong">错误最多</option>
                 </select>
             </div>
-            <div id="questionList"></div>
-            <div class="pagination" id="pagination"></div>
         </div>
+        <div id="questionList"></div>
+        <div id="pagination" class="flex-center" style="gap: 8px; margin-top: 16px;"></div>
     </div>
+</div>
+{% endblock %}
 
-    <script>
-        let currentPage = 1;
-        const pageSize = 20;
+{% block extra_js %}
+<script>
+    let currentPage = 1;
+    const pageSize = 20;
 
-        async function loadAnalysis() {
-            try {
-                const resp = await fetch("/api/wrong-book/analysis");
-                const data = await resp.json();
-                document.getElementById("totalWrong").textContent = data.total_wrong || 0;
-                if (data.weakest_topics && data.weakest_topics.length > 0) {
-                    const w = data.weakest_topics[0];
-                    document.getElementById("weakestCount").textContent = w.count;
-                    document.querySelector("#weakestTopicBox .label").textContent = w.topic;
-                }
-                if (data.review_suggestions) {
-                    const list = document.getElementById("weaknessList");
-                    list.innerHTML = data.review_suggestions.map(s =>
-                        `<span class="topic-tag">${s.topic} (${s.wrong_count}错) ${s.action}</span>`
-                    ).join(" ");
-                }
-            } catch(e) { console.error("load analysis failed", e); }
+    async function loadAnalysis() {
+        try {
+            const resp = await fetch("/api/wrong-book/analysis");
+            const data = await resp.json();
+            document.getElementById("totalWrong").textContent = data.total_wrong || 0;
+            if (data.weakest_topics && data.weakest_topics.length > 0) {
+                const w = data.weakest_topics[0];
+                document.getElementById("weakestCount").textContent = w.count;
+                document.getElementById("weakestLabel").textContent = w.topic;
+            }
+            if (data.review_suggestions) {
+                const list = document.getElementById("weaknessList");
+                list.innerHTML = data.review_suggestions.map(s =>
+                    `<span class="badge badge-danger">📌 ${s.topic} (${s.wrong_count}错) ${s.action}</span>`
+                ).join(" ");
+            }
+        } catch(e) {
+            console.error("load analysis failed", e);
+            document.getElementById("weaknessList").innerHTML = `<span style="color: var(--text-muted);">暂无错题数据</span>`;
         }
+    }
 
-        async function loadQuestions() {
-            const diff = document.getElementById("difficultyFilter").value;
-            const sort = document.getElementById("sortFilter").value;
-            const offset = (currentPage - 1) * pageSize;
-            try {
-                const resp = await fetch(`/api/wrong-book/questions?limit=${pageSize}&offset=${offset}&difficulty=${diff}&sort_by=${sort}`);
-                const data = await resp.json();
-                const list = document.getElementById("questionList");
-                if (data.questions && data.questions.length > 0) {
-                    list.innerHTML = data.questions.map(q => `
-                        <div class="question-item">
-                            <div class="q-meta">
-                                <span>📅 ${q.timestamp ? q.timestamp.slice(0,10) : "-"}</span>
-                                <span>📊 ${q.difficulty || "-"}</span>
-                                <span>🏷️ ${q.knowledge_point || "未分类"}</span>
-                                <span>🤖 ${q.model_used || "-"}</span>
+    async function loadQuestions() {
+        const diff = document.getElementById("difficultyFilter").value;
+        const sort = document.getElementById("sortFilter").value;
+        const offset = (currentPage - 1) * pageSize;
+        const list = document.getElementById("questionList");
+        list.innerHTML = `
+            <div class="flex-center" style="padding: 24px;">
+                <div class="spinner"></div>
+                <span style="margin-left: 12px; color: var(--text-muted);">加载中...</span>
+            </div>
+        `;
+        try {
+            const resp = await fetch(`/api/wrong-book/questions?limit=${pageSize}&offset=${offset}&difficulty=${diff}&sort_by=${sort}`);
+            const data = await resp.json();
+            if (data.questions && data.questions.length > 0) {
+                list.innerHTML = data.questions.map(q => `
+                    <div class="question-item" style="
+                        border-left: 4px solid var(--danger);
+                        padding: 16px;
+                        margin: 12px 0;
+                        background: var(--danger-bg);
+                        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+                    ">
+                        <div class="flex-between mb-sm" style="flex-wrap: wrap; gap: 8px;">
+                            <div class="flex gap-sm" style="flex-wrap: wrap;">
+                                <span class="badge badge-flash">📅 ${q.timestamp ? q.timestamp.slice(0,10) : "-"}</span>
+                                <span class="badge ${q.difficulty === 'hard' ? 'badge-pro' : 'badge-flash'}">${q.difficulty || "未知"}</span>
+                                <span class="badge badge-flash">📌 ${q.knowledge_point || "未分类"}</span>
                             </div>
-                            <div class="q-text">${q.question}</div>
-                            <div class="q-answer wrong">❌ 你的答案: ${q.student_answer}</div>
-                            <div class="q-answer correct">✅ 正确答案: ${q.correct_answer}</div>
+                            <span class="badge ${q.model_used && q.model_used.includes('pro') ? 'badge-pro' : 'badge-flash'}">${q.model_used || "-"}</span>
                         </div>
-                    `).join("");
-                } else {
-                    list.innerHTML = "<p style='color:#999;text-align:center;padding:40px;'>暂无错题记录，继续刷题吧！</p>";
-                }
-                const totalPages = Math.ceil((data.total || 0) / pageSize);
-                renderPagination(totalPages);
-            } catch(e) { console.error("load questions failed", e); }
-        }
-
-        function renderPagination(totalPages) {
-            const p = document.getElementById("pagination");
-            if (totalPages <= 1) { p.innerHTML = ""; return; }
-            let html = `<button onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>`;
-            for (let i = 1; i <= totalPages; i++) {
-                html += `<button onclick="goPage(${i})" class="${i===currentPage?'active':''}">${i}</button>`;
+                        <div style="font-size: 15px; margin-bottom: 12px; white-space: pre-wrap;">${q.question}</div>
+                        <div style="font-size: 14px; padding: 8px 12px; background: var(--danger-bg); border-radius: var(--radius-sm); margin: 4px 0;">
+                            ❌ 你的答案: ${q.student_answer}
+                        </div>
+                        <div style="font-size: 14px; padding: 8px 12px; background: var(--success-bg); border-radius: var(--radius-sm); margin: 4px 0;">
+                            ✅ 正确答案: ${q.correct_answer}
+                        </div>
+                    </div>
+                `).join("");
+            } else {
+                list.innerHTML = `<div style="text-align: center; padding: 48px; color: var(--text-muted);">
+                    <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
+                    <p>暂无错题记录，继续刷题吧！</p>
+                </div>`;
             }
-            html += `<button onclick="goPage(${currentPage+1})" ${currentPage>=totalPages?'disabled':''}>›</button>`;
-            p.innerHTML = html;
+            const totalPages = Math.ceil((data.total || 0) / pageSize);
+            renderPagination(totalPages);
+        } catch(e) {
+            list.innerHTML = `<p style="color: var(--danger); text-align: center; padding: 24px;">加载失败: ${e.message}</p>`;
         }
+    }
 
-        function goPage(page) {
-            currentPage = page;
-            loadQuestions();
+    function renderPagination(totalPages) {
+        const p = document.getElementById("pagination");
+        if (totalPages <= 1) { p.innerHTML = ""; return; }
+        let html = `<button class="btn btn-sm btn-outline" onclick="goPage(${currentPage-1})" ${currentPage<=1?'disabled':''}>‹</button>`;
+        for (let i = Math.max(1, currentPage-2); i <= Math.min(totalPages, currentPage+2); i++) {
+            html += `<button class="btn btn-sm ${i===currentPage?'btn-primary':'btn-outline'}" onclick="goPage(${i})">${i}</button>`;
         }
+        html += `<button class="btn btn-sm btn-outline" onclick="goPage(${currentPage+1})" ${currentPage>=totalPages?'disabled':''}>›</button>`;
+        p.innerHTML = html;
+    }
 
-        async function triggerEvolve() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = "进化中...";
-            const resultDiv = document.getElementById("evolveResult");
-            resultDiv.classList.remove("hidden");
-            resultDiv.className = "evolve-result";
-            try {
-                const resp = await fetch("/api/wrong-book/evolve", {method: "POST"});
-                const data = await resp.json();
-                resultDiv.textContent = data.message || "自进化完成！";
-                loadAnalysis();
-            } catch(e) {
-                resultDiv.textContent = "进化失败: " + e.message;
-                resultDiv.style.background = "#ffebee";
-            }
-            btn.disabled = false;
-            btn.textContent = "🤖 触发自进化";
-        }
+    function goPage(page) {
+        currentPage = page;
+        loadQuestions();
+        document.getElementById("questionList").scrollIntoView({ behavior: "smooth" });
+    }
 
-        async function clearBook() {
-            if (!confirm("确定要清空所有错题记录吗？")) return;
-            await fetch("/api/wrong-book/clear", {method: "DELETE"});
+    async function triggerEvolve() {
+        const btn = event.target;
+        btn.disabled = true;
+        btn.textContent = "⏳ 进化中...";
+        const resultDiv = document.getElementById("evolveResult");
+        resultDiv.classList.remove("hidden");
+        resultDiv.style.background = "var(--warning-bg)";
+        resultDiv.style.borderLeftColor = "var(--warning)";
+        resultDiv.textContent = "AI 正在分析错题数据并优化技能...";
+        try {
+            const resp = await fetch("/api/wrong-book/evolve", {method: "POST"});
+            const data = await resp.json();
+            resultDiv.style.background = "var(--success-bg)";
+            resultDiv.style.borderLeftColor = "var(--success)";
+            resultDiv.textContent = "✅ " + (data.message || "自进化完成！出题策略已优化");
+            showToast("自进化完成！", "success");
             loadAnalysis();
-            loadQuestions();
+        } catch(e) {
+            resultDiv.style.background = "var(--danger-bg)";
+            resultDiv.style.borderLeftColor = "var(--danger)";
+            resultDiv.textContent = "❌ 进化失败: " + e.message;
+            showToast("自进化失败", "error");
         }
+        btn.disabled = false;
+        btn.textContent = "🧬 触发自进化";
+    }
 
+    async function clearBook() {
+        if (!confirm("确定要清空所有错题记录吗？此操作不可撤销。")) return;
+        await fetch("/api/wrong-book/clear", {method: "DELETE"});
+        showToast("错题本已清空", "success");
         loadAnalysis();
         loadQuestions();
-    </script>
-</body>
-</html>
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        loadAnalysis();
+        loadQuestions();
+    });
+</script>
+{% endblock %}

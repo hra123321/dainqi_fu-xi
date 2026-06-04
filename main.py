@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title="电气专业课 AI 期末刷题系统",
@@ -15,11 +16,14 @@ app = FastAPI(
 )
 
 templates = Jinja2Templates(directory="app/templates")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 static_dir = Path("app/static")
 static_dir.mkdir(exist_ok=True)
 (static_dir / "css").mkdir(exist_ok=True)
 (static_dir / "js").mkdir(exist_ok=True)
+
+# ?????? - ???????CSS/JS
 
 # Register API routers
 from app.router import exam as exam_router

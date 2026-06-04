@@ -1,158 +1,159 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <style>
-        /* ========== 页面样式 ========== */
-        /* 这里定义页面长什么样，这是最简单的 "干净白底" 风格 */
-        
-        /* 全局设置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, "Microsoft YaHei", sans-serif;
-            background: #f0f2f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        /* 顶部导航栏 */
-        .header {
-            background: #1a73e8;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        /* 主体内容区域 */
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        /* 卡片样式 */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-        }
-        
-        .card h2 {
-            color: #1a73e8;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-        
-        .card p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        /* 功能按钮 */
-        .btn {
-            display: inline-block;
-            background: #1a73e8;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 16px;
-            margin: 5px;
-            transition: background 0.2s;
-        }
-        
-        .btn:hover {
-            background: #1557b0;
-        }
-        
-        .btn-secondary {
-            background: #34a853;
-        }
-        
-        .btn-secondary:hover {
-            background: #2d8f47;
-        }
-        
-        /* 页脚 */
-        .footer {
-            text-align: center;
-            color: #999;
-            padding: 20px;
-            font-size: 13px;
-        }
-        
-        /* 状态标签 */
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-    </style>
-</head>
-<body>
-    <!-- 页面顶部 -->
-    <div class="header">
-        <h1>⚡ 电气专业课 AI 期末刷题系统</h1>
-        <p>{{ message }}</p>
-        <span class="status-badge">{{ version }}</span>
+﻿{% extends "base.html" %}
+
+{% block title %}首页 - 电气复习系统{% endblock %}
+
+{% block content %}
+<!-- ========== 英雄区（Hero Section） ========== -->
+<!-- 【作用】页面最上方的大标题区，给用户第一印象 -->
+<div class="hero-section fade-in">
+    <h1>⚡ 电气专业课 <span class="gradient-text">AI 期末复习</span></h1>
+    <p>基于 DeepSeek-V4 双规格 AI 模型，智能出题、自动批改、错题分析，帮你高效备战期末考试。</p>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="/exam" class="btn btn-primary">📝 开始刷题</a>
+        <a href="/wrong-book" class="btn btn-outline">📕 错题本</a>
+        <a href="/upload" class="btn btn-outline">📤 上传课件</a>
     </div>
+</div>
+
+<!-- ========== 快捷功能卡片 ========== -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px;">
     
-    <!-- 页面主体 -->
-    <div class="container">
-        <!-- 欢迎卡片 -->
-        <div class="card">
-            <h2>📚 欢迎回来！</h2>
-            <p>本系统基于 DeepSeek-V4 AI 模型，为你提供智能出题、自动批改、错题分析等功能。</p>
-            <p>目前处于第一阶段：项目基础设施搭建完成，核心业务功能将在后续阶段逐步上线。</p>
+    <!-- 功能卡片1: 刷题 -->
+    <a href="/exam" class="card" style="text-decoration: none; color: inherit; display: block;">
+        <div class="card-header">
+            <h3>📝 在线刷题</h3>
+            <span class="badge badge-flash">Flash · 常规</span>
         </div>
-        
-        <!-- 功能卡片 -->
-        <div class="card">
-            <h2>🚀 即将上线的功能</h2>
-            <p>✅ 课件 PDF 上传 → 自动入库</p>
-            <p>✅ 知识点智能检索召回</p>
-            <p>✅ 分层 AI 出题（Flash/Pro 双规格）</p>
-            <p>✅ 在线作答与自动批改</p>
-            <p>✅ 错题收集与 Skill 自迭代优化</p>
+        <p style="color: var(--text-secondary); font-size: 14px;">
+            选择知识点和难度，AI 自动生成考题。简单概念用 Flash，复杂推导用 Pro。
+        </p>
+        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="badge badge-flash">基础概念</span>
+            <span class="badge badge-pro">电路推导</span>
+            <span class="badge badge-flash">客观题</span>
         </div>
-        
-        <!-- 系统状态卡片 -->
-        <div class="card">
-            <h2>💻 系统状态</h2>
-            <p>🔹 后端框架: FastAPI</p>
-            <p>🔹 AI 模型: DeepSeek-V4 Flash + Pro</p>
-            <p>🔹 知识库: Chroma 本地向量数据库</p>
-            <p>🔹 浏览器: Microsoft Edge</p>
-            <p>🔹 提示词: {{ version }} 已加载 4 套场景提示词</p>
+    </a>
+
+    <!-- 功能卡片2: 错题本 -->
+    <a href="/wrong-book" class="card" style="text-decoration: none; color: inherit; display: block;">
+        <div class="card-header">
+            <h3>📕 智能错题本</h3>
+            <span class="badge badge-danger">自进化</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 14px;">
+            自动记录错题，分析薄弱知识点。累计阈值后自动触发 AI 优化出题策略。
+        </p>
+        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="badge badge-success">学情分析</span>
+            <span class="badge badge-danger">薄弱点</span>
+        </div>
+    </a>
+
+    <!-- 功能卡片3: 上传课件 -->
+    <a href="/upload" class="card" style="text-decoration: none; color: inherit; display: block;">
+        <div class="card-header">
+            <h3>📤 课件知识库</h3>
+            <span class="badge badge-flash">Chroma</span>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 14px;">
+            上传 PDF 课件，AI 自动提取文字建立向量知识库。刷题时自动召回相关教材原文。
+        </p>
+        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="badge badge-success">自动切片</span>
+            <span class="badge badge-flash">语义检索</span>
+        </div>
+    </a>
+</div>
+
+<!-- ========== 系统状态看板 ========== -->
+<div class="card fade-in">
+    <div class="card-header">
+        <h3>🔧 系统运行状态</h3>
+        <span class="status-bar">
+            <span class="status-dot" id="healthDot"></span>
+            <span id="healthText">检查中...</span>
+        </span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">后端框架</p>
+            <p style="font-weight: 600;">FastAPI</p>
+        </div>
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">AI 模型</p>
+            <p style="font-weight: 600;">DeepSeek-V4 Flash + Pro</p>
+        </div>
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">知识库</p>
+            <p style="font-weight: 600;">Chroma 本地向量库</p>
+        </div>
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">提示词</p>
+            <p style="font-weight: 600;">4 套场景已加载</p>
+        </div>
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">缓存</p>
+            <p style="font-weight: 600;">内存 LRU + SHA256</p>
+        </div>
+        <div>
+            <p style="color: var(--text-muted); font-size: 12px;">浏览器</p>
+            <p style="font-weight: 600;">Microsoft Edge</p>
         </div>
     </div>
-    
-    <!-- 页脚 -->
-    <div class="footer">
-        <p>电气专业课 AI 期末刷题系统 &copy; 2026</p>
+</div>
+
+<!-- ========== 学习建议 ========== -->
+<div class="card fade-in" id="currentSubjectCard">
+    <div class="card-header">
+        <h3>📚 当前学习建议</h3>
+        <span class="badge badge-flash" id="subjectBadge">未选择学科</span>
     </div>
-</body>
-</html>
+    <p style="color: var(--text-secondary); font-size: 14px;" id="studyAdvice">
+        从导航栏选择一门学科开始复习，或上传课件建立知识库。
+    </p>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 页面加载后检查系统健康状态
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const resp = await fetch("/api/health");
+        const data = await resp.json();
+        const dot = document.getElementById("healthDot");
+        const text = document.getElementById("healthText");
+        if (data.status === "ok") {
+            dot.style.background = "var(--success)";
+            text.textContent = "系统运行正常 v" + data.version;
+        } else {
+            dot.style.background = "var(--danger)";
+            text.textContent = "系统异常";
+        }
+    } catch (e) {
+        document.getElementById("healthDot").style.background = "var(--danger)";
+        document.getElementById("healthText").textContent = "无法连接";
+    }
+
+    // 学科选择变化时更新建议
+    const saved = localStorage.getItem("selectedSubject");
+    if (saved) {
+        const subject = findSubject(saved);
+        if (subject) {
+            document.getElementById("subjectBadge").textContent = subject.icon + " " + subject.name;
+            document.getElementById("studyAdvice").textContent = 
+                `当前选择：${subject.name}。推荐从 "${subject.topics[0]}" 开始复习，` +
+                `逐步掌握 ${subject.topics.slice(1, 4).join("、")} 等核心知识点。`;
+        }
+    }
+
+    document.addEventListener("subjectChanged", (e) => {
+        const s = e.detail;
+        document.getElementById("subjectBadge").textContent = s.icon + " " + s.name;
+        document.getElementById("studyAdvice").textContent = 
+            `当前选择：${s.name}。推荐从 "${s.topics[0]}" 开始复习，` +
+            `逐步掌握 ${s.topics.slice(1, 4).join("、")} 等核心知识点。`;
+    });
+});
+</script>
+{% endblock %}
