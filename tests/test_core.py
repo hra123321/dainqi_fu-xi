@@ -14,8 +14,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 def test_config():
     """测试配置模块"""
     from app.config import settings
-    assert settings.MODEL_FLASH == "deepseek-chat"
-    assert settings.MODEL_PRO == "deepseek-reasoner"
+    assert settings.MODEL_FLASH == "deepseek-v4-flash"
+    assert settings.MODEL_PRO == "deepseek-v4-pro"
     assert settings.MEMORY_CACHE_TTL == 300
     print("  PASS: config")
 
@@ -23,8 +23,8 @@ def test_config():
 def test_dispatch():
     """测试模型调度"""
     from app.models.dispatch import get_model_for_difficulty, is_pro_model
-    assert get_model_for_difficulty("easy") == "deepseek-chat"
-    assert get_model_for_difficulty("hard") == "deepseek-reasoner"
+    assert get_model_for_difficulty("easy") == "deepseek-v4-flash"
+    assert get_model_for_difficulty("hard") == "deepseek-v4-pro"
     assert is_pro_model("expert") == True
     assert is_pro_model("normal") == False
     print("  PASS: dispatch")

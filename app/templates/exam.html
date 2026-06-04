@@ -125,7 +125,7 @@
         function renderQuestions(data) {
             const container = document.getElementById("questionsList");
             const badge = document.getElementById("modelBadge");
-            badge.innerHTML = data.model_used === "deepseek-chat"
+            badge.innerHTML = data.model_used === "deepseek-v4-flash"
                 ? '<span class="badge flash">Flash</span>'
                 : '<span class="badge pro">Pro</span>';
 
@@ -174,7 +174,7 @@
                     div.className = `result ${data.conclusion === "错误" ? "wrong" : ""}`;
                     div.innerHTML = `
                         <strong>${data.conclusion}</strong>
-                        <span class="badge ${data.model_used === 'deepseek-chat' ? 'flash' : 'pro'}">${data.model_used}</span>
+                        <span class="badge ${data.model_used === 'deepseek-v4-flash' ? 'flash' : 'pro'}">${data.model_used}</span>
                         <div style="margin-top: 10px;">${data.analysis}</div>
                     `;
                     resultsContainer.appendChild(div);

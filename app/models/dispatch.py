@@ -57,9 +57,9 @@ def get_model_for_difficulty(difficulty: str) -> str:
     
     使用示例:
         >>> get_model_for_difficulty("easy")
-        'deepseek-chat'
+        'deepseek-v4-flash'
         >>> get_model_for_difficulty("hard")
-        'deepseek-reasoner'
+        'deepseek-v4-pro'
     """
     if difficulty not in _DIFFICULTY_MAP:
         raise ValueError(

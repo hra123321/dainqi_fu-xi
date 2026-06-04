@@ -42,8 +42,8 @@ class Settings(BaseSettings):
     # 【模型名称】
     # Flash：轻量快速版，适合常规问题（选择题、简单问答）
     # Pro：增强推理版，适合复杂计算（电路推导、高数）
-    MODEL_FLASH: str = "deepseek-chat"          # Flash 模型名
-    MODEL_PRO: str = "deepseek-reasoner"        # Pro 模型名
+    MODEL_FLASH: str = "deepseek-v4-flash"       # Flash 模型名 (V4)
+    MODEL_PRO: str = "deepseek-v4-pro"          # Pro 模型名 (V4)
 
     # ==================== 2. 生成参数（固定值！提升缓存命中率） ====================
     # 【temperature】"创造力"参数，0=严格按事实，1=自由发挥
