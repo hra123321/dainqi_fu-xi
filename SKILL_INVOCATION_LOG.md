@@ -172,3 +172,6 @@ PWA 移动端支持、Flutter Android 原生应用。
 - **文件**: \C:\Users\123\.codex\skills\.system\skill-installer\SKILL.md\
 - **作用**: 安装UI设计和移动端开发相关的技能到全局skills目录
 - **已安装相关技能**: website-ui-design, apple-web-ui, hue-design-system, lanhu-to-native, skill-mobile-engineer
+## 2026-06-08 - v2.1 UI修复与体验改进
+
+## 2026-06-08 - v2.1 UI修复与体验改进
