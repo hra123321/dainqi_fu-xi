@@ -149,3 +149,26 @@ PWA 移动端支持、Flutter Android 原生应用。
 | 白名单目录外禁止读写 | ✅ | `app/config.py` 中 `SKILL_WHITELIST = ["app/skills"]` |
 | 每次改动 Git 提交 | ✅ | 共 8 次规范提交 |
 | 前端默认 Edge 浏览器 | ✅ | `app/utils/browser.py` 硬编码 Edge 路径 |
+
+---
+
+### 6. website-ui-design（网站UI设计）
+- **文件**: \C:\Users\123\.codex\skills\web-ui-design\SKILL.md\
+- **作用**: 参考 UI 设计最佳实践重构 exam.html 页面布局、交互流程
+- **参考内容**: anti-ai-slop.md（视觉质量检查）、accessibility.md（可访问性检查）
+- **具体应用**:
+  - 参考 anti-ai-slop 清单修复了页面中的"无明确主要任务"结构问题
+  - 修复了"空状态不提示用户如何继续"的问题（emptyState 添加了引导文字）
+  - 增加了清晰的"当前学科"指示器、视频课程链接、快速搜索标签
+  - 确保每道题都有完整的评分/讲解展示
+- **实现文件**: \pp/templates/exam.html\
+
+### 7. browser:control-in-app-browser（浏览器控制）
+- **文件**: \C:\Users\123\.codex\plugins\cache\openai-bundled\browser\26.602.30954\skills\control-in-app-browser\SKILL.md\
+- **作用**: 通过浏览器验证前端页面渲染效果和交互功能
+- **实现方式**: 启动Edge浏览器打开本地服务验证
+
+### 8. skill-installer（技能安装器）
+- **文件**: \C:\Users\123\.codex\skills\.system\skill-installer\SKILL.md\
+- **作用**: 安装UI设计和移动端开发相关的技能到全局skills目录
+- **已安装相关技能**: website-ui-design, apple-web-ui, hue-design-system, lanhu-to-native, skill-mobile-engineer
