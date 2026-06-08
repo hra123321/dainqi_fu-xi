@@ -456,13 +456,13 @@
             btn.textContent = "📺 " + (subject.courseName || "全套课程");
         }
         renderQuickTags();
+        // Auto-show all topics on page load
+        setTimeout(() => browseAllTopics(), 100);
     });
 
     document.addEventListener("subjectChanged", (e) => {
         document.getElementById("topicSearch").value = "";
-        document.getElementById("searchResults").innerHTML = "";
         document.getElementById("learnArea").classList.add("hidden");
-        document.getElementById("emptyState").classList.remove("hidden");
         document.getElementById("currentSubjectName").textContent = e.detail.icon + " " + e.detail.name;
         const btn = document.getElementById("courseLinkBtn");
         if (e.detail.courseLink) {
@@ -473,6 +473,9 @@
             btn.style.display = "none";
         }
         renderQuickTags();
+        setTimeout(() => browseAllTopics(), 50);
+        // Auto-show all topics on page load
+        setTimeout(() => browseAllTopics(), 100);
     });
 </script>
 {% endblock %}
