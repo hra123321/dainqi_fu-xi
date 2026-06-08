@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}学习 - 电气复习{% endblock %}
 
@@ -6,7 +6,7 @@
 <div class="fade-in" style="max-width: 800px; margin: 0 auto;">
     <!-- 顶部搜索区 -->
     <div style="text-align: center; margin: 20px 0 24px;">
-        <h1 style="font-size: 28px; margin-bottom: 8px;">📚 想学什么？</h1>
+        <h1 style="font-size: 28px; margin-bottom: 8px;">📚 ???????</h1>
         <p style="color: var(--text-secondary); font-size: 14px;">搜索知识点，AI 讲解 + 刷题巩固</p>
     </div>
 
@@ -106,11 +106,14 @@
         <div style="font-size: 64px; margin-bottom: 16px;">🔍</div>
         <p style="font-size: 16px;">在上方搜索框输入知识点名称</p>
         <p style="font-size: 14px; margin-top: 8px;">例如：傅里叶变换、变压器、唯物辩证法、正态分布...</p>
-        <div style="margin-top: 24px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('傅里叶变换')">傅里叶变换</span>
-            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('戴维南定理')">戴维南定理</span>
-            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('全概率公式')">全概率公式</span>
-            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('麦克斯韦方程组')">麦克斯韦方程组</span>
+                <div style="margin-bottom: 12px;">
+            <button class="btn btn-outline" onclick="browseAllTopics()" style="font-size: 14px;">📚 浏览全部知识点</button>
+        </div>
+        <div style="margin-top: 8px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('?????')">?????</span>
+            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('?????')">?????</span>
+            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('?????')">?????</span>
+            <span class="badge" style="background: var(--primary-bg); color: var(--primary); cursor: pointer;" onclick="quickSearch('???????')">???????</span>
         </div>
     </div>
 </div>
@@ -369,6 +372,32 @@
     }
 
     // ====== 初始化 ======
+
+    // ???????
+    function browseAllTopics() {
+        const subject = getDefaultSubject();
+        const container = document.getElementById("searchResults");
+        const empty = document.getElementById("emptyState");
+        empty.classList.add("hidden");
+        document.getElementById("learnArea").classList.add("hidden");
+        document.getElementById("topicSearch").value = "";
+        container.innerHTML = subject.topics.map((t, i) => {
+            const name = t.name || t;
+            return <div class="topic-card" style="cursor:pointer;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:3px;border-left:3px solid transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;" onclick="selectTopic('')">
+                <div style="flex:1;">
+                    <div style="font-size:13px;font-weight:500;"></div>
+                    <div style="display:flex;gap:8px;font-size:11px;margin-top:1px;">
+                        <span>?? <span style="color:"></span></span>
+                        <span>?? <span style="color:"></span></span>
+                        <span>?? <span style="color:"></span></span>
+                    </div>
+                </div>
+                <span style="color:var(--primary);font-size:12px;white-space:nowrap;">???? →</span>
+            </div>;
+        }).join("");
+        container.scrollIntoView({behavior:"smooth"});
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         const subject = getDefaultSubject();
         document.getElementById("currentSubjectName").textContent = subject.icon + " " + subject.name;
