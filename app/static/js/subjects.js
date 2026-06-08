@@ -9,7 +9,7 @@ const SUBJECTS = [
         name: "?????????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1BQ4y1A7tL",
+        courseLink: "https://search.bilibili.com/all?keyword=?????????+??+??&order=click",
         courseName: "????????",
         topics: [
             { name: "????????????", difficulty: 2, examImportance: 5, engineeringImportance: 2 },
@@ -64,7 +64,7 @@ const SUBJECTS = [
         name: "?????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1gJ411T7Wj",
+        courseLink: "https://search.bilibili.com/all?keyword=?????+??+???&order=click",
         courseName: "???????????",
         topics: [
             { name: "????????/??/??/??/???", difficulty: 2, examImportance: 5, engineeringImportance: 4 },
@@ -124,7 +124,7 @@ const SUBJECTS = [
         name: "????4",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1CD4y1U7L7",
+        courseLink: "https://search.bilibili.com/all?keyword=??????+??+??&order=click",
         courseName: "???????????",
         topics: [
             { name: "???????", difficulty: 2, examImportance: 5, engineeringImportance: 3 },
@@ -176,7 +176,7 @@ const SUBJECTS = [
         name: "??????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1Kt411N7Cx",
+        courseLink: "https://search.bilibili.com/all?keyword=????????+??&order=click",
         courseName: "????????????",
         topics: [
             { name: "????/?/?/??????????", difficulty: 2, examImportance: 5, engineeringImportance: 5 },
@@ -236,7 +236,7 @@ const SUBJECTS = [
         name: "???????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1GJ411j7TW",
+        courseLink: "https://search.bilibili.com/all?keyword=MATLAB+Simulink+??+??&order=click",
         courseName: "?MATLAB/Simulink?????",
         topics: [
             { name: "MATLAB???????", difficulty: 1, examImportance: 4, engineeringImportance: 5 },
@@ -290,7 +290,7 @@ const SUBJECTS = [
         name: "????????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1ot41167oD",
+        courseLink: "https://search.bilibili.com/all?keyword=????????+??+??&order=click",
         courseName: "?????????",
         topics: [
             { name: "?????????", difficulty: 1, examImportance: 5, engineeringImportance: 3 },
@@ -352,7 +352,7 @@ const SUBJECTS = [
         name: "?????",
         short: "???",
         icon: "?",
-        courseLink: "https://www.bilibili.com/video/BV1et411J7TW",
+        courseLink: "https://search.bilibili.com/all?keyword=?????+??+??&order=click",
         courseName: "?????????",
         topics: [
             { name: "??????????", difficulty: 2, examImportance: 5, engineeringImportance: 5 },
@@ -414,7 +414,7 @@ const SUBJECTS = [
         name: "??????",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1GJ411j7TW",
+        courseLink: "https://search.bilibili.com/all?keyword=MATLAB+Simulink+??+??&order=click",
         courseName: "????????????",
         topics: [
             { name: "???????????", difficulty: 2, examImportance: 5, engineeringImportance: 4 },
@@ -478,7 +478,7 @@ const SUBJECTS = [
         name: "???",
         short: "??",
         icon: "??",
-        courseLink: "https://www.bilibili.com/video/BV1Kt411N7Cx",
+        courseLink: "https://search.bilibili.com/all?keyword=????????+??&order=click",
         courseName: "?????????",
         topics: [
             { name: "????????????", difficulty: 2, examImportance: 5, engineeringImportance: 5 },
