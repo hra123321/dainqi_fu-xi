@@ -109,3 +109,13 @@ async def startup_event():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
+
+@app.get("/favicon.ico")
+async def favicon_ico():
+    from fastapi.responses import FileResponse, Response
+    import os
+    p = os.path.join("app", "static", "favicon.svg")
+    if os.path.exists(p):
+        return FileResponse(p, media_type="image/svg+xml")
+    return Response(status_code=204)
