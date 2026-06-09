@@ -198,3 +198,21 @@ PWA 移动端支持、Flutter Android 原生应用。
 ### Git 提交
 
 提交: 修复exam.html HTML结构错误+全面页面验证
+
+
+## 2026-06-09 - v2.3 星星简化+标签标注+向量库导入
+
+### 调用 Skills
+- **knowledge-first**: 完善本地向量知识库，导入154条学科知识数据
+- **website-ui-design**: 简化UI中星星显示，减少视觉杂乱
+- **skill-installer**: 之前已安装 website-ui-design 等技能
+
+### 改动
+1. renderStars 只显示实心星，取消空心星
+2. 搜索结果标注中文标签：难度/考试重要/工程重要
+3. 向量库导入9学科154条知识条目
+4. 清理临时修复脚本 + 更新.gitignore
+
+### Git 提交
+- 1ba53e9 简化星星显示+添加中文标签标注
+- f0013db 清理临时修复脚本
