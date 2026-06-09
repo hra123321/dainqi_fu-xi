@@ -31,14 +31,10 @@ class KnowledgeRetriever:
         self._embedding_model = None
 
     def _get_embedding_model(self):
-        """获取嵌入模型（与 processor 共用同一个模型）"""
+        """获取嵌入模型 - 使用 Chroma 默认模型"""
         if self._embedding_model is None:
-            from sentence_transformers import SentenceTransformer
-            print("[检索器] 正在加载嵌入模型...")
-            self._embedding_model = SentenceTransformer(
-                "paraphrase-multilingual-MiniLM-L12-v2"
-            )
-            print("[检索器] 嵌入模型加载完成")
+            print("[检索器] 使用 Chroma 默认嵌入模型")
+            self._embedding_model = "default"
         return self._embedding_model
 
     def search(
@@ -78,17 +74,10 @@ class KnowledgeRetriever:
                     "message": "知识库为空，请先上传课件",
                 }
             
-            # 2. 生成查询向量
-            model = self._get_embedding_model()
-            query_embedding = model.encode(query).tolist()
-            
+            # 2. 直接用文本搜索（Chroma 内置 embedding）
             # 3. 在 Chroma 中搜索
-            # query 参数：
-            #   query_embeddings: 查询向量
-            #   n_results: 返回几条
-            #   include: 返回哪些字段（文档+元数据+距离）
             result = collection.query(
-                query_embeddings=[query_embedding],
+                query_texts=[query],
                 n_results=top_k,
                 include=["documents", "metadatas", "distances"],
             )
