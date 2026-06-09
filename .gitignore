@@ -44,3 +44,10 @@ _test_*.txt
 _test_*.py
 stdout.txt
 stderr.txt
+
+# Temporary fix scripts
+fix_*.py
+check_*.py
+debug_*.py
+prepare_kb.py
+import_kb.py
