@@ -464,6 +464,14 @@ function onSearchInput() {
             const data = await resp.json();
 
             if (data.explanation) {
+                setTimeout(function() {
+                    if (typeof renderMathInElement === "function") {
+                        renderMathInElement(document.getElementById("explainContent"), {
+                            delimiters: [{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],
+                            throwOnError: false
+                        });
+                    }
+                }, 200);
 
                 document.getElementById("explainContent").innerHTML =
 
@@ -750,6 +758,14 @@ function onSearchInput() {
             if (data.results) {
 
                 renderResults(data.results);
+                setTimeout(function() {
+                    if (typeof renderMathInElement === "function") {
+                        renderMathInElement(document.getElementById("practiceResults"), {
+                            delimiters: [{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],
+                            throwOnError: false
+                        });
+                    }
+                }, 300);
 
                 showToast("批改完成！", "success");
 
@@ -798,6 +814,14 @@ function onSearchInput() {
             const data = await resp.json();
 
             if (data.explanation) {
+                setTimeout(function() {
+                    if (typeof renderMathInElement === "function") {
+                        renderMathInElement(document.getElementById("explainContent"), {
+                            delimiters: [{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],
+                            throwOnError: false
+                        });
+                    }
+                }, 200);
 
                 const textOnly = data.explanation.replace(/<[^>]*>/g, "");
 
