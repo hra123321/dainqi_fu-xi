@@ -175,3 +175,26 @@ PWA 移动端支持、Flutter Android 原生应用。
 ## 2026-06-08 - v2.1 UI修复与体验改进
 
 ## 2026-06-08 - v2.1 UI修复与体验改进
+
+## 2026-06-09 - v2.2 HTML结构修复与全面测试
+
+### 本次调用 Skills
+
+| Skill | 用途 |
+|-------|------|
+| knowledge-first | 审查本地向量知识库状态，确认 Chroma 已初始化但数据为空 |
+| website-ui-design | 参考 UI 设计原则检查 exam.html 布局问题 |
+| create-plan | 制定修复计划（定位问题→编写修复→验证→提交） |
+
+### 修复内容
+
+1. **exam.html 破损div标签**：<div     <div id="emptyState" → <div id="emptyState"
+2. **exam.html 重复尾部代码**：删除 {% endblock %} 后的重复 step-guide 内容
+3. **exam.html 多余空行**：压缩连续空行（4+ → 2）
+4. **验证全部页面**：exam(28097B)/首页(5029B)/错题本(11089B) 均返回 200 OK
+5. **验证静态文件**：subjects.js(54197B)/style.css(18640B)/favicon 均正常
+6. **验证API**：health/wrong-book/analysis 全部正常响应
+
+### Git 提交
+
+提交: 修复exam.html HTML结构错误+全面页面验证
