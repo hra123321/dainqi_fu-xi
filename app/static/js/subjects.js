@@ -558,7 +558,7 @@ function getBilibiliSearchUrl(topic, subjectName) {
 }
 
 function renderStars(level) {
-    return "\u2605".repeat(level) + "\u2606".repeat(5 - level);
+    return "\u2605".repeat(level);
 }
 
 function getStarColor(level) {

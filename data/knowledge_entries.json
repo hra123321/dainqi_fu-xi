@@ -1,0 +1,2004 @@
+[
+  {
+    "id": "kb_marxism_01",
+    "text": "马克思主义基本原理 - 哲学的基本问题与基本派别 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "哲学的基本问题与基本派别",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_02",
+    "text": "马克思主义基本原理 - 物质观与世界的物质统一性 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "物质观与世界的物质统一性",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_03",
+    "text": "马克思主义基本原理 - 意识的起源本质与作用 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "意识的起源本质与作用",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_04",
+    "text": "马克思主义基本原理 - 世界的普遍联系与永恒发展 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "世界的普遍联系与永恒发展",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_05",
+    "text": "马克思主义基本原理 - 对立统一规律 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "对立统一规律",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_06",
+    "text": "马克思主义基本原理 - 量变与质变规律 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "量变与质变规律",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_07",
+    "text": "马克思主义基本原理 - 否定之否定规律 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "否定之否定规律",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_08",
+    "text": "马克思主义基本原理 - 现象与本质形式与内容 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "现象与本质形式与内容",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_09",
+    "text": "马克思主义基本原理 - 必然与偶然原因与结果 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "必然与偶然原因与结果",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_10",
+    "text": "马克思主义基本原理 - 实践的本质与基本形式 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "实践的本质与基本形式",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_11",
+    "text": "马克思主义基本原理 - 实践是认识的基础 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "实践是认识的基础",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_12",
+    "text": "马克思主义基本原理 - 认识的辩证运动过程 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "认识的辩证运动过程",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_13",
+    "text": "马克思主义基本原理 - 真理的客观性与绝对性相对性 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "真理的客观性与绝对性相对性",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_14",
+    "text": "马克思主义基本原理 - 真理与价值的辩证统一 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "真理与价值的辩证统一",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_15",
+    "text": "马克思主义基本原理 - 认识与实践的统一 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "认识与实践的统一",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_16",
+    "text": "马克思主义基本原理 - 社会存在与社会意识 (难度1/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "社会存在与社会意识",
+      "index": 15,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_17",
+    "text": "马克思主义基本原理 - 生产力与生产关系的矛盾运动 (难度2/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "生产力与生产关系的矛盾运动",
+      "index": 16,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_18",
+    "text": "马克思主义基本原理 - 经济基础与上层建筑 (难度3/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "经济基础与上层建筑",
+      "index": 17,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_19",
+    "text": "马克思主义基本原理 - 社会形态更替的规律 (难度4/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "社会形态更替的规律",
+      "index": 18,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_20",
+    "text": "马克思主义基本原理 - 阶级斗争与社会革命 (难度5/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "阶级斗争与社会革命",
+      "index": 19,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_21",
+    "text": "马克思主义基本原理 - 社会改革与科学技术革命 (难度1/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "社会改革与科学技术革命",
+      "index": 20,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_22",
+    "text": "马克思主义基本原理 - 人民群众与个人在历史上的作用 (难度2/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "人民群众与个人在历史上的作用",
+      "index": 21,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_23",
+    "text": "马克思主义基本原理 - 商品经济的形成与商品二因素 (难度3/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "商品经济的形成与商品二因素",
+      "index": 22,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_24",
+    "text": "马克思主义基本原理 - 劳动的二重性与商品价值量 (难度4/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "劳动的二重性与商品价值量",
+      "index": 23,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_25",
+    "text": "马克思主义基本原理 - 货币的本质职能与流通规律 (难度5/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "货币的本质职能与流通规律",
+      "index": 24,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_26",
+    "text": "马克思主义基本原理 - 价值规律的作用与局限性 (难度1/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "价值规律的作用与局限性",
+      "index": 25,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_27",
+    "text": "马克思主义基本原理 - 剩余价值的生产过程 (难度2/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "剩余价值的生产过程",
+      "index": 26,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_28",
+    "text": "马克思主义基本原理 - 不变资本与可变资本 (难度3/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "不变资本与可变资本",
+      "index": 27,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_29",
+    "text": "马克思主义基本原理 - 剩余价值率与剩余价值量 (难度4/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "剩余价值率与剩余价值量",
+      "index": 28,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_30",
+    "text": "马克思主义基本原理 - 绝对剩余价值与相对剩余价值 (难度5/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "绝对剩余价值与相对剩余价值",
+      "index": 29,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_31",
+    "text": "马克思主义基本原理 - 资本主义工资的本质 (难度1/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "资本主义工资的本质",
+      "index": 30,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_32",
+    "text": "马克思主义基本原理 - 资本的循环与周转 (难度2/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "资本的循环与周转",
+      "index": 31,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_33",
+    "text": "马克思主义基本原理 - 社会总资本的再生产 (难度3/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "社会总资本的再生产",
+      "index": 32,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_marxism_34",
+    "text": "马克思主义基本原理 - 利润与平均利润 (难度4/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "利润与平均利润",
+      "index": 33,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_marxism_35",
+    "text": "马克思主义基本原理 - 资本主义经济危机 (难度5/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "资本主义经济危机",
+      "index": 34,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_marxism_36",
+    "text": "马克思主义基本原理 - 垄断资本的形成与特征 (难度1/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "垄断资本的形成与特征",
+      "index": 35,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_marxism_37",
+    "text": "马克思主义基本原理 - 国家垄断资本主义 (难度2/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "马克思主义基本原理",
+      "subject_id": "marxism",
+      "topic": "国家垄断资本主义",
+      "index": 36,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_signals_01",
+    "text": "信号与系统 - 信号的基本分类与运算 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "信号的基本分类与运算",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_signals_02",
+    "text": "信号与系统 - 阶跃信号与冲激信号 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "阶跃信号与冲激信号",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_signals_03",
+    "text": "信号与系统 - 系统的性质与分类 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "系统的性质与分类",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_signals_04",
+    "text": "信号与系统 - 线性时不变系统 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "线性时不变系统",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_signals_05",
+    "text": "信号与系统 - 卷积积分与卷积和 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "卷积积分与卷积和",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_signals_06",
+    "text": "信号与系统 - 傅里叶级数 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "傅里叶级数",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_signals_07",
+    "text": "信号与系统 - 傅里叶变换 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "傅里叶变换",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_signals_08",
+    "text": "信号与系统 - 抽样定理 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "抽样定理",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_signals_09",
+    "text": "信号与系统 - 拉普拉斯变换 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "拉普拉斯变换",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_signals_10",
+    "text": "信号与系统 - 拉普拉斯反变换 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "拉普拉斯反变换",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_signals_11",
+    "text": "信号与系统 - 系统函数与零极点 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "系统函数与零极点",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_signals_12",
+    "text": "信号与系统 - Z变换 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "Z变换",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_signals_13",
+    "text": "信号与系统 - Z反变换 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "Z反变换",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_signals_14",
+    "text": "信号与系统 - 离散系统分析 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "离散系统分析",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_signals_15",
+    "text": "信号与系统 - 状态变量分析 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "信号与系统",
+      "subject_id": "signals",
+      "topic": "状态变量分析",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_english4_01",
+    "text": "大学英语4 - 词汇与短语 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "词汇与短语",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_english4_02",
+    "text": "大学英语4 - 阅读理解技巧 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "阅读理解技巧",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_english4_03",
+    "text": "大学英语4 - 听力理解 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "听力理解",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_english4_04",
+    "text": "大学英语4 - 写作结构与逻辑 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "写作结构与逻辑",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_english4_05",
+    "text": "大学英语4 - 翻译技巧 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "翻译技巧",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_english4_06",
+    "text": "大学英语4 - 完形填空 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "完形填空",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_english4_07",
+    "text": "大学英语4 - 语法综合 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "语法综合",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_english4_08",
+    "text": "大学英语4 - 学术英语 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "学术英语",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_english4_09",
+    "text": "大学英语4 - 文化背景知识 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "文化背景知识",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_english4_10",
+    "text": "大学英语4 - 作文模板与句型 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "大学英语4",
+      "subject_id": "english4",
+      "topic": "作文模板与句型",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_digital_01",
+    "text": "数字电子技术 - 数制与编码 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "数制与编码",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_digital_02",
+    "text": "数字电子技术 - 逻辑代数基础 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "逻辑代数基础",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_digital_03",
+    "text": "数字电子技术 - 逻辑门电路 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "逻辑门电路",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_digital_04",
+    "text": "数字电子技术 - 组合逻辑电路分析 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "组合逻辑电路分析",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_digital_05",
+    "text": "数字电子技术 - 组合逻辑电路设计 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "组合逻辑电路设计",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_digital_06",
+    "text": "数字电子技术 - 编码器与译码器 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "编码器与译码器",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_digital_07",
+    "text": "数字电子技术 - 数据选择器与分配器 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "数据选择器与分配器",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_digital_08",
+    "text": "数字电子技术 - 加法器与比较器 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "加法器与比较器",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_digital_09",
+    "text": "数字电子技术 - 触发器 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "触发器",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_digital_10",
+    "text": "数字电子技术 - 时序逻辑电路分析 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "时序逻辑电路分析",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_digital_11",
+    "text": "数字电子技术 - 计数器 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "计数器",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_digital_12",
+    "text": "数字电子技术 - 寄存器 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "寄存器",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_digital_13",
+    "text": "数字电子技术 - 半导体存储器 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "半导体存储器",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_digital_14",
+    "text": "数字电子技术 - 模数与数模转换 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "模数与数模转换",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_digital_15",
+    "text": "数字电子技术 - 脉冲波形产生与整形 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "数字电子技术",
+      "subject_id": "digital",
+      "topic": "脉冲波形产生与整形",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_modeling_01",
+    "text": "工程建模与仿真 - 建模基本概念 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "建模基本概念",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_modeling_02",
+    "text": "工程建模与仿真 - 数学模型的建立 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "数学模型的建立",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_modeling_03",
+    "text": "工程建模与仿真 - 传递函数 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "传递函数",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_modeling_04",
+    "text": "工程建模与仿真 - 方框图与信号流图 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "方框图与信号流图",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_modeling_05",
+    "text": "工程建模与仿真 - 系统的时域分析 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "系统的时域分析",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_modeling_06",
+    "text": "工程建模与仿真 - 系统的频域分析 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "系统的频域分析",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_modeling_07",
+    "text": "工程建模与仿真 - 系统仿真基础 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "系统仿真基础",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_modeling_08",
+    "text": "工程建模与仿真 - 数值积分方法 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "数值积分方法",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_modeling_09",
+    "text": "工程建模与仿真 - 连续系统离散化 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "连续系统离散化",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_modeling_10",
+    "text": "工程建模与仿真 - 仿真软件应用 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "工程建模与仿真",
+      "subject_id": "modeling",
+      "topic": "仿真软件应用",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_probability_01",
+    "text": "概率论与数理统计 - 随机事件与概率 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "随机事件与概率",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_probability_02",
+    "text": "概率论与数理统计 - 条件概率与独立性 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "条件概率与独立性",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_probability_03",
+    "text": "概率论与数理统计 - 全概率公式与贝叶斯公式 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "全概率公式与贝叶斯公式",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_probability_04",
+    "text": "概率论与数理统计 - 随机变量 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "随机变量",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_probability_05",
+    "text": "概率论与数理统计 - 离散型随机变量 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "离散型随机变量",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_probability_06",
+    "text": "概率论与数理统计 - 连续型随机变量 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "连续型随机变量",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_probability_07",
+    "text": "概率论与数理统计 - 随机变量的数字特征 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "随机变量的数字特征",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_probability_08",
+    "text": "概率论与数理统计 - 大数定律 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "大数定律",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_probability_09",
+    "text": "概率论与数理统计 - 中心极限定理 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "中心极限定理",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_probability_10",
+    "text": "概率论与数理统计 - 参数估计 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "参数估计",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_probability_11",
+    "text": "概率论与数理统计 - 假设检验 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "假设检验",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_probability_12",
+    "text": "概率论与数理统计 - 方差分析 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "方差分析",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_probability_13",
+    "text": "概率论与数理统计 - 回归分析 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "概率论与数理统计",
+      "subject_id": "probability",
+      "topic": "回归分析",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_01",
+    "text": "电磁场理论 - 矢量分析与场论 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "矢量分析与场论",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_02",
+    "text": "电磁场理论 - 静电场的基本方程 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "静电场的基本方程",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_emfield_03",
+    "text": "电磁场理论 - 电位与电场强度 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "电位与电场强度",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_emfield_04",
+    "text": "电磁场理论 - 高斯定律 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "高斯定律",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_emfield_05",
+    "text": "电磁场理论 - 静电场边界条件 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "静电场边界条件",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_06",
+    "text": "电磁场理论 - 电容与部分电容 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "电容与部分电容",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_emfield_07",
+    "text": "电磁场理论 - 静电场能量与力 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "静电场能量与力",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_emfield_08",
+    "text": "电磁场理论 - 恒定电场 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "恒定电场",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_emfield_09",
+    "text": "电磁场理论 - 恒定磁场的基本方程 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "恒定磁场的基本方程",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_10",
+    "text": "电磁场理论 - 安培环路定律 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "安培环路定律",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_emfield_11",
+    "text": "电磁场理论 - 矢量磁位 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "矢量磁位",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_emfield_12",
+    "text": "电磁场理论 - 电感 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "电感",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_emfield_13",
+    "text": "电磁场理论 - 磁场能量与力 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "磁场能量与力",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_14",
+    "text": "电磁场理论 - 时变电磁场 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "时变电磁场",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_emfield_15",
+    "text": "电磁场理论 - 麦克斯韦方程组 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "麦克斯韦方程组",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_emfield_16",
+    "text": "电磁场理论 - 电磁波动方程 (难度1/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "电磁波动方程",
+      "index": 15,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_emfield_17",
+    "text": "电磁场理论 - 坡印廷矢量 (难度2/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "坡印廷矢量",
+      "index": 16,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_emfield_18",
+    "text": "电磁场理论 - 平面电磁波 (难度3/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "平面电磁波",
+      "index": 17,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_emfield_19",
+    "text": "电磁场理论 - 波的极化 (难度4/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "波的极化",
+      "index": 18,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_emfield_20",
+    "text": "电磁场理论 - 波的反射与折射 (难度5/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电磁场理论",
+      "subject_id": "emfield",
+      "topic": "波的反射与折射",
+      "index": 19,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_analog_01",
+    "text": "模拟电子技术 - 半导体基础 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "半导体基础",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_analog_02",
+    "text": "模拟电子技术 - PN结与二极管 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "PN结与二极管",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_analog_03",
+    "text": "模拟电子技术 - 二极管电路分析 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "二极管电路分析",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_analog_04",
+    "text": "模拟电子技术 - 双极型晶体管 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "双极型晶体管",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_analog_05",
+    "text": "模拟电子技术 - 共射放大电路 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "共射放大电路",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_analog_06",
+    "text": "模拟电子技术 - 共集与共基放大电路 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "共集与共基放大电路",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_analog_07",
+    "text": "模拟电子技术 - 场效应管 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "场效应管",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_analog_08",
+    "text": "模拟电子技术 - FET放大电路 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "FET放大电路",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_analog_09",
+    "text": "模拟电子技术 - 多级放大电路 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "多级放大电路",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_analog_10",
+    "text": "模拟电子技术 - 频率响应 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "频率响应",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_analog_11",
+    "text": "模拟电子技术 - 功率放大电路 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "功率放大电路",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_analog_12",
+    "text": "模拟电子技术 - 集成运算放大器 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "集成运算放大器",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_analog_13",
+    "text": "模拟电子技术 - 负反馈放大电路 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "负反馈放大电路",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_analog_14",
+    "text": "模拟电子技术 - 运放的线性应用 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "运放的线性应用",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_analog_15",
+    "text": "模拟电子技术 - 信号产生电路 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "信号产生电路",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_analog_16",
+    "text": "模拟电子技术 - 直流稳压电源 (难度1/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "模拟电子技术",
+      "subject_id": "analog",
+      "topic": "直流稳压电源",
+      "index": 15,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_motor_01",
+    "text": "电机学 - 磁路基本定律 (难度1/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "磁路基本定律",
+      "index": 0,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_motor_02",
+    "text": "电机学 - 铁磁材料特性 (难度2/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "铁磁材料特性",
+      "index": 1,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_motor_03",
+    "text": "电机学 - 变压器原理 (难度3/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "变压器原理",
+      "index": 2,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_motor_04",
+    "text": "电机学 - 变压器等效电路 (难度4/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "变压器等效电路",
+      "index": 3,
+      "difficulty": 4,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_motor_05",
+    "text": "电机学 - 变压器运行特性 (难度5/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "变压器运行特性",
+      "index": 4,
+      "difficulty": 5,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_motor_06",
+    "text": "电机学 - 三相变压器 (难度1/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "三相变压器",
+      "index": 5,
+      "difficulty": 1,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_motor_07",
+    "text": "电机学 - 直流电机基本结构 (难度2/5, 考试重要5/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "直流电机基本结构",
+      "index": 6,
+      "difficulty": 2,
+      "exam_importance": 5,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_motor_08",
+    "text": "电机学 - 直流电机电枢绕组 (难度3/5, 考试重要4/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "直流电机电枢绕组",
+      "index": 7,
+      "difficulty": 3,
+      "exam_importance": 4,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_motor_09",
+    "text": "电机学 - 直流发电机 (难度4/5, 考试重要3/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "直流发电机",
+      "index": 8,
+      "difficulty": 4,
+      "exam_importance": 3,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_motor_10",
+    "text": "电机学 - 直流电动机 (难度5/5, 考试重要5/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "直流电动机",
+      "index": 9,
+      "difficulty": 5,
+      "exam_importance": 5,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_motor_11",
+    "text": "电机学 - 异步电机基本结构 (难度1/5, 考试重要4/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "异步电机基本结构",
+      "index": 10,
+      "difficulty": 1,
+      "exam_importance": 4,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_motor_12",
+    "text": "电机学 - 旋转磁场理论 (难度2/5, 考试重要3/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "旋转磁场理论",
+      "index": 11,
+      "difficulty": 2,
+      "exam_importance": 3,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_motor_13",
+    "text": "电机学 - 异步电动机等效电路 (难度3/5, 考试重要5/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "异步电动机等效电路",
+      "index": 12,
+      "difficulty": 3,
+      "exam_importance": 5,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_motor_14",
+    "text": "电机学 - 异步电动机功率与转矩 (难度4/5, 考试重要4/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "异步电动机功率与转矩",
+      "index": 13,
+      "difficulty": 4,
+      "exam_importance": 4,
+      "engineering_importance": 3
+    }
+  },
+  {
+    "id": "kb_motor_15",
+    "text": "电机学 - 异步电动机起动与调速 (难度5/5, 考试重要3/5, 工程重要2/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "异步电动机起动与调速",
+      "index": 14,
+      "difficulty": 5,
+      "exam_importance": 3,
+      "engineering_importance": 2
+    }
+  },
+  {
+    "id": "kb_motor_16",
+    "text": "电机学 - 同步电机基本结构 (难度1/5, 考试重要5/5, 工程重要1/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "同步电机基本结构",
+      "index": 15,
+      "difficulty": 1,
+      "exam_importance": 5,
+      "engineering_importance": 1
+    }
+  },
+  {
+    "id": "kb_motor_17",
+    "text": "电机学 - 同步发电机 (难度2/5, 考试重要4/5, 工程重要4/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "同步发电机",
+      "index": 16,
+      "difficulty": 2,
+      "exam_importance": 4,
+      "engineering_importance": 4
+    }
+  },
+  {
+    "id": "kb_motor_18",
+    "text": "电机学 - 同步电动机 (难度3/5, 考试重要3/5, 工程重要3/5)",
+    "metadata": {
+      "subject": "电机学",
+      "subject_id": "motor",
+      "topic": "同步电动机",
+      "index": 17,
+      "difficulty": 3,
+      "exam_importance": 3,
+      "engineering_importance": 3
+    }
+  }
+]
