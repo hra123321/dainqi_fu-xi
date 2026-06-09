@@ -670,6 +670,7 @@ function onSearchInput() {
             </div>`;
 
         }).join("");
+        try { if (typeof renderMathInElement === "function") renderMathInElement(document.getElementById("practiceQuestionsList"), {delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false}); } catch(e) {}
 
         document.getElementById("practiceQuestions").classList.remove("hidden");
 
@@ -878,6 +879,7 @@ function onSearchInput() {
             container.appendChild(div);
 
         }
+        try { if (typeof renderMathInElement === "function") renderMathInElement(document.getElementById("practiceResultsList"), {delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false}); } catch(e) {}
 
         document.getElementById("practiceResults").classList.remove("hidden");
 

@@ -216,3 +216,31 @@ PWA 移动端支持、Flutter Android 原生应用。
 ### Git 提交
 - 1ba53e9 简化星星显示+添加中文标签标注
 - f0013db 清理临时修复脚本
+
+---
+
+## 2026-06-09 - v2.4 公式渲染修复与动态KaTeX重渲染
+
+### 本次调用 Skills
+
+| Skill | 用途 |
+|-------|------|
+| website-ui-design | 参考UI设计原则检查页面结构问题 |
+| knowledge-first | 审查本地向量知识库状态 |
+| browser:control-in-app-browser | 浏览器页面状态验证 |
+| create-plan | 制定修复计划与步骤 |
+
+### 修复内容
+
+1. **KaTeX动态重渲染**: renderQuestions()/renderResults() 动态插入HTML后调用 renderMathInElement() 重新渲染所有 LaTeX 公式
+2. **renderResults异步Bug修复**: function → async function（之前内部用了 await 但函数未声明 async）
+3. **知识点自动展示**: 切换学科时自动展示全部知识点列表
+4. **完善迭代报告**: 新增 reports/v2.2.md 记录本次迭代
+
+### 涉及文件
+- app/templates/exam.html
+- reports/v2.2.md
+- SKILL_INVOCATION_LOG.md
+
+### Git 提交
+提交信息: [fix] KaTeX动态重渲染+renderResults异步修复
