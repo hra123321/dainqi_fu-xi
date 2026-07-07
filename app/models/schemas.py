@@ -12,8 +12,17 @@ Pydantic 模型 = 数据的"模板"或"合同"。
 - 响应出去时：按模板保证返回的字段齐全
 """
 
-from typing import Optional, List
+from typing import Optional, List, Literal
 from pydantic import BaseModel, Field
+
+
+QuestionType = Literal[
+    "single_choice",
+    "multiple_choice",
+    "judge",
+    "calculation",
+    "short_answer",
+]
 
 
 # ==================== 请求模型（客户端 → 服务器） ====================
@@ -61,20 +70,39 @@ class AnswerSubmitRequest(BaseModel):
       knowledge_context: 相关的知识点参考文本
     """
     question_id: str = Field(..., description="题目 ID")
-    question_type: str = Field(
-        ..., description="题型: objective/advanced"
+    question_type: Optional[str] = Field(
+        default=None, description="题型: objective/advanced（兼容旧前端）"
     )
-    question: str = Field(..., description="题目内容")
+    question: Optional[str] = Field(default=None, description="题目内容（兼容旧前端）")
     student_answer: str = Field(..., description="学生答案")
     correct_answer: Optional[str] = Field(
-        default=None, description="标准答案（客观题）"
+        default=None, description="标准答案（兼容旧前端）"
     )
     reference_answer: Optional[str] = Field(
-        default=None, description="参考答案（高阶题）"
+        default=None, description="参考答案（兼容旧前端）"
     )
     knowledge_context: str = Field(
         default="", description="知识点参考上下文"
     )
+    subject: str = Field(default="", description="所属学科")
+    knowledge_point: str = Field(default="", description="知识点名称")
+
+
+class BatchAnswerItem(BaseModel):
+    """批量批改中的单题答案"""
+
+    question_id: str = Field(..., description="题目 ID")
+    student_answer: str = Field(..., description="学生答案")
+    subject: str = Field(default="", description="所属学科")
+    knowledge_point: str = Field(default="", description="知识点名称")
+
+
+class BatchGradeRequest(BaseModel):
+    """批量批改请求"""
+
+    topic: str = Field(default="", description="当前知识点")
+    subject: str = Field(default="", description="当前学科")
+    answers: List[BatchAnswerItem] = Field(default_factory=list)
 
 
 class KnowledgeUploadRequest(BaseModel):
@@ -126,8 +154,26 @@ class QuestionItem(BaseModel):
     """
     id: str
     question_text: str
-    type: str          # "choice" / "judge" / "calculate" / "analyze"
+    type: QuestionType
     difficulty: str
+    options: List[str] = Field(default_factory=list)
+
+
+class GeneratedQuestionPayload(BaseModel):
+    """模型返回的完整题目结构，含服务端保留字段"""
+
+    question_text: str = Field(..., min_length=1)
+    type: QuestionType
+    options: List[str] = Field(default_factory=list)
+    answer: str = Field(default="")
+    reference_answer: str = Field(default="")
+    explanation: str = Field(default="")
+
+
+class GeneratedQuestionSet(BaseModel):
+    """模型返回的结构化题目集合"""
+
+    questions: List[GeneratedQuestionPayload] = Field(default_factory=list)
 
 
 class QuestionGenerateResponse(BaseModel):

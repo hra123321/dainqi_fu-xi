@@ -56,6 +56,8 @@ def record_wrong_question(
     difficulty: str,
     model_used: str,
     knowledge_point: str = "",
+    subject: str = "",
+    question_type: str = "",
 ):
     """
     【记录错题】
@@ -76,6 +78,8 @@ def record_wrong_question(
         "difficulty": difficulty,
         "model_used": model_used,
         "knowledge_point": knowledge_point,
+        "subject": subject,
+        "question_type": question_type,
     }
     
     # 追加写入（a = append 追加模式）

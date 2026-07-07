@@ -70,6 +70,7 @@ def generate_cache_key(
     user_message: str,
     temperature: float = 0.7,
     max_tokens: int = 2048,
+    extra_context: str = "",
 ) -> str:
     """
     【生成缓存键】— 用于服务端缓存匹配
@@ -95,6 +96,7 @@ def generate_cache_key(
         normalize_text(user_message),
         str(temperature),
         str(max_tokens),
+        normalize_text(extra_context),
     ])
     
     # 计算 SHA256 哈希

@@ -3,74 +3,81 @@
 {% block title %}首页 - 电气复习{% endblock %}
 
 {% block content %}
-<!-- ========== 英雄区 ========== -->
 <div class="hero-section fade-in">
-    <h1>⚡ 期末复习 <span class="gradient-text">冲冲冲</span></h1>
-    <p>智能出题、自动批改、错题分析，帮你高效备战电气专业课期末考试。</p>
+    <h1>⚡ 期末复习 <span class="gradient-text">高效冲刺</span></h1>
+    <p>围绕课程知识点生成练习、批改作答、沉淀错题，帮助你用更稳定的节奏完成期末复习。</p>
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <a href="/exam" class="btn btn-primary">📝 开始刷题</a>
-        <a href="/wrong-book" class="btn btn-outline">📕 错题本</a>
-        <a href="/upload" class="btn btn-outline">📤 上传课件</a>
+        <a href="/exam" class="btn btn-primary">开始学习</a>
+        <a href="/wrong-book" class="btn btn-outline">查看错题本</a>
+        <a href="/upload" class="btn btn-outline">上传资料</a>
     </div>
 </div>
 
-<!-- ========== 功能卡片 ========== -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 24px;">
-
     <a href="/exam" class="card" style="text-decoration: none; color: inherit; display: block;">
         <div style="font-size: 36px; margin-bottom: 8px;">📝</div>
-        <h3 style="margin-bottom: 8px;">智能刷题</h3>
+        <h3 style="margin-bottom: 8px;">知识点学习与练习</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            选择知识点和难度，AI 自动生成考题，答完立刻批改讲解。
+            先看知识点讲解，再生成针对性练习，完成后立即获得批改结果与解析。
         </p>
     </a>
 
     <a href="/wrong-book" class="card" style="text-decoration: none; color: inherit; display: block;">
-        <div style="font-size: 36px; margin-bottom: 8px;">📕</div>
+        <div style="font-size: 36px; margin-bottom: 8px;">📚</div>
         <h3 style="margin-bottom: 8px;">错题本</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            自动记录错题，分析薄弱环节，越用越懂你。
+            按学科、知识点和题型沉淀错题，方便你集中回看薄弱环节。
         </p>
     </a>
 
     <a href="/upload" class="card" style="text-decoration: none; color: inherit; display: block;">
         <div style="font-size: 36px; margin-bottom: 8px;">📤</div>
-        <h3 style="margin-bottom: 8px;">课件导入</h3>
+        <h3 style="margin-bottom: 8px;">资料导入</h3>
         <p style="color: var(--text-secondary); font-size: 14px;">
-            上传 PDF 课件，AI 自动学习教材内容，出题更贴近课堂。
+            上传课程资料后，系统会切片入库并在出题、讲解时优先检索相关内容。
         </p>
     </a>
 </div>
 
-<!-- ========== 当前学科建议 ========== -->
 <div class="card fade-in" id="currentSubjectCard">
     <div class="card-header">
-        <h3>📚 当前复习建议</h3>
+        <h3>当前复习建议</h3>
         <span class="badge" id="subjectBadge" style="background: var(--primary-bg); color: var(--primary);">未选择学科</span>
     </div>
     <p style="color: var(--text-secondary); font-size: 14px;" id="studyAdvice">
-        从导航栏选择一门学科开始复习，或上传课件让 AI 学习教材内容。
+        请先从顶部选择一门学科，再进入学习页面检索知识点、查看讲解并开始练习。
     </p>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+function getTopicLabel(topic) {
+    if (!topic) return "";
+    return typeof topic === "string" ? topic : (topic.name || "");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const saved = localStorage.getItem("selectedSubject");
     if (saved) {
         const subject = findSubject(saved);
         if (subject) {
+            const firstTopic = getTopicLabel(subject.topics[0]);
+            const nextTopics = subject.topics.slice(1, 4).map(getTopicLabel).filter(Boolean).join("、");
             document.getElementById("subjectBadge").textContent = subject.icon + " " + subject.name;
             document.getElementById("studyAdvice").textContent =
-                `当前选择：${subject.name}。推荐从「${subject.topics[0]}」开始复习，逐步掌握 ${subject.topics.slice(1, 4).join("、")} 等核心知识点。`;
+                `当前选择：${subject.name}。建议先复习「${firstTopic}」，再逐步覆盖 ${nextTopics} 等核心知识点。`;
         }
     }
-    document.addEventListener("subjectChanged", (e) => {
-        const s = e.detail;
-        document.getElementById("subjectBadge").textContent = s.icon + " " + s.name;
+
+    document.addEventListener("subjectChanged", (event) => {
+        const subject = event.detail;
+        if (!subject) return;
+        const firstTopic = getTopicLabel(subject.topics[0]);
+        const nextTopics = subject.topics.slice(1, 4).map(getTopicLabel).filter(Boolean).join("、");
+        document.getElementById("subjectBadge").textContent = subject.icon + " " + subject.name;
         document.getElementById("studyAdvice").textContent =
-            `当前选择：${s.name}。推荐从「${s.topics[0]}」开始复习，逐步掌握 ${s.topics.slice(1, 4).join("、")} 等核心知识点。`;
+            `当前选择：${subject.name}。建议先复习「${firstTopic}」，再逐步覆盖 ${nextTopics} 等核心知识点。`;
     });
 });
 </script>

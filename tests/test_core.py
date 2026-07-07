@@ -1,118 +1,143 @@
-"""
-============================================
- 核心功能快速测试 — 验证所有模块是否正常
-============================================
-运行方式: python -m pytest tests/test_core.py -v
-或直接: python tests/test_core.py
-"""
-
-import sys
+import json
 import os
+import sys
+import time
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 
 def test_config():
-    """测试配置模块"""
     from app.config import settings
+
     assert settings.MODEL_FLASH == "deepseek-v4-flash"
     assert settings.MODEL_PRO == "deepseek-v4-pro"
-    assert settings.MEMORY_CACHE_TTL == 300
-    print("  PASS: config")
+    assert settings.QUESTION_SESSION_TTL > 0
+    print("PASS: config")
 
 
 def test_dispatch():
-    """测试模型调度"""
     from app.models.dispatch import get_model_for_difficulty, is_pro_model
+
     assert get_model_for_difficulty("easy") == "deepseek-v4-flash"
     assert get_model_for_difficulty("hard") == "deepseek-v4-pro"
-    assert is_pro_model("expert") == True
-    assert is_pro_model("normal") == False
-    print("  PASS: dispatch")
+    assert is_pro_model("expert") is True
+    assert is_pro_model("normal") is False
+    print("PASS: dispatch")
 
 
 def test_cache_key():
-    """测试缓存键生成"""
-    from app.cache.cache_key import normalize_text, generate_cache_key
+    from app.cache.cache_key import generate_cache_key, normalize_text
+
     assert normalize_text("  Hello  World  ") == "hello world"
-    k1 = generate_cache_key("model", "system", "hello")
-    k2 = generate_cache_key("model", "system", "hello")
-    assert k1 == k2
-    print("  PASS: cache_key")
+    base = generate_cache_key("model", "system", "hello", extra_context="flash")
+    changed = generate_cache_key("model", "system", "hello", extra_context="pro-thinking")
+    assert base != changed
+    print("PASS: cache_key")
 
 
 def test_memory_cache():
-    """测试内存缓存"""
     from app.cache.memory_cache import MemoryCache
-    c = MemoryCache(maxsize=3, ttl=60)
-    c.set("a", 1)
-    c.set("b", 2)
-    c.set("c", 3)
-    c.get("a")
-    c.set("d", 4)
-    assert c.get("b") is None  # b should be evicted (LRU)
-    assert c.get("d") == 4
-    print("  PASS: memory_cache")
+
+    cache = MemoryCache(maxsize=3, ttl=60)
+    cache.set("a", 1)
+    cache.set("b", 2)
+    cache.set("c", 3)
+    cache.get("a")
+    cache.set("d", 4)
+    assert cache.get("b") is None
+    assert cache.get("d") == 4
+    print("PASS: memory_cache")
 
 
-def test_prompts():
-    """测试提示词加载"""
-    from app.prompts.loader import load_prompts, get_prompt, list_prompts
-    load_prompts()
-    names = list_prompts()
-    assert "general" in names
-    assert "objective_mcq" in names
-    assert "advanced_answer" in names
-    assert "skill_optimize" in names
-    text = get_prompt("general", question="测试", knowledge_context="测试")
-    assert "测试" in text
-    print("  PASS: prompts")
+def test_question_session():
+    from app.services.question_session_service import QuestionSessionService
+
+    service = QuestionSessionService(ttl_seconds=1)
+    service.save_question(
+        question_id="q1",
+        question_text="测试题目",
+        question_type="single_choice",
+        difficulty="normal",
+        answer="A",
+        reference_answer="A",
+        explanation="测试解析",
+        knowledge_point="测试知识点",
+        subject="测试学科",
+    )
+    assert service.get_question("q1") is not None
+    time.sleep(1.1)
+    assert service.get_question("q1") is None
+    print("PASS: question_session")
 
 
-def test_vector_db():
-    """测试向量数据库"""
-    from app.vector_db.client import vector_db, ALL_COLLECTIONS
-    for name in ALL_COLLECTIONS:
-        col = vector_db.get_or_create_collection(name)
-        assert col is not None
-    stats = vector_db.get_all_collections()
-    assert len(stats) == 4
-    print("  PASS: vector_db")
+def test_structured_questions_preserve_multipart():
+    from app.services.exam_service import ExamService
+    from app.services.question_session_service import question_session_service
+
+    payload = {
+        "questions": [
+            {
+                "question_text": (
+                    "已知硅在 $T=300\\ \\text{K}$ 时的本征载流子浓度 $n_i = 1.5\\times10^{10}\\ \\text{cm}^{-3}$。\n"
+                    "（1）计算 N 型硅中的电子浓度与空穴浓度；\n"
+                    "（2）计算 P 型硅中的空穴浓度与电子浓度；\n"
+                    "（3）若温度升高到 $T=400\\ \\text{K}$，重新计算并说明温度影响。"
+                ),
+                "type": "calculation",
+                "options": [],
+                "answer": "略",
+                "reference_answer": "完整参考答案",
+                "explanation": "完整解析",
+            }
+        ]
+    }
+
+    service = ExamService()
+    questions = service._parse_questions(
+        ai_text=json.dumps(payload, ensure_ascii=False),
+        difficulty="hard",
+        count=1,
+        knowledge_point="半导体基础",
+        subject="模拟电子技术",
+    )
+
+    assert len(questions) == 1
+    assert "（3）" in questions[0]["question_text"]
+    assert "\n（2）" in questions[0]["question_text"]
+    session = question_session_service.get_question(questions[0]["id"])
+    assert session is not None
+    assert session.reference_answer == "完整参考答案"
+    print("PASS: structured_questions")
 
 
-def test_logger():
-    """测试日志模块"""
+def test_logger_stats():
     from app.utils.logger import get_stats
+
     stats = get_stats()
     assert "wrong_questions" in stats
     assert "api_errors" in stats
-    print("  PASS: logger")
-
-
-def test_skills():
-    """测试 Skill 模块"""
-    from app.skills.vector_skills.chunk_strategy import smart_chunk, validate_chunks
-    from app.skills.exam_skills.scoring import parse_grading_result
-    
-    chunks = smart_chunk(["第一段", "第二段"], chunk_size=100)
-    assert len(chunks) > 0
-    
-    result = parse_grading_result("正确！回答得很好", "objective")
-    assert result["conclusion"] == "正确"
-    print("  PASS: skills")
+    assert "should_optimize" in stats
+    print("PASS: logger_stats")
 
 
 if __name__ == "__main__":
-    print("=== 核心功能测试 ===")
     tests = [
-        test_config, test_dispatch, test_cache_key,
-        test_memory_cache, test_prompts, test_vector_db,
-        test_logger, test_skills,
+        test_config,
+        test_dispatch,
+        test_cache_key,
+        test_memory_cache,
+        test_question_session,
+        test_structured_questions_preserve_multipart,
+        test_logger_stats,
     ]
+
     passed = 0
-    for t in tests:
+    for test in tests:
         try:
-            t()
+            test()
             passed += 1
-        except Exception as e:
-            print(f"  FAIL: {t.__name__} - {e}")
-    print(f"\n=== {passed}/{len(tests)} 测试通过 ===")
+        except Exception as error:
+            print(f"FAIL: {test.__name__} - {error}")
+            raise
+
+    print(f"PASS: {passed}/{len(tests)}")

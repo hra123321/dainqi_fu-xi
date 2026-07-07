@@ -244,3 +244,58 @@ PWA 移动端支持、Flutter Android 原生应用。
 
 ### Git 提交
 提交信息: [fix] KaTeX动态重渲染+renderResults异步修复
+
+---
+
+## 2026-06-25 - v2.5 网页核心链路修复
+
+### 本次实际调用 Skills
+
+| Skill | 用途 | 结果 |
+|-------|------|------|
+| `knowledge-first` | 先检查本地知识库上下文 | 发现当前 skill 指向的是外部“热电偶项目”知识库，且只读报错，不适合作为本项目知识源 |
+| `create-plan` | 对照用户给定的 P0/P1 计划核对实施顺序 | 用于确认本轮先修网页核心链路，不扩散到 Android |
+| `browser:control-in-app-browser` | 尝试做浏览器实测 | 被本机浏览器安全策略拦截 `127.0.0.1`，未绕过；改用本地 `TestClient` 验证页面输出 |
+
+### 本轮完成内容
+
+1. **结构化出题闭环**
+   - 出题改为严格 JSON 结构
+   - 删除按空行拆题与 `questions[:5]` 截断逻辑
+   - 增加服务端题目会话缓存，前端不再提前拿到标准答案
+
+2. **复杂题完整渲染**
+   - 增加半导体三小问回归测试
+   - 保证题干内多小问与换行不再被拆散
+   - 动态题目与批改内容统一重新执行 KaTeX 渲染
+
+3. **网页学习页乱码修复**
+   - 重写 `base.html`、`index.html`、`exam.html`、`wrong_book.html`
+   - 修复导航、步骤提示、知识点搜索、错题本页面的中文乱码
+   - 去掉页面中的技术暴露文案，仅保留学习相关内容
+
+4. **错题本与自进化安全门禁**
+   - 错题记录补充 `subject`、`knowledge_point`、`question_type`
+   - `Skill` 自进化改为候选文件验证制
+   - 缺少专项测试、语法检查失败、核心回归失败时禁止覆盖源码
+
+5. **专项测试补齐**
+   - 新增 `tests/test_scoring.py`
+   - 新增 `tests/test_chunking.py`
+   - 新增 `tests/test_api_call.py`
+   - 重写 `tests/test_core.py`
+
+### 本轮验证记录
+
+- `python -m compileall -q app main.py tests`
+- `python tests/test_scoring.py`
+- `python tests/test_chunking.py`
+- `python tests/test_api_call.py`
+- `python tests/test_core.py`
+- 使用 `FastAPI TestClient` 验证 `/`、`/exam`、`/wrong-book`、`/api/health` 返回成功
+
+### 当前遗留问题
+
+1. `knowledge-first` 仍指向外部旧知识库路径，需要在后续 P2 阶段改为本项目独立库
+2. Chroma 仍打印 telemetry 相关告警，需要后续处理依赖兼容
+3. 浏览器自动化实测受本机安全策略限制，本轮改用本地进程内页面验证

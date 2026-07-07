@@ -60,6 +60,8 @@ class Settings(BaseSettings):
     # 【频率/存在惩罚】防止 AI 重复自己说的话
     FREQUENCY_PENALTY: float = 0.0
     PRESENCE_PENALTY: float = 0.0
+    PROMPT_VERSION: str = "2026-06-25"
+    QUESTION_SCHEMA_VERSION: str = "question-schema-v1"
 
     # ==================== 3. 缓存配置 ====================
     # 【内存缓存 TTL】缓存存活时间（秒），300 秒 = 5 分钟
@@ -67,6 +69,7 @@ class Settings(BaseSettings):
 
     # 【内存缓存最大条数】防止缓存占用太多内存
     MEMORY_CACHE_MAXSIZE: int = 1000
+    QUESTION_SESSION_TTL: int = 1800
 
     # ==================== 4. 向量知识库配置 ====================
     # 【向量库存储路径】Chroma 数据库文件存在哪里
