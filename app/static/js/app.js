@@ -40,9 +40,13 @@ function initSubjectSelector() {
     const select = document.getElementById("subjectSelector");
     if (!select) return;
 
-    select.innerHTML = SUBJECTS.map((subject) =>
-        `<option value="${subject.id}">${subject.icon} ${subject.name}</option>`
-    ).join("");
+    select.innerHTML = "";
+    SUBJECTS.forEach((subject) => {
+        const option = document.createElement("option");
+        option.value = subject.id;
+        option.textContent = `${subject.icon || "📘"} ${subject.name}`;
+        select.appendChild(option);
+    });
 
     const saved = localStorage.getItem("selectedSubject");
     if (saved) {
@@ -52,12 +56,16 @@ function initSubjectSelector() {
         localStorage.setItem("selectedSubject", SUBJECTS[0].id);
     }
 
-    select.addEventListener("change", (event) => {
+    select.onchange = (event) => {
         localStorage.setItem("selectedSubject", event.target.value);
         document.dispatchEvent(new CustomEvent("subjectChanged", {
             detail: findSubject(event.target.value)
         }));
-    });
+    };
+
+    document.dispatchEvent(new CustomEvent("subjectChanged", {
+        detail: findSubject(select.value)
+    }));
 }
 
 function showToast(message, type = "info", duration = 3000) {
@@ -128,9 +136,10 @@ function hideLoading(containerId) {
     container.innerHTML = "";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     initTheme();
     initNavigation();
+    await loadSubjectsFromApi();
     initSubjectSelector();
 
     document.querySelectorAll(".card").forEach((card, index) => {

@@ -84,6 +84,13 @@ class Settings(BaseSettings):
     # 【召回数量】用户提问时从知识库找回几段相关文本
     RETRIEVAL_TOP_K: int = 5
 
+    # 【应用数据】SQLite 用来保存可变业务数据，例如自定义学科和入库任务
+    APP_DB_PATH: str = str(Path("data/app.sqlite3").absolute())
+
+    # 【联网搜索】默认不强依赖外部商业搜索；配置 SearXNG 后优先使用
+    SEARXNG_URL: str = ""
+    SEARCH_TIMEOUT_SECONDS: int = 20
+
     # ==================== 5. Skill 自迭代配置 ====================
     # 【技能目录】AI 技能代码存放的目录（也是写操作白名单）
     SKILL_DIR: str = "app/skills"

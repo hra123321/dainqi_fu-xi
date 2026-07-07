@@ -3,7 +3,7 @@
 //  难度: 1-5星 | 考试重要性: 1-5星 | 工程重要性: 1-5星
 // =============================================
 
-const SUBJECTS = [
+var SUBJECTS = [
     {
         id: "marxism",
         name: "马克思主义基本原理",
@@ -536,6 +536,16 @@ function findSubject(id) {
 }
 
 function getDefaultSubject() {
+    const params = new URLSearchParams(window.location.search);
+    const querySubject = params.get("subject");
+    if (querySubject) {
+        const found = findSubject(querySubject);
+        if (found) {
+            localStorage.setItem("selectedSubject", querySubject);
+            return found;
+        }
+    }
+
     const saved = localStorage.getItem("selectedSubject");
     if (saved) {
         const found = findSubject(saved);
@@ -567,4 +577,21 @@ function getStarColor(level) {
     if (level >= 3) return "#2563eb";
     if (level >= 2) return "#16a34a";
     return "#94a3b8";
+}
+
+async function loadSubjectsFromApi() {
+    try {
+        const response = await fetch("/api/subjects");
+        if (!response.ok) {
+            throw new Error("学科 API 暂不可用");
+        }
+        const data = await response.json();
+        if (Array.isArray(data.subjects) && data.subjects.length > 0) {
+            SUBJECTS = data.subjects;
+        }
+    } catch (error) {
+        console.warn("[subjects] 使用内置学科数据：", error.message);
+    }
+    document.dispatchEvent(new CustomEvent("subjectsReady", { detail: SUBJECTS }));
+    return SUBJECTS;
 }

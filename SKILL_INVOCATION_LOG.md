@@ -299,3 +299,32 @@ PWA 移动端支持、Flutter Android 原生应用。
 1. `knowledge-first` 仍指向外部旧知识库路径，需要在后续 P2 阶段改为本项目独立库
 2. Chroma 仍打印 telemetry 相关告警，需要后续处理依赖兼容
 3. 浏览器自动化实测受本机安全策略限制，本轮改用本地进程内页面验证
+# 2026-07-07 自定义学科与向量入库链路
+
+## 调用的 Skill
+
+- knowledge-first：按项目要求先检查本地向量知识库；实际发现该 skill 指向旧热电偶项目路径，且路径当前不存在，因此未作为本项目依据。
+- browser:control-in-app-browser：读取并尝试用于页面验证；浏览器安全策略拒绝访问 `http://127.0.0.1:8000`，因此未绕过，改用 FastAPI TestClient 验证页面与 API。
+- create-plan：上一阶段用于形成实施计划，本轮按计划执行。
+
+## 本轮修改
+
+- 新增 SQLite 学科注册表，支持自定义学科持久化。
+- 新增 `/api/subjects`、`/api/subjects/{id}/topics`、`/api/subjects/{id}/ingest`、`/api/ingestion-jobs/{id}`。
+- 新增“新增学科”网页，创建学科后自动启动公开资料搜索与入库任务。
+- 前端学科选择器改为优先读取后端 API，保留九门课种子数据。
+- Chroma 检索新增 `subject_id` 过滤参数，避免跨学科误召回。
+
+## 验证
+
+- `python -m compileall -q app main.py tests`
+- `python tests/test_subjects.py`
+- `python tests/test_subject_api.py`
+- `python tests/test_core.py`
+- `python tests/test_scoring.py`
+- `python tests/test_chunking.py`
+- `python tests/test_api_call.py`
+
+## 已知问题
+
+- Chroma 0.5.18 在当前环境仍打印 telemetry 兼容性错误：`capture() takes 1 positional argument but 3 were given`。功能测试通过，该问题暂定为日志噪声，后续建议通过固定兼容依赖或替换 telemetry 实现解决。

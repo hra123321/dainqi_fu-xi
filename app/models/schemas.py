@@ -53,6 +53,7 @@ class QuestionGenerateRequest(BaseModel):
         ge=1,                         # ge = Greater or Equal（≥1）
         le=20,                        # le = Less or Equal（≤20）
     )
+    subject: str = Field(default="", description="所属学科")
 
 
 class AnswerSubmitRequest(BaseModel):
@@ -137,6 +138,7 @@ class KnowledgeSearchRequest(BaseModel):
         ge=1,
         le=20,
     )
+    subject_id: str = Field(default="", description="限定检索的学科 ID")
 
 
 # ==================== 响应模型（服务器 → 客户端） ====================

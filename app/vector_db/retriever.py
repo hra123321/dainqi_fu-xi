@@ -42,6 +42,7 @@ class KnowledgeRetriever:
         query: str,
         category: str = COURSE_MATERIALS,
         top_k: int = None,
+        subject_id: str = "",
     ) -> Dict:
         """
         【核心检索方法】
@@ -76,10 +77,17 @@ class KnowledgeRetriever:
             
             # 2. 直接用文本搜索（Chroma 内置 embedding）
             # 3. 在 Chroma 中搜索
+            where_filter = {"subject_id": subject_id} if subject_id else None
+            query_kwargs = {
+                "query_texts": [query],
+                "n_results": top_k,
+                "include": ["documents", "metadatas", "distances"],
+            }
+            if where_filter:
+                query_kwargs["where"] = where_filter
+
             result = collection.query(
-                query_texts=[query],
-                n_results=top_k,
-                include=["documents", "metadatas", "distances"],
+                **query_kwargs,
             )
             
             # 4. 整理结果
@@ -98,6 +106,8 @@ class KnowledgeRetriever:
                         "text": doc,
                         "source": meta.get("source", "未知"),
                         "page": meta.get("page", 0),
+                        "subject_id": meta.get("subject_id", ""),
+                        "topic": meta.get("topic", ""),
                         "score": round(similarity, 4),
                     })
             

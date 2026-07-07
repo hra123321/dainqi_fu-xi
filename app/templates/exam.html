@@ -602,7 +602,7 @@ function renderResults(results) {
 function renderQuickTags() {
     const container = document.getElementById("quickTopicTags");
     const subject = getDefaultSubject();
-    const tags = subject.topics.slice(0, 8);
+    const tags = (subject.topics || []).slice(0, 8);
     container.innerHTML = "";
 
     tags.forEach((topic) => {
@@ -623,17 +623,7 @@ function quickSearch(query) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const subject = getDefaultSubject();
-    document.getElementById("currentSubjectName").textContent = subject.icon + " " + subject.name;
-
-    const button = document.getElementById("courseLinkBtn");
-    if (subject.courseLink) {
-        button.href = subject.courseLink;
-        button.style.display = "inline-flex";
-        button.textContent = subject.courseName || "相关课程";
-    }
-
-    renderQuickTags();
+    refreshSubjectView(getDefaultSubject());
 });
 
 document.addEventListener("subjectChanged", (event) => {
@@ -641,23 +631,31 @@ document.addEventListener("subjectChanged", (event) => {
     document.getElementById("searchResults").innerHTML = "";
     document.getElementById("learnArea").classList.add("hidden");
     document.getElementById("emptyState").classList.remove("hidden");
-    document.getElementById("currentSubjectName").textContent = event.detail.icon + " " + event.detail.name;
+    currentTopic = "";
+    currentQuestions = [];
+    currentExplanationText = "";
+    updateStep(1);
+    refreshSubjectView(event.detail);
+});
 
+function refreshSubjectView(subject) {
+    if (!subject) return;
+    currentSubject = subject;
+    document.getElementById("currentSubjectName").textContent = (subject.icon || "📘") + " " + subject.name;
     const button = document.getElementById("courseLinkBtn");
-    if (event.detail.courseLink) {
-        button.href = event.detail.courseLink;
+    if (subject.courseLink) {
+        button.href = subject.courseLink;
         button.style.display = "inline-flex";
-        button.textContent = event.detail.courseName || "相关课程";
+        button.textContent = subject.courseName || "相关课程";
     } else {
         button.style.display = "none";
     }
 
-    currentTopic = "";
-    currentSubject = event.detail;
-    currentQuestions = [];
-    currentExplanationText = "";
-    updateStep(1);
     renderQuickTags();
+}
+
+document.addEventListener("subjectsReady", () => {
+    refreshSubjectView(getDefaultSubject());
 });
 </script>
 {% endblock %}

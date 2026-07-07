@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}新增学科 - 电气复习{% endblock %}
+
+{% block content %}
+<div class="fade-in" style="max-width: 860px; margin: 0 auto;">
+    <div style="text-align:center; margin: 20px 0 24px;">
+        <h1 style="font-size:28px; margin-bottom:8px;">新增自定义学科</h1>
+        <p style="color:var(--text-secondary); font-size:14px;">
+            输入学科名称后，系统会创建本地学科，并自动启动公开资料搜索、知识点提取和向量入库。
+        </p>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+        <div style="display:grid; grid-template-columns: 1fr 120px 90px; gap:12px; align-items:end;">
+            <div>
+                <label class="form-label">学科名称</label>
+                <input id="newSubjectName" class="form-control" placeholder="例如：电力电子技术、大学物理、自动控制原理">
+            </div>
+            <div>
+                <label class="form-label">简称</label>
+                <input id="newSubjectShort" class="form-control" placeholder="可选">
+            </div>
+            <div>
+                <label class="form-label">图标</label>
+                <input id="newSubjectIcon" class="form-control" value="📘">
+            </div>
+        </div>
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="createSubject()">创建学科</button>
+            <button class="btn btn-outline" onclick="refreshSubjects()">刷新列表</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3>学科列表与入库状态</h3>
+        </div>
+        <div id="subjectManageList"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function createSubject() {
+    const name = document.getElementById("newSubjectName").value.trim();
+    const short = document.getElementById("newSubjectShort").value.trim();
+    const icon = document.getElementById("newSubjectIcon").value.trim() || "📘";
+    if (!name) {
+        showToast("请先输入学科名称", "warning");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/subjects", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, short, icon })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "创建失败");
+        showToast("学科已创建", "success");
+        document.getElementById("newSubjectName").value = "";
+        await refreshSubjects();
+        await startIngestion(data.subject.id);
+        await loadSubjectsFromApi();
+        initSubjectSelector();
+    } catch (error) {
+        showToast(error.message, "error");
+    }
+}
+
+async function startIngestion(subjectId) {
+    try {
+        const response = await fetch(`/api/subjects/${subjectId}/ingest`, { method: "POST" });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "启动失败");
+        showToast("已启动入库任务", "success");
+        pollJob(data.job.id);
+    } catch (error) {
+        showToast(error.message, "error");
+    }
+}
+
+async function pollJob(jobId) {
+    const timer = setInterval(async () => {
+        const response = await fetch(`/api/ingestion-jobs/${jobId}`);
+        const data = await response.json();
+        if (data.job) {
+            showToast(`${data.job.stage}：${data.job.message}`, data.job.status === "failed" ? "error" : "info", 1800);
+            await refreshSubjects();
+            if (["done", "failed"].includes(data.job.status)) {
+                clearInterval(timer);
+                await loadSubjectsFromApi();
+                initSubjectSelector();
+            }
+        }
+    }, 2500);
+}
+
+async function refreshSubjects() {
+    const container = document.getElementById("subjectManageList");
+    container.innerHTML = "<p style='color:var(--text-muted)'>加载中...</p>";
+    const response = await fetch("/api/subjects");
+    const data = await response.json();
+    container.innerHTML = "";
+
+    data.subjects.forEach((subject) => {
+        const row = document.createElement("div");
+        row.style.cssText = "display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);";
+        const left = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = `${subject.icon || "📘"} ${subject.name}`;
+        const meta = document.createElement("div");
+        meta.style.cssText = "font-size:12px;color:var(--text-muted)";
+        meta.textContent = `知识点 ${subject.topic_count || 0} 个｜状态 ${subject.ingest_status || "not_started"}`;
+        left.appendChild(title);
+        left.appendChild(meta);
+        const actions = document.createElement("div");
+        actions.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;";
+        const ingest = document.createElement("button");
+        ingest.className = "btn btn-sm btn-primary";
+        ingest.textContent = "联网入库";
+        ingest.onclick = () => startIngestion(subject.id);
+        const learn = document.createElement("a");
+        learn.className = "btn btn-sm btn-outline";
+        learn.href = `/exam?subject=${encodeURIComponent(subject.id)}`;
+        learn.textContent = "去学习";
+        actions.appendChild(ingest);
+        actions.appendChild(learn);
+        row.appendChild(left);
+        row.appendChild(actions);
+        container.appendChild(row);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", refreshSubjects);
+</script>
+{% endblock %}

@@ -21,6 +21,7 @@ async def generate_questions(req: QuestionGenerateRequest):
         knowledge_point=req.knowledge_point,
         difficulty=req.difficulty,
         count=req.count,
+        subject=req.subject,
     )
 
 

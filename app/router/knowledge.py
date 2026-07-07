@@ -8,7 +8,7 @@ import os
 import uuid
 import tempfile
 
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, Query
 from app.models.schemas import KnowledgeSearchRequest, KnowledgeSearchResponse
 from app.vector_db.processor import pdf_processor
 from app.vector_db.retriever import retriever
@@ -78,8 +78,24 @@ async def search_knowledge(req: KnowledgeSearchRequest):
         query=req.query,
         category=req.category,
         top_k=req.top_k,
+        subject_id=req.subject_id,
     )
     return result
+
+
+@router.get("/search")
+async def search_knowledge_get(
+    query: str = Query(..., min_length=1),
+    category: str = Query("course_materials"),
+    top_k: int = Query(5, ge=1, le=20),
+    subject_id: str = Query(""),
+):
+    return retriever.search(
+        query=query,
+        category=category,
+        top_k=top_k,
+        subject_id=subject_id,
+    )
 
 
 @router.get("/collections")
