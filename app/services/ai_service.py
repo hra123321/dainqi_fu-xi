@@ -12,6 +12,7 @@ from app.cache.memory_cache import cache as memory_cache
 from app.config import settings
 from app.models.dispatch import get_model_for_difficulty, is_pro_model
 from app.prompts.loader import get_prompt
+from app.security import require_api_key
 from app.utils.logger import logger, record_api_error
 
 
@@ -97,8 +98,9 @@ class AIService:
         response_format: Optional[Dict],
         cache_context: str,
     ) -> str:
+        api_key = require_api_key(settings.DEEPSEEK_API_KEY)
         headers = {
-            "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         }
 

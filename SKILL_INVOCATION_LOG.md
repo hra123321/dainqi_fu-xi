@@ -328,3 +328,17 @@ PWA 移动端支持、Flutter Android 原生应用。
 ## 已知问题
 
 - Chroma 0.5.18 在当前环境仍打印 telemetry 兼容性错误：`capture() takes 1 positional argument but 3 were given`。功能测试通过，该问题暂定为日志噪声，后续建议通过固定兼容依赖或替换 telemetry 实现解决。
+
+# 2026-07-09 长期平台阶段 0：密钥安全基线
+
+## 本次调用 Skills
+
+- `knowledge-first`：按规则尝试读取本地知识库；旧库属于其他项目且 Chroma 版本不兼容，未作为本项目依据。
+- `security-best-practices`：读取 FastAPI 与浏览器 JavaScript 安全规范，用于约束密钥、输入验证和前端输出边界。
+
+## 本次修改
+
+- 增加 DeepSeek API Key 使用前校验，错误信息不包含密钥内容。
+- 增加 Git 跟踪文件泄密扫描测试。
+- 增加不含真实密钥的 `.env.example`。
+- 重写乱码配置文件，保留既有固定模型、缓存和路径参数。
