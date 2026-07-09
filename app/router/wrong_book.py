@@ -24,6 +24,10 @@ async def get_wrong_questions(
 async def get_analysis():
     return wrong_book_service.get_analysis()
 
+@router.get("/ability-profile")
+async def get_ability_profile():
+    return wrong_book_service.get_ability_profile()
+
 @router.post("/evolve")
 async def trigger_evolve():
     return await wrong_book_service.auto_evolve()

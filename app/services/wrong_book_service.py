@@ -1,6 +1,7 @@
 import json
 
 from app.services.skill_service import skill_service
+from app.services.ability_profile_service import ability_profile_service
 from app.utils.logger import WRONG_QUESTIONS_FILE, get_stats, get_weakest_topics, logger
 
 
@@ -70,6 +71,9 @@ class WrongBookService:
             "review_suggestions": review_suggestions,
             "should_optimize": stats["should_optimize"],
         }
+
+    def get_ability_profile(self):
+        return ability_profile_service.build_profile()
 
     async def auto_evolve(self):
         logger.info("[自进化] 开始分析错题模式")
