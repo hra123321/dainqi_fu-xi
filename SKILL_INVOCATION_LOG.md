@@ -348,3 +348,9 @@ PWA 移动端支持、Flutter Android 原生应用。
 - 核对运行环境后确认 `chromadb 0.5.18` 与 `posthog 7.17.0` 的调用签名不兼容。
 - 原计划固定旧版 PostHog，但 `chroma-hnswlib 0.7.6` 在 Python 3.12/Windows 缺少预编译轮子，无法重复安装。
 - 最终升级到提供 Windows ABI3 轮子的 `chromadb 1.5.8`，并增加初始化、写入和依赖版本专项测试。
+## 2026-07-09 长期平台阶段 0：本地备份与完整性检查
+
+- 使用 Skill：`knowledge-first`、`codebase-recon`、`create-plan`。
+- 输入范围：本项目仓库、Git 历史、旧本地向量库路径、SQLite/Chroma 数据目录。
+- 结果：新增 `BackupService`，可检查 SQLite `PRAGMA quick_check` 与 Chroma collection 可读性，并生成不包含 `.env` 的 zip 备份。
+- 注意：`knowledge-first` 指向旧热电偶项目库，当前 Chroma 版本读取该旧库失败，因此仅记录为不适用，不作为本项目依据。
