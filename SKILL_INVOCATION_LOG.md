@@ -366,3 +366,9 @@ PWA 移动端支持、Flutter Android 原生应用。
 - 输入范围：入库服务、知识库路由、Chroma 元数据、学习领域 API。
 - 结果：新增知识节点、资料来源登记、领域知识树 API，并让入库 chunk 带 `domain_id/node_id/source_id/version/license/hash/quality_status` 元数据。
 - 注意：AI 生成或联网发现内容默认进入 `candidate`，后续通过评估门禁再发布，避免污染正式知识库。
+## 2026-07-09 长期平台阶段 3：知识成长评估门禁
+
+- 使用 Skill：`knowledge-first`。
+- 输入范围：知识树、资料来源模型、领域 API、Chroma 元数据约束。
+- 结果：新增成长门禁服务，候选来源和节点需通过必填字段、许可、哈希、链接风险、星级和公式风险检查后才能发布。
+- 注意：许可不明确和公式风险不会直接进入正式库，状态会停在 `needs_review`，防止错误资料污染本地知识库。

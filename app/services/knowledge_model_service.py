@@ -205,6 +205,29 @@ class KnowledgeModelService:
             ).fetchall()
         return [self._row_to_source(row) for row in rows]
 
+    def update_node_quality(self, node_id: str, quality_status: str) -> dict[str, Any]:
+        clean_quality = self._validate(quality_status, QUALITY_STATUSES, "质量状态")
+        with self._connect() as connection:
+            cursor = connection.execute(
+                "UPDATE knowledge_nodes SET quality_status = ?, updated_at = ? WHERE id = ?",
+                (clean_quality, int(time.time()), node_id),
+            )
+        if cursor.rowcount == 0:
+            raise KeyError(f"知识节点不存在：{node_id}")
+        return self.get_node(node_id)
+
+    def update_source_quality(self, source_id: str, quality_status: str) -> dict[str, Any]:
+        clean_quality = self._validate(quality_status, QUALITY_STATUSES, "质量状态")
+        reviewed_at = int(time.time()) if clean_quality in {"approved", "rejected", "needs_review"} else 0
+        with self._connect() as connection:
+            cursor = connection.execute(
+                "UPDATE knowledge_sources SET quality_status = ?, reviewed_at = ? WHERE id = ?",
+                (clean_quality, reviewed_at, source_id),
+            )
+        if cursor.rowcount == 0:
+            raise KeyError(f"资料来源不存在：{source_id}")
+        return self.get_source(source_id)
+
     def get_source(self, source_id: str) -> dict[str, Any]:
         with self._connect() as connection:
             row = connection.execute("SELECT * FROM knowledge_sources WHERE id = ?", (source_id,)).fetchone()

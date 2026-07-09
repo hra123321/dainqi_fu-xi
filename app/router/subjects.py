@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from app.services.ingestion_service import subject_ingestion_service
+from app.services.growth_gate_service import growth_gate_service
 from app.services.knowledge_model_service import knowledge_model_service
 from app.services.subject_service import subject_service
 
@@ -157,6 +158,22 @@ async def list_domain_sources(domain_id: str):
     try:
         subject_service.get_domain(domain_id, include_topics=False)
         return {"domain_id": domain_id, "sources": knowledge_model_service.list_sources(domain_id)}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/v1/sources/{source_id}/publish")
+async def publish_source(source_id: str):
+    try:
+        return growth_gate_service.publish_source_if_passed(source_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/v1/knowledge-nodes/{node_id}/publish")
+async def publish_knowledge_node(node_id: str):
+    try:
+        return growth_gate_service.publish_node_if_passed(node_id)
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
