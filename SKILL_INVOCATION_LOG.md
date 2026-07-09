@@ -342,3 +342,9 @@ PWA 移动端支持、Flutter Android 原生应用。
 - 增加 Git 跟踪文件泄密扫描测试。
 - 增加不含真实密钥的 `.env.example`。
 - 重写乱码配置文件，保留既有固定模型、缓存和路径参数。
+
+## Chroma 兼容性处理
+
+- 核对运行环境后确认 `chromadb 0.5.18` 与 `posthog 7.17.0` 的调用签名不兼容。
+- 原计划固定旧版 PostHog，但 `chroma-hnswlib 0.7.6` 在 Python 3.12/Windows 缺少预编译轮子，无法重复安装。
+- 最终升级到提供 Windows ABI3 轮子的 `chromadb 1.5.8`，并增加初始化、写入和依赖版本专项测试。
