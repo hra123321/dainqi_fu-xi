@@ -29,6 +29,7 @@ from app.router import exam as exam_router
 from app.router import knowledge as knowledge_router
 from app.router import mobile as mobile_router
 from app.router import subjects as subjects_router
+from app.router import sync as sync_router
 from app.router import wrong_book as wrong_book_router
 
 app.include_router(exam_router.router)
@@ -36,6 +37,7 @@ app.include_router(knowledge_router.router)
 app.include_router(subjects_router.router)
 app.include_router(admin_router.router)
 app.include_router(mobile_router.router)
+app.include_router(sync_router.router)
 app.include_router(wrong_book_router.router)
 
 
