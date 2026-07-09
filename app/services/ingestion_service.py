@@ -10,6 +10,7 @@ import httpx
 
 from app.config import settings
 from app.services.ai_service import ai_service
+from app.services.knowledge_model_service import knowledge_model_service
 from app.services.subject_service import subject_service
 from app.vector_db.client import COURSE_MATERIALS, vector_db
 from app.vector_db.processor import pdf_processor
@@ -41,7 +42,34 @@ class SubjectIngestionService:
             topics = await self.extract_topics(subject["name"], accepted_sources)
             topic_count = subject_service.replace_topics(subject_id, topics, source="generated")
 
-            chunks = self._build_text_chunks(subject, accepted_sources, topics)
+            registered_sources = [
+                knowledge_model_service.register_source(
+                    domain_id=subject_id,
+                    title=source.get("title", "") or subject["name"],
+                    url=source.get("url", ""),
+                    license_name=source.get("license", "public-web-candidate"),
+                    source_type="web",
+                    content=source.get("summary", ""),
+                    quality_status="candidate",
+                )
+                for source in accepted_sources
+            ]
+            registered_nodes = {}
+            for topic in topics:
+                node = knowledge_model_service.upsert_node(
+                    domain_id=subject_id,
+                    name=topic.get("name", ""),
+                    node_type="knowledge",
+                    difficulty=topic.get("difficulty", 3),
+                    exam_importance=topic.get("examImportance", 3),
+                    engineering_importance=topic.get("engineeringImportance", 3),
+                    source_id="deepseek-topic-discovery",
+                    quality_status="candidate",
+                    version=subject.get("version", ""),
+                )
+                registered_nodes[topic.get("name", "")] = node
+
+            chunks = self._build_text_chunks(subject, accepted_sources, topics, registered_sources, registered_nodes)
             stored = self.store_chunks(subject, chunks)
 
             subject_service.update_job(
@@ -158,23 +186,35 @@ class SubjectIngestionService:
         collection.add(ids=ids, embeddings=embeddings.tolist(), metadatas=metadatas, documents=texts)
         return len(chunks)
 
-    def _build_text_chunks(self, subject: Dict, sources: List[Dict], topics: List[Dict]) -> List[Dict]:
+    def _build_text_chunks(
+        self,
+        subject: Dict,
+        sources: List[Dict],
+        topics: List[Dict],
+        registered_sources: List[Dict] | None = None,
+        registered_nodes: Dict[str, Dict] | None = None,
+    ) -> List[Dict]:
         chunks = []
         subject_id = subject["id"]
         for index, source in enumerate(sources):
             source_text = f"资料标题：{source.get('title', '')}\n资料摘要：{source.get('summary', '')}\n资料URL：{source.get('url', '')}"
-            source_id = hashlib.sha256(source.get("url", "").encode("utf-8")).hexdigest()[:16]
+            registered_source = registered_sources[index] if registered_sources and index < len(registered_sources) else {}
+            source_id = registered_source.get("id") or hashlib.sha256(source.get("url", "").encode("utf-8")).hexdigest()[:16]
             chunks.append(
                 {
                     "id": f"{subject_id}_source_{source_id}_{index}",
                     "text": source_text,
                     "metadata": {
                         "subject_id": subject_id,
+                        "domain_id": subject_id,
+                        "node_id": "",
                         "subject": subject["name"],
                         "source_id": source_id,
                         "source": source.get("url", ""),
                         "title": source.get("title", ""),
                         "license": source.get("license", "public-web-candidate"),
+                        "version": subject.get("version", ""),
+                        "quality_status": registered_source.get("quality_status", "candidate"),
                         "topic": "",
                         "chunk_type": "source_summary",
                         "hash": hashlib.sha256(source_text.encode("utf-8")).hexdigest(),
@@ -184,17 +224,23 @@ class SubjectIngestionService:
 
         for index, topic in enumerate(topics):
             text = f"{subject['name']} 知识点：{topic.get('name', '')}\n难度：{topic.get('difficulty', 3)}星\n考试重要性：{topic.get('examImportance', 3)}星\n工程重要性：{topic.get('engineeringImportance', 3)}星"
+            topic_name = topic.get("name", "")
+            node_id = (registered_nodes or {}).get(topic_name, {}).get("id", "")
             chunks.append(
                 {
                     "id": f"{subject_id}_topic_{hashlib.sha256(text.encode('utf-8')).hexdigest()[:16]}_{index}",
                     "text": text,
                     "metadata": {
                         "subject_id": subject_id,
+                        "domain_id": subject_id,
+                        "node_id": node_id,
                         "subject": subject["name"],
                         "source_id": "deepseek-topic-discovery",
                         "source": "DeepSeek structured extraction from reviewed search summaries",
                         "title": topic.get("name", ""),
                         "license": "generated-summary",
+                        "version": subject.get("version", ""),
+                        "quality_status": "candidate",
                         "topic": topic.get("name", ""),
                         "chunk_type": "topic_outline",
                         "hash": hashlib.sha256(text.encode("utf-8")).hexdigest(),

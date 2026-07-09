@@ -23,7 +23,7 @@ def test_backup_service_checks_integrity_and_excludes_env():
 
         vector_path.mkdir()
         (vector_path / "index.txt").write_text("vector placeholder", encoding="utf-8")
-        (vector_path / ".env").write_text("sk-should-not-be-backed-up", encoding="utf-8")
+        (vector_path / ".env").write_text("SECRET_SHOULD_NOT_BE_BACKED_UP", encoding="utf-8")
 
         service = BackupService(sqlite_path, vector_path, backup_dir)
         integrity = service.check_integrity()

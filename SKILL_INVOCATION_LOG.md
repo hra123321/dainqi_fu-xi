@@ -360,3 +360,9 @@ PWA 移动端支持、Flutter Android 原生应用。
 - 输入范围：`SubjectService`、学科 API、现有学科测试与网页兼容入口。
 - 结果：保留旧 `/api/subjects`，新增 `/api/v1/domains`，支持 `course/software/exam/project/skill` 五类学习领域。
 - 注意：第一步不重命名 SQLite 旧表，避免迁移风险；通过新增字段完成语义升级，后续再做正式数据迁移。
+## 2026-07-09 长期平台阶段 2：知识树与资料来源模型
+
+- 使用 Skill：`knowledge-first`、`codebase-recon`、`create-plan`。
+- 输入范围：入库服务、知识库路由、Chroma 元数据、学习领域 API。
+- 结果：新增知识节点、资料来源登记、领域知识树 API，并让入库 chunk 带 `domain_id/node_id/source_id/version/license/hash/quality_status` 元数据。
+- 注意：AI 生成或联网发现内容默认进入 `candidate`，后续通过评估门禁再发布，避免污染正式知识库。

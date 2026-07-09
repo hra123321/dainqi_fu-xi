@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from app.services.ingestion_service import subject_ingestion_service
+from app.services.knowledge_model_service import knowledge_model_service
 from app.services.subject_service import subject_service
 
 
@@ -24,6 +25,29 @@ class DomainCreateRequest(SubjectCreateRequest):
     domain_type: str = Field(default="course", max_length=20)
     version: str = Field(default="", max_length=80)
     learning_goal: str = Field(default="", max_length=300)
+
+
+class KnowledgeNodeRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=120)
+    parent_id: str = Field(default="", max_length=80)
+    node_type: str = Field(default="knowledge", max_length=30)
+    difficulty: int = Field(default=3, ge=1, le=5)
+    exam_importance: int = Field(default=3, ge=1, le=5)
+    engineering_importance: int = Field(default=3, ge=1, le=5)
+    source_id: str = Field(default="", max_length=80)
+    quality_status: str = Field(default="candidate", max_length=30)
+    version: str = Field(default="", max_length=80)
+
+
+class KnowledgeSourceRequest(BaseModel):
+    domain_id: str = Field(..., min_length=1, max_length=80)
+    title: str = Field(..., min_length=1, max_length=200)
+    url: str = Field(default="", max_length=500)
+    author: str = Field(default="", max_length=120)
+    license_name: str = Field(default="", max_length=120)
+    source_type: str = Field(default="web", max_length=30)
+    content: str = Field(default="", max_length=10000)
+    quality_status: str = Field(default="candidate", max_length=30)
 
 
 @router.get("/subjects")
@@ -71,6 +95,68 @@ async def create_domain(req: DomainCreateRequest):
 async def get_domain(domain_id: str):
     try:
         return {"domain": subject_service.get_domain(domain_id, include_topics=True)}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/v1/domains/{domain_id}/knowledge-tree")
+async def get_domain_knowledge_tree(domain_id: str):
+    try:
+        subject_service.get_domain(domain_id, include_topics=False)
+        return {"domain_id": domain_id, "nodes": knowledge_model_service.list_tree(domain_id)}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/v1/domains/{domain_id}/knowledge-tree")
+async def upsert_domain_knowledge_node(domain_id: str, req: KnowledgeNodeRequest):
+    try:
+        subject_service.get_domain(domain_id, include_topics=False)
+        node = knowledge_model_service.upsert_node(
+            domain_id=domain_id,
+            name=req.name,
+            parent_id=req.parent_id,
+            node_type=req.node_type,
+            difficulty=req.difficulty,
+            exam_importance=req.exam_importance,
+            engineering_importance=req.engineering_importance,
+            source_id=req.source_id,
+            quality_status=req.quality_status,
+            version=req.version,
+        )
+        return {"success": True, "node": node}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/v1/sources")
+async def register_knowledge_source(req: KnowledgeSourceRequest):
+    try:
+        subject_service.get_domain(req.domain_id, include_topics=False)
+        source = knowledge_model_service.register_source(
+            domain_id=req.domain_id,
+            title=req.title,
+            url=req.url,
+            author=req.author,
+            license_name=req.license_name,
+            source_type=req.source_type,
+            content=req.content,
+            quality_status=req.quality_status,
+        )
+        return {"success": True, "source": source}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/v1/domains/{domain_id}/sources")
+async def list_domain_sources(domain_id: str):
+    try:
+        subject_service.get_domain(domain_id, include_topics=False)
+        return {"domain_id": domain_id, "sources": knowledge_model_service.list_sources(domain_id)}
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
