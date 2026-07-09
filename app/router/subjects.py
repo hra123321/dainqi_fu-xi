@@ -20,6 +20,12 @@ class SubjectCreateRequest(BaseModel):
     aliases: List[str] = Field(default_factory=list)
 
 
+class DomainCreateRequest(SubjectCreateRequest):
+    domain_type: str = Field(default="course", max_length=20)
+    version: str = Field(default="", max_length=80)
+    learning_goal: str = Field(default="", max_length=300)
+
+
 @router.get("/subjects")
 async def list_subjects():
     return {"subjects": subject_service.list_subjects(include_topics=True)}
@@ -37,6 +43,36 @@ async def create_subject(req: SubjectCreateRequest):
         return {"success": True, "subject": subject}
     except ValueError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/v1/domains")
+async def list_domains():
+    return {"domains": subject_service.list_domains(include_topics=True)}
+
+
+@router.post("/v1/domains")
+async def create_domain(req: DomainCreateRequest):
+    try:
+        domain = subject_service.create_domain(
+            name=req.name,
+            domain_type=req.domain_type,
+            short=req.short,
+            icon=req.icon,
+            aliases=req.aliases,
+            version=req.version,
+            learning_goal=req.learning_goal,
+        )
+        return {"success": True, "domain": domain}
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/v1/domains/{domain_id}")
+async def get_domain(domain_id: str):
+    try:
+        return {"domain": subject_service.get_domain(domain_id, include_topics=True)}
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @router.get("/subjects/{subject_id}/topics")

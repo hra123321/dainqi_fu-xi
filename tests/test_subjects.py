@@ -39,7 +39,30 @@ def test_subject_registry_duplicate_name():
             raise AssertionError("duplicate subject name should fail")
 
 
+def test_learning_domain_create_and_validate_type():
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
+        service = SubjectService(str(Path(temp_dir) / "app.sqlite3"))
+        domain = service.create_domain(
+            name="博图",
+            domain_type="software",
+            short="TIA",
+            icon="🧰",
+            version="V18",
+            learning_goal="学习 PLC 工程诊断与项目维护",
+        )
+        assert domain["type"] == "software"
+        assert domain["version"] == "V18"
+
+        try:
+            service.create_domain(name="未知类型", domain_type="unknown")
+        except ValueError as exc:
+            assert "学习领域类型不支持" in str(exc)
+        else:
+            raise AssertionError("unsupported domain type should fail")
+
+
 if __name__ == "__main__":
     test_subject_registry_create_and_topics()
     test_subject_registry_duplicate_name()
+    test_learning_domain_create_and_validate_type()
     print("PASS: test_subjects")

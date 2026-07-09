@@ -18,6 +18,7 @@ from app.config import settings
 
 
 DEFAULT_ICON = "📘"
+DOMAIN_TYPES = {"course", "software", "exam", "project", "skill"}
 
 
 class SubjectService:
@@ -44,6 +45,9 @@ class SubjectService:
                     short TEXT NOT NULL DEFAULT '',
                     icon TEXT NOT NULL DEFAULT '📘',
                     aliases TEXT NOT NULL DEFAULT '[]',
+                    domain_type TEXT NOT NULL DEFAULT 'course',
+                    version TEXT NOT NULL DEFAULT '',
+                    learning_goal TEXT NOT NULL DEFAULT '',
                     source TEXT NOT NULL DEFAULT 'custom',
                     ingest_status TEXT NOT NULL DEFAULT 'not_started',
                     topic_count INTEGER NOT NULL DEFAULT 0,
@@ -80,6 +84,9 @@ class SubjectService:
                 );
                 """
             )
+            self._ensure_column(connection, "subjects", "domain_type", "TEXT NOT NULL DEFAULT 'course'")
+            self._ensure_column(connection, "subjects", "version", "TEXT NOT NULL DEFAULT ''")
+            self._ensure_column(connection, "subjects", "learning_goal", "TEXT NOT NULL DEFAULT ''")
 
     def _seed_builtin_subjects(self) -> None:
         seed_path = Path("data/subjects_seed.json")
@@ -98,6 +105,9 @@ class SubjectService:
                 short=subject.get("short", ""),
                 icon=subject.get("icon", DEFAULT_ICON),
                 aliases=subject.get("aliases", []),
+                domain_type=subject.get("domain_type", "course"),
+                version=subject.get("version", ""),
+                learning_goal=subject.get("learning_goal", ""),
                 source="seed",
                 subject_id=subject.get("id"),
             )
@@ -109,12 +119,16 @@ class SubjectService:
         short: str = "",
         icon: str = DEFAULT_ICON,
         aliases: Optional[List[str]] = None,
+        domain_type: str = "course",
+        version: str = "",
+        learning_goal: str = "",
         source: str = "custom",
         subject_id: Optional[str] = None,
     ) -> Dict:
         clean_name = name.strip()
         if not clean_name:
             raise ValueError("学科名称不能为空")
+        clean_domain_type = self._domain_type(domain_type)
 
         now = int(time.time())
         subject_id = subject_id or self._make_subject_id(clean_name)
@@ -125,10 +139,22 @@ class SubjectService:
                 connection.execute(
                     """
                     INSERT INTO subjects
-                    (id, name, short, icon, aliases, source, created_at, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    (id, name, short, icon, aliases, domain_type, version, learning_goal, source, created_at, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (subject_id, clean_name, short.strip(), icon or DEFAULT_ICON, aliases_json, source, now, now),
+                    (
+                        subject_id,
+                        clean_name,
+                        short.strip(),
+                        icon or DEFAULT_ICON,
+                        aliases_json,
+                        clean_domain_type,
+                        version.strip(),
+                        learning_goal.strip(),
+                        source,
+                        now,
+                        now,
+                    ),
                 )
             except sqlite3.IntegrityError as exc:
                 raise ValueError(f"学科已存在：{clean_name}") from exc
@@ -141,6 +167,37 @@ class SubjectService:
                 "SELECT * FROM subjects ORDER BY source DESC, created_at ASC"
             ).fetchall()
         return [self._row_to_subject(row, include_topics=include_topics) for row in rows]
+
+    def list_domains(self, include_topics: bool = True) -> List[Dict]:
+        return [self._subject_to_domain(item) for item in self.list_subjects(include_topics=include_topics)]
+
+    def create_domain(
+        self,
+        name: str,
+        domain_type: str,
+        short: str = "",
+        icon: str = DEFAULT_ICON,
+        aliases: Optional[List[str]] = None,
+        version: str = "",
+        learning_goal: str = "",
+        source: str = "custom",
+        domain_id: Optional[str] = None,
+    ) -> Dict:
+        subject = self.create_subject(
+            name=name,
+            short=short,
+            icon=icon,
+            aliases=aliases,
+            domain_type=domain_type,
+            version=version,
+            learning_goal=learning_goal,
+            source=source,
+            subject_id=domain_id,
+        )
+        return self._subject_to_domain(subject)
+
+    def get_domain(self, domain_id: str, include_topics: bool = True) -> Dict:
+        return self._subject_to_domain(self.get_subject(domain_id, include_topics=include_topics))
 
     def get_subject(self, subject_id: str, include_topics: bool = True) -> Dict:
         with self._connect() as connection:
@@ -261,10 +318,36 @@ class SubjectService:
     def _row_to_subject(self, row: sqlite3.Row, include_topics: bool) -> Dict:
         subject = dict(row)
         subject["aliases"] = json.loads(subject.get("aliases") or "[]")
+        subject["domain_type"] = subject.get("domain_type") or "course"
+        subject["domainType"] = subject["domain_type"]
+        subject["version"] = subject.get("version") or ""
+        subject["learning_goal"] = subject.get("learning_goal") or ""
+        subject["learningGoal"] = subject["learning_goal"]
         subject["topics"] = self.get_topics(subject["id"]) if include_topics else []
         subject["courseLink"] = f"https://search.bilibili.com/all?keyword={subject['name']}+课程+教学"
         subject["courseName"] = f"{subject['name']}相关课程"
         return subject
+
+    def _subject_to_domain(self, subject: Dict) -> Dict:
+        return {
+            "id": subject["id"],
+            "name": subject["name"],
+            "short": subject.get("short", ""),
+            "icon": subject.get("icon", DEFAULT_ICON),
+            "aliases": subject.get("aliases", []),
+            "type": subject.get("domain_type", "course"),
+            "domainType": subject.get("domain_type", "course"),
+            "version": subject.get("version", ""),
+            "learningGoal": subject.get("learning_goal", ""),
+            "source": subject.get("source", "custom"),
+            "ingest_status": subject.get("ingest_status", "not_started"),
+            "ingestStatus": subject.get("ingest_status", "not_started"),
+            "topic_count": subject.get("topic_count", 0),
+            "topicCount": subject.get("topic_count", 0),
+            "question_count": subject.get("question_count", 0),
+            "questionCount": subject.get("question_count", 0),
+            "topics": subject.get("topics", []),
+        }
 
     def _make_subject_id(self, name: str) -> str:
         slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
@@ -276,6 +359,17 @@ class SubjectService:
         except Exception:
             number = 3
         return max(1, min(5, number))
+
+    def _domain_type(self, value: str) -> str:
+        clean_value = (value or "course").strip().lower()
+        if clean_value not in DOMAIN_TYPES:
+            raise ValueError(f"学习领域类型不支持：{value}")
+        return clean_value
+
+    def _ensure_column(self, connection: sqlite3.Connection, table: str, column: str, definition: str) -> None:
+        columns = {row["name"] for row in connection.execute(f"PRAGMA table_info({table})")}
+        if column not in columns:
+            connection.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
 
 
 subject_service = SubjectService()

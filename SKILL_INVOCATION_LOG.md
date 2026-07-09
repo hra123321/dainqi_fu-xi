@@ -354,3 +354,9 @@ PWA 移动端支持、Flutter Android 原生应用。
 - 输入范围：本项目仓库、Git 历史、旧本地向量库路径、SQLite/Chroma 数据目录。
 - 结果：新增 `BackupService`，可检查 SQLite `PRAGMA quick_check` 与 Chroma collection 可读性，并生成不包含 `.env` 的 zip 备份。
 - 注意：`knowledge-first` 指向旧热电偶项目库，当前 Chroma 版本读取该旧库失败，因此仅记录为不适用，不作为本项目依据。
+## 2026-07-09 长期平台阶段 1：学科到学习领域兼容迁移
+
+- 使用 Skill：`knowledge-first`、`codebase-recon`、`create-plan`。
+- 输入范围：`SubjectService`、学科 API、现有学科测试与网页兼容入口。
+- 结果：保留旧 `/api/subjects`，新增 `/api/v1/domains`，支持 `course/software/exam/project/skill` 五类学习领域。
+- 注意：第一步不重命名 SQLite 旧表，避免迁移风险；通过新增字段完成语义升级，后续再做正式数据迁移。

@@ -28,6 +28,25 @@ def test_subject_api_and_pages():
     assert search_response.status_code == 200
     assert "results" in search_response.json()
 
+    domain_response = client.get("/api/v1/domains")
+    assert domain_response.status_code == 200
+    assert "domains" in domain_response.json()
+
+    create_response = client.post(
+        "/api/v1/domains",
+        json={
+            "name": "博图测试领域",
+            "domain_type": "software",
+            "short": "TIA",
+            "icon": "🧰",
+            "version": "V18",
+            "learning_goal": "复习 PLC 项目诊断、手册阅读和错误处理",
+        },
+    )
+    assert create_response.status_code in (200, 409)
+    if create_response.status_code == 200:
+        assert create_response.json()["domain"]["type"] == "software"
+
 
 if __name__ == "__main__":
     test_subject_api_and_pages()
